@@ -21,7 +21,7 @@ setup(
        long_description_content_type="text/markdown",
        author = "K.y" ,
        author_email="beidongjiedeguang@gmail.com",
-       url = "https://pypi.org/user/K.y/" ,
+       url = "https://github.com/beidongjiedeguang/Tools" ,
        license = "GNU" ,
        packages = find_packages(exclude=['tests*']),
        install_requires=install_requires,
