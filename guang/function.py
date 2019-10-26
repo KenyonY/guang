@@ -46,3 +46,20 @@ def dict_dotable(dic):
         if type(dic[i]) == dict:
             dic[i] = dict_dotable(dic[i])
     return dic
+
+
+# define a constant like C language.
+class Cons:
+    '''
+    `object.__setattr__(self, name, value)`
+    this built-in function will called when assigning values to properties of the class
+    
+    `object.__dict__` holds all writable attributes in object, 
+    key as variable name and value as variable value.
+    '''
+    def __setattr__(self, name,value):
+        if hasattr(self,name):
+            raise " "
+        else:
+            self.__dict__[name] = value
+
