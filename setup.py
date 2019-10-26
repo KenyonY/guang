@@ -26,10 +26,10 @@ setup(
        packages = find_packages(exclude=['tests*']),
        install_requires=install_requires,
        classifiers=[
-	   'Operating System :: OS Independent',
-	   'Intended Audience :: Developers',
-	   'Intended Audience :: Science/Research',
-	   'Topic :: Scientific/Engineering :: Artificial Intelligence'
+	     'Operating System :: OS Independent',
+	     'Intended Audience :: Developers',
+	     'Intended Audience :: Science/Research',
+	     'Topic :: Scientific/Engineering :: Artificial Intelligence',
        "Programming Language :: Python :: 3",
        "Programming Language :: Python :: 3.5",
        "Programming Language :: Python :: 3.6",
