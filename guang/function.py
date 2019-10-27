@@ -5,7 +5,7 @@ def broadcast(func):
         example:
         @broadcast
         def f(x):
-            # 一个只能单个元素映射的函数
+            # A function that can map only a single element
             if x==1 or x==0:
                 return x
             else:
