@@ -84,25 +84,6 @@ def find_simil_idx(Vec_list, VEC,dist_choise=2, tolerance=0.3):
             IDX.append(idx)
     return IDX
 
-def sort_count(lis):
-    '''
-    返回lis的由大到小排序好的元素列表
-    Example:
-    l = np.array([2,2,2,2,5,5,3,9,9])
-    sort_count(l) : [(2, 4), (5, 2), (9, 2), (3, 1)]
-    return [2, 5, 9,3], [4, 2, 2, 1]
-    '''
-    a = {}
-    for i in lis:
-        if i in a:
-            a[i] = a[i] + 1
-        else:
-            a[i] = 1
-    # 使用sorted对字典进行排序
-    b = sorted(a.items(),key=lambda item:item[1],reverse=True)
-    # idx, counts = [b[i][0] for i in range(len(b))], [b[i][1] for i in range(len(b))]
-    return b
-
 
 
 
@@ -164,33 +145,6 @@ def is_Centers_same(V1,w1,V2,w2,yourScore = 0.75, dist_choise=2,lamb = 5,sigma=1
     else:
         return False
 
-
-def find_centers_simil_idx(Centers1,Centers2,yourScore = 0.75, dist_choise=2,lamb = 5,sigma=1, **dic):
-    '''
-    Centers1将与每一个Centers2向量比较, 最后返回所有与Centers2相似向量下标列表
-    '''
-    # default Para
-    printScore = 0
-
-    if 'printScore' in dic:
-        printScore = dic['printScore']
-
-    V1,w1 = Centers1[0], Centers1[1]
-    IDX=[]
-    for idx,centers in enumerate(Centers2):
-        V2,w2 = centers[0],centers[1]
-        if is_Centers_same(V1, w1, V2, w2, yourScore=yourScore, dist_choise=dist_choise, lamb=lamb, sigma=sigma,printScore=printScore):
-            IDX.append(idx)
-    return IDX
-
-
-def cvtBlackWhite(fileName):
-    '''
-    convert image's black color to white and meanwhile convert white to black.
-    '''
-    img = cv2.imread(fileName, 0)
-    img = 255-img
-    cv2.imwrite('convert_'+fileName, img)
     
 def cvt2rgb(img,channel = 'bgr'):
     '''it can convert image channel BGR,BGRA,HLS,HSV to RGB'''
@@ -269,7 +223,7 @@ def MaxMinNormal(I,out_min, out_max):
     Imax = I.max()
     Imin = I.min()
     out = out_min + (out_max - out_min)/(Imax - Imin) * (I-Imin)
-    return out.astype('uint8')
+    return out
 
 # 伽马变换
 def Gamma_trans(I, I_max, gamma):
