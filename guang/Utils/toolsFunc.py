@@ -27,7 +27,7 @@ def broadcast(func):
     return wrap
 
 # :Enables the dictionary to be dot operated
-class Dict_enhance(dict):
+class _Dict_enhance(dict):
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         self.__dict__ = self 
@@ -41,7 +41,7 @@ def dict_dotable(dic):
     then, you can operate an enhanced dictionary like this:
         enhance_dic.key1.key2. ...
     '''
-    dic = Dict_enhance(dic)
+    dic = _Dict_enhance(dic)
     for i in dic:
         if type(dic[i]) == dict:
             dic[i] = dict_dotable(dic[i])
