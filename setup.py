@@ -22,7 +22,7 @@ setup(
        author = "K.y" ,
        author_email="beidongjiedeguang@gmail.com",
        url = "https://github.com/beidongjiedeguang/Tools" ,
-       license = "GNU" ,
+       license = "GPL-v3" ,
        packages = find_packages(exclude=['tests*']),
        install_requires=install_requires,
        classifiers=[
