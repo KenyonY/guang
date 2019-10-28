@@ -1,18 +1,12 @@
 # tensorflow2.0
 import tensorflow as tf
-from tensorflow.keras import Input,Model
-from tensorflow.keras import layers
-from tensorflow.keras.layers import Flatten,Dense
-from tensorflow.keras import regularizers
-from tensorflow.keras.datasets import mnist
+from tensorflow.keras import Input,Model, layers, regularizers 
+from tensorflow.keras.layers import Dense
 import numpy as np
-import matplotlib.pyplot as plt
-
 
 class Encoder(tf.keras.Model):
-    def __init__(self, w, h):
+    def __init__(self, w, h, dim=256):
         super().__init__()
-        global dim
         self.fc1 = Dense(dim, activation='relu', input_shape=(w*h,) )                         
         self.fc2 = Dense(dim/2, activation='relu')
         self.fc3 = Dense(dim/4, activation='relu')
@@ -23,9 +17,8 @@ class Encoder(tf.keras.Model):
         return x
 
 class Decoder(tf.keras.Model):
-    def __init__(self, w, h):
+    def __init__(self, w, h, dim=256):
         super().__init__()
-        global dim
         Out_dim = w*h
 
         self.fc1 = Dense(dim/2, activation='relu', input_shape=(dim,) )
@@ -44,10 +37,10 @@ class AE:
 		self.w, self.h = w, h
 	def compile(self):
 		input_img = Input(shape=(self.w*self.h),)
-		self.encoder = Encoder(self.w,self.h)
+		self.encoder = Encoder(self.w,self.h, self.dim)
 		self.encoded = self.encoder(input_img)
 
-		self.decoder = Decoder(self.w,self.h)
+		self.decoder = Decoder(self.w,self.h, self.dim)
 		self.decoded = self.decoder(self.encoded)
 
 		self.autoencoder = Model(input_img, self.decoded)
@@ -60,7 +53,10 @@ class AE:
 						shuffle=True,
 						validation_data=(x_test, x_test))
 
+
 if __name__ == "__main__":
+	from tensorflow.keras.datasets import mnist
+	import matplotlib.pyplot as plt
 	(x_train, _), (x_test, _) = mnist.load_data()
 	x_train = x_train.astype('float32') / 255.
 	x_test = x_test.astype('float32') / 255.
@@ -71,7 +67,6 @@ if __name__ == "__main__":
 	ae = AE(dim, w, h)
 	ae.compile()
 	ae.fit(x_train, x_test)
-
 
 	decoded_imgs = ae.autoencoder.predict(x_test)
 	n = 10  # how many digits we will display
