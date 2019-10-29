@@ -36,7 +36,6 @@ setup(
        "Programming Language :: Python :: 3.7",
        ],
        keywords=[
-          'utils',
           'Deep Learning',
           'Machine Learning',
           'Neural Networks'

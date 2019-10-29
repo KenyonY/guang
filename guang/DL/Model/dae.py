@@ -31,7 +31,7 @@ class Decoder(tf.keras.Model):
         x = self.fc3(x)
         return x
 
-class AE:
+class DAE:
 	def __init__(self, dim, w, h):
 		self.dim = dim
 		self.w, self.h = w, h
@@ -53,8 +53,7 @@ class AE:
 						shuffle=True,
 						validation_data=(x_test, x_test))
 
-
-if __name__ == "__main__":
+def TEST():
 	from tensorflow.keras.datasets import mnist
 	import matplotlib.pyplot as plt
 	(x_train, _), (x_test, _) = mnist.load_data()
@@ -64,7 +63,7 @@ if __name__ == "__main__":
 	x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
 	dim = 256
 	w,h = 28,28
-	ae = AE(dim, w, h)
+	ae = DAE(dim, w, h)
 	ae.compile()
 	ae.fit(x_train, x_test)
 
@@ -87,3 +86,5 @@ if __name__ == "__main__":
 		ax.get_xaxis().set_visible(False)
 		ax.get_yaxis().set_visible(False)
 	plt.show()
+if __name__ == "__main__":
+	TEST()
