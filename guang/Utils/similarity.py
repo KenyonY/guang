@@ -1,9 +1,14 @@
 import numpy as np
 
 def is_similarity(vec1, vec2, dist_choise=2, tolerance=0.3):
-    '''inputParam:
-    dist_choise: 选择哪种距离, 1:P1范数(曼哈顿距离), 2: P2范数(欧氏距离), 3: P_inf范数(切比雪夫距离)
-    tolerance: 相似度小于该值时会被判断为同类别,并 return True
+    '''
+    input
+    -----
+        dist_choise: 选择哪种距离, 1:P1范数(曼哈顿距离), 2: P2范数(欧氏距离), 3: P_inf范数(切比雪夫距离)
+        tolerance: 相似度小于该值时会被判断为同类别
+    return
+    ------
+        bool
     '''
     if dist_choise == 1:
         distance = Dist.manhattan_dist
@@ -21,9 +26,7 @@ def is_similarity(vec1, vec2, dist_choise=2, tolerance=0.3):
         return False
 
 def find_simil_idx(Vec_list, VEC,dist_choise=2, tolerance=0.3):
-    '''
-    Vec_list中每一个向量将与VEC向量比较, 最后返回所有与VEC相似向量下标列表
-    '''
+
     IDX = []
     for idx, vec in enumerate(Vec_list):
         if is_similarity(vec, VEC,dist_choise, tolerance):
@@ -85,7 +88,7 @@ def is_Centers_same(V1,w1,V2,w2,yourScore = 0.75, dist_choise=2,lamb = 5,sigma=1
     score = simil_score(V1,w1,V2,w2,dist_choise=dist_choise,lamb = lamb,sigma=sigma)
     if printSore == 1:
         print(score)
-    # 判断相似度:
+
     if score >= yourScore:
         return True
     else:
