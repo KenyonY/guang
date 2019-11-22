@@ -1,10 +1,10 @@
 import os
-import soundfile as sf
 from pydub import AudioSegment
 
 def cvt2wav(orig_path, new_path, sr=16000):
-	basename = os.path.basename(orig_path)
-	sufname = basename.split('.')[-1]
+    
+    basename = os.path.basename(orig_path)
+    sufname = basename.split('.')[-1]
 
     x = AudioSegment.from_file(orig_path, format=sufname)
     x = x.set_channels(1)

@@ -3,7 +3,7 @@ This is a universal function library.
 '''
 from . import *
 
-__version__ = '0.0.6.03'
+__version__ = '0.0.6.06'
 __author__ = 'K.y'
 __copyright = 'Copyright 2019 K.y'
 
