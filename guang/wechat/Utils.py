@@ -107,23 +107,34 @@ def dynamic_specified_msg(userName=None):
             return msg
 
 
-def download_file(msg):
-    '''download .png .mp3 .mp4 file'''
+def download_file(msg, fileType='mp3'):
+    '''
+    :param fileType : 'attachment' ,'mp3', 'mp4', 'png'
+    download .png .mp3 .mp4 file
+    and
+    ATTACHMENT,  of which, various file types are included.
+    '''
     #     msg = dynamic_specified_msg(username)
     file_name = msg.fileName.split('.')
     sufname = file_name[-1]
     prename = '.'.join(file_name[:-1])
-    if sufname == 'png':
+
+    if fileType == 'attachment':#'attachment':
+        tpath = os.path.join('wechat_download', msg.User.NickName, 'attachment')
+        if not os.path.exists(tpath):
+            os.makedirs(tpath)
+        msg.download(os.path.join(tpath, msg.fileName))
+    elif sufname == 'png' and fileType== 'png':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'picture')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
         msg.download(os.path.join(tpath, msg.fileName))
-    elif sufname == 'mp3':
+    elif sufname=='mp3'and fileType=='mp3':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'voice')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
         msg.download(os.path.join(tpath, msg.fileName))
-    elif sufname == 'mp4':
+    elif sufname == 'mp4' and fileType=='mp4':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'video')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
@@ -131,6 +142,7 @@ def download_file(msg):
 
     #     os.remove(msg.fileName) # remove 当前文件夹下的下载文件
     return msg
+
 
 
 def d_time(d_t, t0=[]):
@@ -153,5 +165,5 @@ if __name__ == '__main__':
 
     while d_time(60):
         msg = dynamic_specified_msg(get_userName('光')['光'])
-        msg = download_file(msg)
+        msg = download_file(msg, fileType='mp3')
 
