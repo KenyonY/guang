@@ -15,6 +15,7 @@ Scientific calculation of universal function library
 Python 3
 CUDA >= 9.0
 PyTorch >= v0.4.0
+Tensorflow >= 1.12.0
 opencv-python
 pydub
 librosa==0.6.3
@@ -27,11 +28,9 @@ pypinyin
 
 ## Installation
 
-~~~python
-```
+```python
 pip install guang
 ```
-~~~
 
 
 
@@ -39,21 +38,21 @@ pip install guang
 
 - Convert audio in .mp3/ .wav format to (sample rate=16k, single channel) .wav format
 
-  - ```python
-    from guang.Voice.convert improt cvt2wav
-    cvt2wav(orig_path, target_path, sr=16000)
-    ```
+  ```python
+  from guang.Voice.convert improt cvt2wav
+  cvt2wav(orig_path, target_path, sr=16000)
+  ```
 
 
 
 * Convert a dictionary to dotable dictionary:
 
-  * ```python
-    from guang.Utilt.toolsFunc import dict_dotable
-    a = {'a':{'b':1}}
-    a = dict_dotable(a)
-    print(a.a.b)
-    ```
+  ```python
+  from guang.Utilt.toolsFunc import dict_dotable
+  a = {'a':{'b':1}}
+  a = dict_dotable(a)
+  print(a.a.b)
+  ```
 
 * 
 
