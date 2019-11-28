@@ -2,9 +2,10 @@
 from __future__ import print_function
 from setuptools import setup, find_packages
 import guang
+from glob import glob
 
 
-with open('requirements.txt', encoding='utf-8') as f:
+with open(glob('requirements.*')[0], encoding='utf-8') as f:
     all_reqs = f.read().split('\n')
 install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
 
@@ -38,6 +39,8 @@ setup(
        keywords=[
           'Deep Learning',
           'Machine Learning',
-          'Neural Networks'
+          'Neural Networks',
+          'Natural Language Processing',
+          'Computer Version'
       ]
 )

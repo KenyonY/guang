@@ -1,4 +1,6 @@
 import numpy as np
+import os
+import shutil
 
 def broadcast(func):
     '''
@@ -63,3 +65,14 @@ class Cons:
         else:
             self.__dict__[name] = value
 
+
+def rm(path):
+    '''remove path
+    '''
+    if os.path.exists(path):
+        if os.path.isfile(path):
+            os.remove(path)
+        elif os.path.isdir(path):
+            shutil.rmtree(path)
+        else:
+            print(f'{path} is  illegal !')

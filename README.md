@@ -9,3 +9,29 @@
 
 Scientific calculation of universal function library
 
+# Examples
+
+- Convert audio in .mp3/ .wav format to (sample rate=16k, single channel) .wav format
+
+```python
+from guang.Voice.convert improt cvt2wav
+cvt2wav(orig_path, target_path, sr=16000)
+```
+
+
+
+* Convert a dictionary to dotable dictionary:
+
+```python
+from guang.Utilt.toolsFunc import dict_dotable
+a = {'a':{'b':1}}
+a = dict_dotable(a)
+print(a.a.b)
+```
+
+
+
+```python
+
+```
+
