@@ -2,7 +2,8 @@
 This is a universal function library.
 '''
 from . import *
-
+import sys
+sys.path.append('..')
 
 def get_version():
     with open('version','r') as fi:

@@ -51,12 +51,22 @@ def show_Fourier():
 from guang.wechat import *
 from guang.wechat import dynamic_msg, dynamic_specified_msg, d_time, download_file
 import itchat
+import os
 st.cache(itchat.auto_login(hotReload=True))
 
 nickName = '光'
 while d_time(60):
     msg = dynamic_specified_msg(get_userName(nickName)[nickName])
     msg, download_path = download_file(msg)
+    print(download_path)
+    if os.path.exists(download_path):
+        with open(download_path, 'rb') as fi:
+            music = fi.read()
+        st.audio(music, fomat='audio/mp3')
+
+
+
+
 
 
 
