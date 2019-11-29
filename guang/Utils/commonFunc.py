@@ -1,3 +1,4 @@
+import numpy as np
 def gaussian(x,sigma,miu):
     """
     标准高斯函数
@@ -28,13 +29,29 @@ def butter(U,V,n,m):
     '''
     return 1/(1+(np.sqrt(U**2+V**2)/m)**(2*n))
 
-def sawtooth(n,x):
+def sawtooth(n, x):
     '''
     锯齿函数sawtooth的傅里叶级数为 sin(nx)/n ,n从一累加到无穷 
     '''
+
     S=np.zeros(x.shape)
     for i in range(1,n+1):
         s=np.sin(i*x)/i
         S+=s
 
     return S
+
+def legendre(n, N=100):
+    ''' Legendre function
+    return
+    ------
+        N-order Legendre function
+    '''
+    x = np.linspace(0, 1, N)
+    if n == 0:
+        return 1
+    elif n == 1:
+        return x
+    else:
+        return((2*n-1)*x*legendre(n-1,x)-(n-1)*legendre(n-2,x))/n
+
