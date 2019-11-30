@@ -113,6 +113,7 @@ def download_file(msg, fileType='mp3'):
     download .png .mp3 .mp4 file
     and
     ATTACHMENT,  of which, various file types are included.
+    :returns msg, file_path
     '''
     #     msg = dynamic_specified_msg(username)
     file_name = msg.fileName.split('.')
@@ -141,7 +142,7 @@ def download_file(msg, fileType='mp3'):
         msg.download(os.path.join(tpath, msg.fileName))
 
     #     os.remove(msg.fileName) # remove 当前文件夹下的下载文件
-    return msg
+    return msg, tpath
 
 
 

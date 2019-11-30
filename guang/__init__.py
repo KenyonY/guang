@@ -5,15 +5,13 @@ from . import *
 import sys
 sys.path.append('..')
 
+import version
 def get_version():
-    with open('version','r') as fi:
-        v_list = fi.read().split('.')
-        v = int(''.join(v_list))
-        v += 1
-    with open('version','w') as fo:
-        fo.write('.'.join(list(str(v))))
-
-    return '.'.join(v_list)
+    v= version.version
+    v += 1
+    with open('version.py','w') as fo:
+        fo.write('version= '+ str(v))
+    return '.'.join(list(str(v)))
 
 __v = get_version()
 

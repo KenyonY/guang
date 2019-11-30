@@ -1,7 +1,5 @@
 import os
 from guang.Utils.toolsFunc import rm
-import sys
-sys.path.append('guang')
 
 rm('build')
 rm('dist')
