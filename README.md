@@ -50,7 +50,7 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
 * Use `dict_dotable` to convert a dictionary to dot-able dictionary:
 
   ```python
-  from guang.Utilt.toolsFunc import dict_dotable
+  from guang.Utils.toolsFunc import dict_dotable
   a = {'a':{'b':1}}
   a = dict_dotable(a)
   print(a.a.b)
@@ -61,7 +61,7 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
 * Use `probar` to display current progress
 
   ```python
-  from guang.Utilt.toolsFunc import probar
+  from guang.Utils.toolsFunc import probar
   for i in probar(range(10)):
       time.sleep(0.3)
   
@@ -71,6 +71,8 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
 * `@broadcast`  broadcast a non-broadcast function.
 
   ```python
+  from guang.Utils.toolsFunc import broadcast
+  
   @broadcast
   def f(x):
       # A function that can map only a single element
