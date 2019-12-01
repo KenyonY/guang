@@ -30,6 +30,8 @@ pypinyin
 
 ```bash
 pip install guang
+or
+pip install git+https://github.com/beidongjiedeguang/guang.git
 ```
 
 
