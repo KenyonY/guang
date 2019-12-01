@@ -1,6 +1,36 @@
 import numpy as np
 import os
 import shutil
+import time
+
+class probar:
+    """
+    Simple progress bar display, to instead of tqdm.
+    """
+    def __init__(self, iterable, total_steps=None):
+        self.iterable = iterable
+        self.t0 = time.time()
+        self.c = 0
+        if hasattr(iterable, '__len__'):
+            self.total_steps = len(iterable) -1 
+        else:
+            print(f'{iterable} has no __len__ attr, use total_steps param')
+            self.total_steps = total_steps  
+            if self.total_steps:
+                self.total_steps = self.total_steps -1 
+        
+    def __iter__(self):
+        for idx, i in enumerate(self.iterable):
+            if idx!=0:
+                cost_time = time.time() - self.t0
+                percent = self.c/self.total_steps
+                total_time = cost_time/percent
+                if percent == 1:
+                    print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f}s')
+                    return idx, i
+                print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f}s ', end='', flush=1)
+            yield idx, i
+            self.c += 1
 
 def broadcast(func):
     '''
