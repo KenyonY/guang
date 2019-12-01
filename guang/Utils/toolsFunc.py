@@ -26,7 +26,7 @@ class probar:
                 percent = self.c/self.total_steps
                 total_time = cost_time/percent
                 if percent == 1:
-                    print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f}s')
+                    print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f} s')
                     return idx, i
                 print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f}s ', end='', flush=1)
             yield idx, i

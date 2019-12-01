@@ -47,16 +47,43 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
 
 
 
-* Convert a dictionary to dotable dictionary:
+* Use `dict_dotable` to convert a dictionary to dot-able dictionary:
 
   ```python
   from guang.Utilt.toolsFunc import dict_dotable
   a = {'a':{'b':1}}
   a = dict_dotable(a)
   print(a.a.b)
+  
+  >> 1
   ```
 
-* 
+* Use `probar` to display current progress
+
+  ```python
+  from guang.Utilt.toolsFunc import probar
+  for i in probar(range(10)):
+      time.sleep(0.3)
+  
+  >> 100.00% 	  2.71|2.71 s
+  ```
+
+* `@broadcast`  broadcast a non-broadcast function.
+
+  ```python
+  @broadcast
+  def f(x):
+      # A function that can map only a single element
+      if x==1 or x==0:
+          return x
+      else:
+          return f(x-1)+f(x-2)
+  
+  >> f([2,4,10])
+  >> array([1, 3, 832040], dtype=object)
+  ```
+
+  
 
 
 
