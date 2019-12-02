@@ -6,3 +6,4 @@
 # pyworld
 # soundfile
 # pypinyin
+# hmmlearn

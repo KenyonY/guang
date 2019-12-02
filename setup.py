@@ -22,7 +22,7 @@ setup(
        long_description_content_type="text/markdown",
        author = "K.y" ,
        author_email="beidongjiedeguang@gmail.com",
-       url = "https://github.com/beidongjiedeguang/Tools" ,
+       url = "https://github.com/beidongjiedeguang/guang" ,
        license = "GPL-v3" ,
        packages = find_packages(exclude=['tests*', 'kaldi*']),
        install_requires=install_requires,

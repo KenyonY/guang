@@ -2,7 +2,7 @@
 This is a universal function library.
 '''
 from . import *
-import guang.get_version
+import guang.get_version as get_version
 
 
 __v = get_version.get_version(update=False)

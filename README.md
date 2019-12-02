@@ -22,15 +22,20 @@ librosa==0.6.3
 pyworld
 soundfile
 pypinyin
+hmmlearn
 ```
 
 
 
 ## Installation
 
-```bash
+```python
 pip install guang
-or
+```
+
+​	Or install  developer version
+
+```bash
 pip install git+https://github.com/beidongjiedeguang/guang.git
 ```
 
@@ -63,9 +68,9 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
   ```python
   from guang.Utils.toolsFunc import probar
   for i in probar(range(10)):
-      time.sleep(0.3)
+      time.sleep(0.8)
   
-  >> 100.00% 	  2.71|2.71 s
+  >> 100.00%         0'7.3"|0'7.3"   Expect:12-2 23:59:8
   ```
 
 * `@broadcast`  broadcast a non-broadcast function.

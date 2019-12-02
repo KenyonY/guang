@@ -2,6 +2,7 @@ import numpy as np
 import os
 import shutil
 import time
+import datetime
 
 class probar:
     """
@@ -11,24 +12,31 @@ class probar:
         self.iterable = iterable
         self.t0 = time.time()
         self.c = 0
+        self.cT = datetime.datetime.now()
         if hasattr(iterable, '__len__'):
-            self.total_steps = len(iterable) -1 
+            self.total_steps = len(iterable) -1
         else:
             print(f'{iterable} has no __len__ attr, use total_steps param')
-            self.total_steps = total_steps  
+            self.total_steps = total_steps  -1
             if self.total_steps:
-                self.total_steps = self.total_steps -1 
+                self.total_steps = self.total_steps
         
     def __iter__(self):
         for idx, i in enumerate(self.iterable):
-            if idx!=0:
+            if idx == 0:
+                print(f'\r{0:.2f}% \t  {0:.1f}|{np.inf:.1f}s \t', end='', flush=1)
+            else:
                 cost_time = time.time() - self.t0
                 percent = self.c/self.total_steps
                 total_time = cost_time/percent
-                if percent == 1:
-                    print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f} s')
-                    return idx, i
-                print(f'\r{percent*100:.2f}% \t  {cost_time:.2f}|{total_time:.2f}s ', end='', flush=1)
+                t_minute, t_second = divmod(total_time, 60)
+                cost_minute, cost_second = divmod(cost_time, 60)
+                dT = datetime.timedelta(0, total_time)
+                deadLine = self.cT + dT
+
+                print(f"\r{percent*100:.2f}% \t{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\"\tExpect:\
+{deadLine.month}-{deadLine.day} \
+{deadLine.hour}:{deadLine.minute}:{deadLine.second} \t", end='', flush=1)
             yield idx, i
             self.c += 1
 
