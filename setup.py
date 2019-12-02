@@ -24,7 +24,7 @@ setup(
        author_email="beidongjiedeguang@gmail.com",
        url = "https://github.com/beidongjiedeguang/Tools" ,
        license = "GPL-v3" ,
-       packages = find_packages(exclude=['tests*']),
+       packages = find_packages(exclude=['tests*', 'kaldi*']),
        install_requires=install_requires,
        classifiers=[
 	     'Operating System :: OS Independent',

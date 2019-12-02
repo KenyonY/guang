@@ -89,9 +89,9 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
 
   ```python
   from guang.Voice.txt2pinyin import txt2ph
-  txt2ph('你好')
+  txt2ph('你好，我是光')
   
-  
+  >> [('n', 'i3'), ('h', 'ao3'), ('sp1',), ('uo3',), ('sh', 'ii4'), ('g', 'uang1')]
   ```
 
   
