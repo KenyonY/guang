@@ -36,7 +36,7 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
 
 
 
-# Examples
+## Examples
 
 - Convert audio in .mp3/ .wav format to (sample rate=16k, single channel) .wav format
 
@@ -85,7 +85,20 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
   >> array([1, 3, 832040], dtype=object)
   ```
 
+* `txt2ph` Convert Chinese characters to phoneme
+
+  ```python
+  from guang.Voice.txt2pinyin import txt2ph
+  txt2ph('你好')
   
+  
+  ```
+
+  
+
+
+
+
 
 
 

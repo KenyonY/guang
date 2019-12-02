@@ -2,18 +2,10 @@
 This is a universal function library.
 '''
 from . import *
-import sys
-sys.path.append('..')
+import guang.get_version
 
-import version
-def get_version():
-    v= version.version
-    v += 1
-    with open('version.py','w') as fo:
-        fo.write('version= '+ str(v))
-    return '.'.join(list(str(v)))
 
-__v = get_version()
+__v = get_version.get_version(update=False)
 
 # '0.0.7.2.7'
 __version__ = '0.0.' + __v

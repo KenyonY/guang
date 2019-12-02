@@ -1,5 +1,7 @@
 import os
 from guang.Utils.toolsFunc import rm
+from guang.get_version import get_version
+get_version(update=True)
 
 rm('build')
 rm('dist')
