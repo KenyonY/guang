@@ -28,9 +28,10 @@ class probar:
             else:
                 cost_time = time.time() - self.t0
                 percent = self.c/self.total_steps
+                cost_minute, cost_second = divmod(cost_time, 60)
+
                 total_time = cost_time/percent
                 t_minute, t_second = divmod(total_time, 60)
-                cost_minute, cost_second = divmod(cost_time, 60)
                 dT = datetime.timedelta(0, total_time)
                 deadLine = self.cT + dT
 
@@ -99,7 +100,7 @@ class Cons:
     '''
     def __setattr__(self, name,value):
         if hasattr(self,name):
-            raise " "
+            raise ValueError('Constant value can\'t be changed')
         else:
             self.__dict__[name] = value
 

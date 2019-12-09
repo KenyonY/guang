@@ -1,4 +1,5 @@
-import numpy as np 
+import numpy as np
+import Levenshtein # pip install python-Levenshtein
 
 '''
 Some common distance function
@@ -7,7 +8,7 @@ Some common distance function
 def euclidean_dist(vec1, vec2):
 
     assert vec1.shape == vec2.shape 
-    return np.sqrt(np.sum((x - y) ** 2))
+    return np.sqrt(np.sum((vec1 - vec2) ** 2))
 
 
 def manhattan_dist(vec1, vec2):
@@ -37,7 +38,12 @@ def cosine_dist(vec1, vec2):
     return (vec1.T @ vec2)/(np.linalg.norm(vec1) * np.linalg.norm(vec2))
 
 
-def hamming_dist():
+def distance(a, b):
+    '''字符串距离'''
+    return Levenshtein.ratio(a, b)
+
+
+def hamming_dist(x, y):
     return np.sum(x != y) / len(x)
 
 

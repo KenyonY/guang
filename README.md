@@ -1,6 +1,6 @@
 # guang
 
-[![image](https://img.shields.io/badge/Pypi_package-0.0.7.2.7-green.svg)](https://pypi.org/project/guang)
+[![image](https://img.shields.io/badge/Pypi-0.0.7.2.7-green.svg)](https://pypi.org/project/guang)
 [![image](https://img.shields.io/badge/python-3.X-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -33,10 +33,10 @@ hmmlearn
 pip install guang
 ```
 
-​	Or install  developer version
+​	Install Explorer Edition 
 
-```bash
-pip install git+https://github.com/beidongjiedeguang/guang.git
+```python
+pip install git+https://github.com/beidongjiedeguang/guang
 ```
 
 
@@ -63,15 +63,19 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
   >> 1
   ```
 
+  
+
 * Use `probar` to display current progress
 
   ```python
   from guang.Utils.toolsFunc import probar
-  for i in probar(range(10)):
+  for idx, x in probar(range(10)):
       time.sleep(0.8)
   
-  >> 100.00%         0'7.3"|0'7.3"   Expect:12-2 23:59:8
+  >> 100.00%         0'7.3"|0'7.3"     Expect: 12-2 23:59:8
   ```
+
+  
 
 * `@broadcast`  broadcast a non-broadcast function.
 
@@ -89,6 +93,8 @@ pip install git+https://github.com/beidongjiedeguang/guang.git
   >> f([2,4,10])
   >> array([1, 3, 832040], dtype=object)
   ```
+
+  
 
 * `txt2ph` Convert Chinese characters to phoneme
 
