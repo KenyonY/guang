@@ -1,4 +1,4 @@
--i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+# -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 # --default-timeout=1000 
 numpy
 pandas
@@ -6,6 +6,7 @@ matplotlib
 opencv-python
 pydub
 librosa==0.6.3
+# pomegranate
 # pyworld
 # soundfile
 # jieba 
@@ -28,6 +29,7 @@ librosa==0.6.3
 # sympy 
 # h5py 
 # plotly 
+# psutil
 # cmake 
 # requests 
 # scikit-learn 
