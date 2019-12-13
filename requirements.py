@@ -5,14 +5,14 @@ pandas
 matplotlib
 opencv-python
 pydub
-librosa==0.6.3
-# pomegranate
+librosa # 0.6.3
+pomegranate
+soundfile
+pypinyin
+python-Levenshtein
 # pyworld
-# soundfile
 # jieba 
-# pypinyin
-# python-Levenshtein
-# # hmmlearn
+# hmmlearn
 # itchat
 # tqdm
 # streamlit

@@ -12,7 +12,7 @@ seaborn.set_style('white')
 
 
 def fillplot(*args, scalex=True, scaley=True, data=None, **kwargs):
-    plot.__doc__ = 'fill_y_min:阴影下界, fill_y_max: 阴影上界\n' + plt.plot.__doc__
+    plt.plot.__doc__ = 'fill_y_min:阴影下界, fill_y_max: 阴影上界\n' + plt.plot.__doc__
     if type(args[0]) != type(args[1]):
         y = args[0]
         x = np.arange(len(y))
