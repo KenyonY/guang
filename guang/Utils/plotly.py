@@ -40,7 +40,6 @@ class Multiplots:
         self.y_label = 'fig.y_label'
         self.count = 0
         self.annotations = []
-        # Title
 
     def plot(self, *args, **kwargs):
         '''
