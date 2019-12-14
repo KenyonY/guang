@@ -5,9 +5,7 @@
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
 
-$$\begin{equation}
-s=\frac{\lambda}{2}\left(\left|\boldsymbol{W}^{(1)}\right|_{F}^{2}+\left\|\boldsymbol{W}^{(2)}\right\|_{F}^{2}\right)
-\end{equation}$$
+
 
 Scientific calculation of universal function library
 
