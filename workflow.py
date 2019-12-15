@@ -1,7 +1,10 @@
 import os
 from guang.Utils.toolsFunc import rm
 from guang.get_version import get_version
-get_version(update=True)
+from generateREADME import generateREADME
+__version__ = get_version(update=True)
+
+generateREADME('0.0.'+ __version__)
 
 rm('build')
 rm('dist')

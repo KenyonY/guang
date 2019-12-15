@@ -1,6 +1,6 @@
-# guang
+# Guang
 
-[![image](https://img.shields.io/badge/Pypi-0.0.7.2.7-green.svg)](https://pypi.org/project/guang)
+[![image](https://img.shields.io/badge/Pypi-7.6.0-green.svg)](https://pypi.org/project/guang)
 [![image](https://img.shields.io/badge/python-3.X-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -22,7 +22,8 @@ librosa==0.6.3
 pyworld
 soundfile
 pypinyin
-hmmlearn
+pomegranate
+python-Levenshtein
 ```
 
 
@@ -33,7 +34,7 @@ hmmlearn
 pip install guang
 ```
 
-​	Install Explorer Edition 
+​	*Nightly* Build
 
 ```python
 pip install git+https://github.com/beidongjiedeguang/guang

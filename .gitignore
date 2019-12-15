@@ -4,6 +4,10 @@ ehthumbs.db
 Desktop.ini
 
 
+#vim
+*.swp
+*.un~
+
 # Python:
 *.py[cod]
 *.so
