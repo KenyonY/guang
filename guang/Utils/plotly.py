@@ -37,8 +37,8 @@ class Multiplots:
         #         self.title = 'title'
         self.title = 'fig.title'
         self.fig = go.Figure()
-        self.x_label = 'fig.x_label'
-        self.y_label = 'fig.y_label'
+        self.xlabel = 'fig.xlabel'
+        self.ylabel = 'fig.ylabel'
         self.count = 0
         self.annotations = []
 
@@ -82,7 +82,7 @@ class Multiplots:
         #
         self.annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.1,  # X axis
                                      xanchor='center', yanchor='top',
-                                     text=self.x_label,
+                                     text=self.xlabel,
                                      font=dict(family='Arial',
                                                size=15,
                                                color='rgb(150,150,150)'),
@@ -93,7 +93,7 @@ class Multiplots:
             overwrite=False,
 
             yaxis=dict(
-                title=self.y_label,
+                title=self.ylabel,
                 showgrid=True,
 
                 zeroline=False,
@@ -101,7 +101,7 @@ class Multiplots:
                 showticklabels=True,),
 
             xaxis=dict(
-                # title=self.x_label,
+                # title=self.xlabel,
                 showline=True,
                 showgrid=True,
                 showticklabels=True,
