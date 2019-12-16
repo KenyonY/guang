@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import seaborn
+import numpy as np
 
 mpl.rcParams['ytick.direction'] = 'in'
 mpl.rc('mathtext',fontset = 'cm',rm = 'serif')
