@@ -12,8 +12,8 @@ def generateREADME(__version__):
 
     with open('README.md', 'w', encoding='UTF-8') as fo:
         fo.write(''.join(new))
-    with open('docs/README.md', 'w', encoding='UTF-8') as fo:
-        fo.write(''.join(new))
+    # with open('docs/README.md', 'w', encoding='UTF-8') as fo:
+    #     fo.write(''.join(new))
 
 if __name__ == "__main__":
     generateREADME('0.0.7.2.5')

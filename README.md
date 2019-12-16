@@ -5,6 +5,9 @@
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
 
+$$
+a^2 + b^2 = c^2
+$$
 
 
 Scientific calculation of universal function library

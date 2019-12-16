@@ -35,7 +35,7 @@ class probar:
                 dT = datetime.timedelta(0, total_time)
                 deadLine = self.cT + dT
 
-                print(f"\r{percent*100:.2f}% \t{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\"\tExpect:\
+                print(f"\r{percent*100:.2f}% \t{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\"\t\tExpect:\
 {deadLine.month}-{deadLine.day} \
 {deadLine.hour}:{deadLine.minute}:{deadLine.second} \t", end='', flush=1)
             yield idx, i
