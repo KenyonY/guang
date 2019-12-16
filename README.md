@@ -21,7 +21,7 @@ PyTorch >= 1.0
 Tensorflow >= 1.12.0
 opencv-python
 pydub
-librosa==0.6.3
+librosa
 pyworld
 soundfile
 pypinyin
