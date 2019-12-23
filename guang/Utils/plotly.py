@@ -72,6 +72,9 @@ class Multiplots:
         self.count += 1
 
     def show(self, *args, **kwargs):
+        Multiplots.show.__doc__ = self.fig.show.__doc__
+
+
         self.annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,  # title
                                      xanchor='left', yanchor='bottom',
                                      text=self.title,
@@ -115,4 +118,16 @@ class Multiplots:
                         ),
             annotations=self.annotations
         )
-        self.fig.show(*args, **kwargs)
+        self.fig.show(*args, 
+                      config={'editable': True,
+                            'scrollZoom': False,
+                             }, 
+                      **kwargs)
+
+    def write_html(self, *args, **kwargs):
+        Multiplots.write_html.__doc__ = self.fig.write_html.__doc__
+        return self.fig.write_html(*args, **kwargs)
+
+    def write_image(self, *args, **kwargs):
+        Multiplots.write_image.__doc__ = self.fig.write_image.__doc__
+        return self.fig.write_image(*args, **kwargs)
