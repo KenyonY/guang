@@ -3,6 +3,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+# data
+data/
 
 #vim
 *.swp

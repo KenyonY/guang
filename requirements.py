@@ -10,6 +10,8 @@ pomegranate
 soundfile
 pypinyin
 python-Levenshtein
+psutil
+# scikit-learn 
 # pyworld
 # jieba 
 # hmmlearn
@@ -29,10 +31,8 @@ python-Levenshtein
 # sympy 
 # h5py 
 # plotly 
-# psutil
 # cmake 
 # requests 
-# scikit-learn 
 # seaborn 
 # wordcloud  
 # tensorflow

@@ -55,3 +55,6 @@ def duration(y=None,
                                 hop_length=hop_length,
                                 center=center,
                                 filename=filename,)
+
+
+from guang.Utils.toolsFunc import probar

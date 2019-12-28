@@ -109,11 +109,13 @@ def dynamic_specified_msg(userName=None):
 
 def download_file(msg, fileType='mp3'):
     '''
-    :param fileType : 'attachment' ,'mp3', 'mp4', 'png'
-    download .png .mp3 .mp4 file
-    and
-    ATTACHMENT,  of which, various file types are included.
-    :returns msg, file_path
+    Param
+    -----
+        fileType : 'attachment' ,'mp3', 'mp4', 'png'
+        and ATTACHMENT,  of which include various file types.
+    Returns
+    -------
+        msg, file_path
     '''
     #     msg = dynamic_specified_msg(username)
     file_name = msg.fileName.split('.')
