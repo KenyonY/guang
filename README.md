@@ -126,29 +126,20 @@ pip install git+https://github.com/beidongjiedeguang/guang
 
 
 
+* Find silence part of a sound file: `find_no_silence`
+
+  ```python
+  from guang.Voice.reduce import find_no_silence
+  start, end, arg_start, arg_end = find_no_silence(filename)
+  ```
+
+  
+
 * Download wechat files.
 
   ```python
-  import argparse
-  from guang.wechat.Utils import *
-  
-  if __name__ == '__main__':
-      parser = argparse.ArgumentParser()
-      parser.add_argument('-n','--name', help='nike name', type=str, default='光')
-      parser.add_argument('-t','--time', help='duration time/s', type=float, default=60)
-      args = parser.parse_args()
-      nickName = args.name
-      duration_time = args.time
-  
-      itchat.auto_login(hotReload=True)
-  
-      while d_time(duration_time):
-          
-          msg = dynamic_specified_msg(get_userName(nickName)[nickName])
-          msg = download_file(msg)
-          
-  >> python xxx.py -n 'guang' -t 100
-  >> ...
+  from guang.wechat.Utils.download import downloads
+  downloads(nickName='caloi', fileType='mp3', d_t=60)
   ```
 
   
