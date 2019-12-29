@@ -1,6 +1,6 @@
 # Guang
 
-[![image](https://img.shields.io/badge/Pypi-0.0.7.6.5-green.svg)](https://pypi.org/project/guang)
+[![image](https://img.shields.io/badge/Pypi-0.0.7.6.7-green.svg)](https://pypi.org/project/guang)
 [![image](https://img.shields.io/badge/python-3.X-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -100,7 +100,7 @@ pip install git+https://github.com/beidongjiedeguang/guang
 
   
 
-* `txt2ph` Convert Chinese characters to phoneme
+* `txt2ph` Convert Chinese characters to phoneme.
 
   ```python
   from guang.Voice.txt2pinyin import txt2ph
@@ -109,7 +109,75 @@ pip install git+https://github.com/beidongjiedeguang/guang
   >> [('n', 'i3'), ('h', 'ao3'), ('sp1',), ('uo3',), ('sh', 'ii4'), ('g', 'uang1')]
   ```
 
+
+
+
+* `reduce_from_duration` Remove files with duration less than `least_time` seconds. 
+  Note that this function does not work in the interactive interpreter because it uses [`multiprocessing.pool.Pool`](https://docs.python.org/zh-cn/3/library/multiprocessing.html#multiprocessing.pool.Pool)
+
+  ```python
+  from guang.Voice.reduce import reduce_from_duration
   
+  reduced_list = reduce_from_duration(path_list, least_time=2)
+  print(len(path_list), len(reduced_list))
+  
+  >> (6889, 6714)
+  ```
+
+
+
+* Download wechat files.
+
+  ```python
+  import argparse
+  from guang.wechat.Utils import *
+  
+  if __name__ == '__main__':
+      parser = argparse.ArgumentParser()
+      parser.add_argument('-n','--name', help='nike name', type=str, default='光')
+      parser.add_argument('-t','--time', help='duration time/s', type=float, default=60)
+      args = parser.parse_args()
+      nickName = args.name
+      duration_time = args.time
+  
+      itchat.auto_login(hotReload=True)
+  
+      while d_time(duration_time):
+          
+          msg = dynamic_specified_msg(get_userName(nickName)[nickName])
+          msg = download_file(msg)
+          
+  >> python xxx.py -n 'guang' -t 100
+  >> ...
+  ```
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

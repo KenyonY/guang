@@ -1,7 +1,8 @@
 from IPython.display import Audio
 import soundfile as sf
 from librosa.display import waveplot, specshow
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 def listen(*voice, dtype='float64', samplerate=None):
     """
