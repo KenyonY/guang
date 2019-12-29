@@ -2,6 +2,9 @@ from multiprocessing import Pool, TimeoutError
 import os
 import librosa
 from glob import glob
+import soundfile as sf
+import numpy as np
+import warnings
 
 def is_lt_duration(file, least_time):
     try:
