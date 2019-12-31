@@ -11,6 +11,11 @@ soundfile
 pypinyin
 python-Levenshtein
 psutil
+shutil
+# treetable
+# ffmpeg-python
+# musdb
+# museval
 # scikit-learn 
 # pyworld
 # jieba 
