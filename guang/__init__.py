@@ -3,7 +3,7 @@ This is a universal function library.
 '''
 
 import guang.get_version as get_version
-
+import pretty_errors
 
 __v = get_version.get_version(update=False)
 
