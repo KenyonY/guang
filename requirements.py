@@ -11,7 +11,6 @@ soundfile
 pypinyin
 python-Levenshtein
 psutil
-shutil
 pretty_errors
 # treetable
 # ffmpeg-python
