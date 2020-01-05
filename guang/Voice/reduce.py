@@ -40,7 +40,7 @@ def find_no_silence(filename):
 #     print(np.argwhere(diff>1e-4))
     argvoice = np.argwhere(np.log(voice, )>-6)
     a= argvoice/sr
-    win = 15
+    win = int(16 * sr/20000)
     for i in range(len(a)):
         if abs(np.mean(a[i:i+win])-a[i]) < 1e-3:
             start = a[i]
