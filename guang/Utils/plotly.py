@@ -131,3 +131,106 @@ class Multiplots:
     def write_image(self, *args, **kwargs):
         Multiplots.write_image.__doc__ = self.fig.write_image.__doc__
         return self.fig.write_image(*args, **kwargs)
+
+
+class Scatter3d():
+    def __init__(self, **kwargs):
+        self.fig = go.Figure()
+
+
+    def scatter3d(self,x, y, z, mode=None, color_line=None,color_marker=None,marker_size=4,line_width=2):
+        """
+        Params:
+            :param mode: 'lines', 'markers', 'lines+markers'(default), 'text'
+            :param marker_size: corresponding of markers mode.
+        """
+        if color_marker is None:
+            color_marker = None#z
+        if color_line is None:
+            color_line = None#'darkblue'
+
+        self.fig.add_trace(go.Scatter3d(x=x,y=y,z=z, 
+                                        mode=mode,
+                                        
+                                        marker=dict(
+                                        size=marker_size,
+                                        color=color_marker,
+                                        colorscale='Viridis',
+                                        ),
+                                        
+                                        line=dict(
+                                            color=color_line,
+                                            width=line_width
+                                                  ),
+                                    ))
+    def show(self,*args, **kwargs):
+        
+        self.fig.update_layout(
+            width=800,
+            height=700,
+            autosize=False,
+            scene=dict(
+                camera=dict(
+                    up=dict(
+                        x=0,
+                        y=0,
+                        z=1
+                    ),
+                    eye=dict(
+                        x=0,
+                        y=1.0707,
+                        z=1,
+                    )
+                ),
+                aspectratio = dict( x=1, y=1, z=0.7 ),
+                aspectmode = 'manual'
+            ),
+        )
+        self.fig.show(*args, 
+                      config={'editable': True,
+                            'scrollZoom': True,
+                             },**kwargs)
+
+    def write_html(self, *args, **kwargs):
+        Multiplots.write_html.__doc__ = self.fig.write_html.__doc__
+        return self.fig.write_html(*args, **kwargs)
+
+    def write_image(self, *args, **kwargs):
+        Multiplots.write_image.__doc__ = self.fig.write_image.__doc__
+        return self.fig.write_image(*args, **kwargs)
+
+class Surface():
+    def __init__(self, **kwargs):
+        self.fig = go.Figure()
+
+
+    def surface(self,**kwargs):
+        """
+        point x= y= z= 
+        or z=
+        x, y, z should be 2D array.
+        """
+
+        self.fig.add_surface(**kwargs)
+        
+    def show(self,*args, **kwargs):
+        
+        self.fig.update_layout(
+            width=800,
+            height=700,
+            autosize=False,
+            margin=dict(l=65, r=50, b=65, t=90), 
+
+        )
+        self.fig.show(*args, 
+                      config={'editable': True,
+                            'scrollZoom': True,
+                             },**kwargs)
+
+    def write_html(self, *args, **kwargs):
+        Multiplots.write_html.__doc__ = self.fig.write_html.__doc__
+        return self.fig.write_html(*args, **kwargs)
+
+    def write_image(self, *args, **kwargs):
+        Multiplots.write_image.__doc__ = self.fig.write_image.__doc__
+        return self.fig.write_image(*args, **kwargs)
