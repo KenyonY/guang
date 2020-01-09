@@ -144,11 +144,25 @@ pip install git+https://github.com/beidongjiedeguang/guang
   downloads(nickName='caloi', fileType='mp3', d_t=60)
   ```
 
-  
 
 
 
+* Plots 3D Scatter:
 
+  ```python
+  from guang.Utils.plotly import Scatter3d
+  from guang.Utils.interesting import Lorenz
+  trace = Lorenz.Trace()
+  fig = Scatter3d()
+  fig.scatter3d(trace[:,0], trace[:,1], trace[:,2], mode="lines+markers", color_line=z,color_marker=None,marker_size=2)
+  fig.show()
+  ```
+
+  <img src="docs/picture/Lorenz.png" style="zoom:75%"/>
+
+
+
+* 
 
 
 
