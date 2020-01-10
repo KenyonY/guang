@@ -9,11 +9,9 @@ def download_data():
     pwd_path = os.path.dirname(__file__)
     data_path = os.path.join(pwd_path, 'date_data')
     if os.path.exists(data_path):
-        print("data path exists")
-        print(data_path)
         pass
     else:
-        print('download data')
+        print('Downloading the required file')
         res = requests.get('https://raw.githubusercontent.com/beidongjiedeguang/guang/master/guang/Utils/date_data')
         with open(data_path, 'wb') as fo:
             fo.write(res.content)
