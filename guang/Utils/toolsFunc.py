@@ -25,17 +25,21 @@ class probar:
         for idx, i in enumerate(self.iterable):
             if idx == 0:
                 print(f'\r{0:.2f}% \t  {0:.1f}|{np.inf:.1f}s \t', end='', flush=1)
+                d_percent = 0.01
             else:
-                cost_time = time.time() - self.t0
                 percent = self.c/self.total_steps
-                cost_minute, cost_second = divmod(cost_time, 60)
+                PERCENT = percent*100
+                
+                if PERCENT >= d_percent:
+                    d_percent += 0.01
+                    cost_time = time.time() - self.t0
+                    cost_minute, cost_second = divmod(cost_time, 60)
 
-                total_time = cost_time/percent
-                t_minute, t_second = divmod(total_time, 60)
-                dT = datetime.timedelta(0, total_time)
-                deadLine = self.cT + dT
-
-                print(f"\r{percent*100:.2f}% \t{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\"\t\tExpect:\
+                    total_time = cost_time/percent
+                    t_minute, t_second = divmod(total_time, 60)
+                    dT = datetime.timedelta(0, total_time)
+                    deadLine = self.cT + dT
+                    print(f"\r{PERCENT:.2f}% \t{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\"\t\tExpect:\
 {deadLine.month}-{deadLine.day} \
 {deadLine.hour}:{deadLine.minute}:{deadLine.second} \t", end='', flush=1)
             yield idx, i
