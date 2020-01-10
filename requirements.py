@@ -12,6 +12,7 @@ pypinyin
 python-Levenshtein
 psutil
 pretty_errors
+ephem
 # treetable
 # ffmpeg-python
 # musdb
