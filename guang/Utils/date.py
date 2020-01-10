@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from itertools import accumulate
 import dill
 
-# The core code come from https://github.com/CutePandaSh/zhdate.git
+# The core code comes from https://github.com/CutePandaSh/zhdate.git
 dill.load_session('date_data')
 class LunarDate():
 
