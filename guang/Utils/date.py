@@ -1,9 +1,27 @@
 from datetime import datetime, timedelta
 from itertools import accumulate
+import requests
 import dill
+import os
 
 # The core code comes from https://github.com/CutePandaSh/zhdate.git
-dill.load_session('date_data')
+def download_data():
+    pwd_path = os.path.dirname(__file__)
+    data_path = os.path.join(pwd_path, 'date_data')
+    if os.path.exists(data_path):
+        print("data path exists")
+        print(data_path)
+        pass
+    else:
+        print('download data')
+        res = requests.get('https://raw.githubusercontent.com/beidongjiedeguang/guang/master/guang/Utils/date_data')
+        with open(data_path, 'wb') as fo:
+            fo.write(res.content)
+    return data_path
+data_path = download_data()
+with open(data_path, 'rb') as fi:
+    [CHINESENEWYEAR,CHINESEYEARCODE] = dill.load(fi)
+
 class LunarDate():
 
     def __init__(self, lunar_year, lunar_month, lunar_day, leap_month=False):
