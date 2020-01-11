@@ -158,7 +158,7 @@ pip install git+https://github.com/beidongjiedeguang/guang
   fig.show()
   ```
 
-  <img src="docs/picture/Lorenz.gif" style="zoom:70%"/>
+  <img src="docs/picture/Lorenz.gif" width = "400" height = "300"/>
 
 
 
