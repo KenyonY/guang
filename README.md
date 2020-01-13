@@ -156,8 +156,9 @@ pip install git+https://github.com/beidongjiedeguang/guang
   x,y,z = trace[:,0], trace[:,1], trace[:,2]
   
   fig = Scatter3d()
-  fig.scatter3d(x,y,z, mode="lines+markers",color_line=z,color_marker=None,marker_size=2)
+  fig.scatter3d(x,y,z,mode="lines+markers",color_line=z,color_marker=None,marker_size=2)
 fig.show()
+  
   ```
   
   <img src="docs/picture/Lorenz.gif" width = "400" height = "300"/>
