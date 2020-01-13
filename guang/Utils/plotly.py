@@ -1,6 +1,34 @@
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
+import plotly.express as px
+
+def imshow(
+        img,
+        zmin=None,
+        zmax=None,
+        origin=None,
+        color_continuous_scale=None,
+        color_continuous_midpoint=None,
+        range_color=None,
+        title=None,
+        template=None,
+        width=None,
+        height=None
+           ):
+    return px.imshow(
+        img,
+        zmin=None,
+        zmax=None,
+        origin=None,
+        color_continuous_scale=None,
+        color_continuous_midpoint=None,
+        range_color=None,
+        title=None,
+        template=None,
+        width=None,
+        height=None)
+imshow.__doc__ = px.imshow.__doc__
 
 
 class Subplots:
@@ -15,16 +43,26 @@ class Subplots:
     def plot(self, x, y, **kwargs):
         '''
         Params:
-            label: look like matplotlib's legend
-            mode: 'lines', 'markers', 'lines+markers', 'text'
+            --label: look like matplotlib's legend
+            --mode: 'lines', 'markers', 'lines+markers', 'text'
+            --marker_color
+            --line_color
+            --marker_size
 
         '''
         label = kwargs.get('label', self.count + 1)
         mode = kwargs.get('mode', 'lines')  #
+        line_color = kwargs.get('line_color', None)
+        marker_color = kwargs.get('marker_color', None)
+        marker_size = kwargs.get('marker_size', None)
         row, col = np.divmod(self.count, self.cols)
         row, col = int(row + 1), int(col + 1)
 
-        self.fig.add_trace(go.Scatter(x=x, y=y, mode=mode, name=label), row=row, col=col)
+        self.fig.add_trace(go.Scatter(x=x, y=y, mode=mode, marker_color=marker_color,
+                                      line_color=line_color,
+                                      marker_size=marker_size,
+                                      name=label),
+                           row=row, col=col)
 
         self.count += 1
 
