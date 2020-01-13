@@ -153,12 +153,43 @@ pip install git+https://github.com/beidongjiedeguang/guang
   from guang.Utils.plotly import Scatter3d
   from guang.Utils.interesting import Lorenz
   trace = Lorenz.Trace()
+  x,y,z = trace[:,0], trace[:,1], trace[:,2]
+  
   fig = Scatter3d()
-  fig.scatter3d(trace[:,0], trace[:,1], trace[:,2], mode="lines+markers", color_line=z,color_marker=None,marker_size=2)
-  fig.show()
+  fig.scatter3d(x,y,z, mode="lines+markers",color_line=z,color_marker=None,marker_size=2)
+fig.show()
+  ```
+  
+  <img src="docs/picture/Lorenz.gif" width = "400" height = "300"/>
+
+
+
+* Data dimension reduction:
+
+  ```bash
+  cd guang/ML/manifold
+  python test_digits.py
   ```
 
-  <img src="docs/picture/Lorenz.gif" width = "400" height = "300"/>
+  <img src="docs/picture/digits_dimension_reduction.PNG" width = "800" height = "400" />
+
+  ```bash
+  python test_s_curve
+  ```
+
+  
+
+  <img src="docs/picture/s_curve.gif" width = "500" height = "500" />
+
+  <img src="docs/picture/s_curve_dimension_reduction.PNG" width = "1000" height = "400"/>
+
+
+
+
+
+
+
+
 
 
 
