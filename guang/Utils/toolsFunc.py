@@ -3,6 +3,8 @@ import os
 import shutil
 import time
 import datetime
+from .time import beijing
+
 
 class probar:
     """
@@ -12,7 +14,8 @@ class probar:
         self.iterable = iterable
         self.t0 = time.time()
         self.c = 0
-        self.cT = datetime.datetime.now()
+        # self.cT = datetime.datetime.now()
+        self.cT = beijing.now
         if hasattr(iterable, '__len__'):
             self.total_steps = len(iterable) -1
         else:
@@ -92,7 +95,6 @@ def dict_dotable(dic):
             dic[i] = dict_dotable(dic[i])
     return dic
 
-
 # define a constant like C language.
 class Cons:
     '''
@@ -107,7 +109,6 @@ class Cons:
             raise ValueError('Constant value can\'t be changed')
         else:
             self.__dict__[name] = value
-
 
 def rm(path):
     '''remove path
