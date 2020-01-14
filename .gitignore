@@ -6,6 +6,9 @@ Desktop.ini
 # data
 data/
 
+# pycharm
+.idea/
+
 #vim
 *.swp
 *.un~
