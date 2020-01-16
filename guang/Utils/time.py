@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, timezone
 
 class beijing:
-    utc_time = datetime.utcnow()
+    # utc_time = datetime.utcnow()
+    utc_time = datetime.now(tz=timezone.utc)
     bj_time = utc_time.astimezone(timezone(timedelta(hours=8)))
     now = bj_time.now()
 

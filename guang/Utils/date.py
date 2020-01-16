@@ -4,7 +4,7 @@ import requests
 import dill
 import os
 
-# The core code comes from https://github.com/CutePandaSh/zhdate.git
+# The class `LunarDate` is modified from https://github.com/CutePandaSh/zhdate.git
 def download_data():
     pwd_path = os.path.dirname(__file__)
     data_path = os.path.join(pwd_path, 'date_data')
@@ -97,7 +97,7 @@ class LunarDate():
             int -- 差值天数
         """
         month_days = LunarDate.decode(self.year_code)
-        month_leap = self.year_code & 0xf  # 当前农历年的闰月，为0表示无润叶
+        month_leap = self.year_code & 0xf  # 当前农历年的闰月，为0表示无闰月
 
         if (month_leap == 0) or (self.lunar_month < month_leap):  # 当年无闰月，或者有闰月但是当前月小于闰月
             days_passed_month = sum(month_days[:self.lunar_month - 1])
@@ -185,9 +185,6 @@ class LunarDate():
         else:
             raise TypeError('减法只支持整数，LunarDate, Datetime类型')
 
-    '''
-    以下为帮助函数
-    '''
 
     @staticmethod
     def __tiandi(anum):
