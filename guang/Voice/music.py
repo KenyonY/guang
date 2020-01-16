@@ -1,4 +1,4 @@
-from IPython.display import Audio
+from IPython.display import Audio, display
 import soundfile as sf
 from librosa.display import waveplot, specshow
 import numpy as np
@@ -18,7 +18,7 @@ def listen(*voice, dtype='float64', samplerate=None):
     else:
         raise ValueError('invalid input, voice can be np.array+fs or file path')
 
-    return Audio(x, rate=fs)
+    return display(Audio(x, rate=fs))
 
 
 def voiceshow(*voice, samplerate=None, dtype='float64', figsize=(10, 4)):
