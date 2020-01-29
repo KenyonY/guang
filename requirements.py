@@ -14,6 +14,7 @@ psutil
 pretty_errors
 ephem
 # treetable
+# plotly
 # ffmpeg-python
 # musdb
 # museval
@@ -25,7 +26,6 @@ ephem
 # tqdm
 # streamlit
 # jupyterlab
-
 # graphviz 
 # mkl
 # mpl_finance
@@ -36,7 +36,6 @@ ephem
 # scipy 
 # sympy 
 # h5py 
-# plotly 
 # cmake 
 # requests 
 # seaborn 
