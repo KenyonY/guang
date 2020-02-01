@@ -4,7 +4,17 @@ import shutil
 import time
 import datetime
 from .time import beijing
+import sys
 
+import sys
+def path(string):
+    platform = sys.platform.lower()
+    if 'linux' in platform:
+        return string.replace('\\','/')
+    elif 'win' in platform:
+        return string.replace('/','\\')
+    else:
+        return string
 
 class probar:
     """
