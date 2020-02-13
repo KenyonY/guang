@@ -31,8 +31,7 @@ class probar:
         if hasattr(iterable, '__len__'):
             self.total_steps = len(iterable) -1
         else:
-            if self.total_steps=None:
-
+            if self.total_steps==None:
                 raise ValueError(f'{iterable} has no __len__ attr, use total_steps param')
             self.total_steps = total_steps 
             if self.total_steps:
