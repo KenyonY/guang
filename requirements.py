@@ -13,6 +13,7 @@ python-Levenshtein
 psutil
 pretty_errors
 ephem
+keyboard
 # treetable
 # plotly
 # ffmpeg-python
