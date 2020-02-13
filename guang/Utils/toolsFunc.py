@@ -6,7 +6,9 @@ import datetime
 from .time import beijing
 import sys
 
-import sys
+
+
+
 def path(string):
     platform = sys.platform.lower()
     if 'linux' in platform:
@@ -29,8 +31,10 @@ class probar:
         if hasattr(iterable, '__len__'):
             self.total_steps = len(iterable) -1
         else:
-            print(f'{iterable} has no __len__ attr, use total_steps param')
-            self.total_steps = total_steps  -1
+            if self.total_steps=None:
+
+                raise ValueError(f'{iterable} has no __len__ attr, use total_steps param')
+            self.total_steps = total_steps 
             if self.total_steps:
                 self.total_steps = self.total_steps
         
@@ -130,3 +134,19 @@ def rm(path):
             shutil.rmtree(path)
         else:
             print(f'{path} is  illegal !')
+
+def index_char(L=1000):
+    '''
+    Get the index of all characters.
+    use chr() 
+    '''
+    index_token = {}
+    token = []
+    for i in range(L):
+        character = chr(i)
+        index_token[i] = character
+        token.append(character)
+
+    token_index=dict(zip(token, range(L))) # token_index[idx] is equal to ord(idx)
+    return index_token
+
