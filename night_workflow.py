@@ -13,3 +13,5 @@ rm('guang.egg-info')
 os.system('python setup.py sdist bdist_wheel')
 upgrade = f'pip uninstall guang -y && pip install dist/guang-0.0.{__version__}-py3-none-any.whl'
 os.system(upgrade)
+rm('guang.egg-info')
+rm('build')
