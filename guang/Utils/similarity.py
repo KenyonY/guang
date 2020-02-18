@@ -1,4 +1,5 @@
 import numpy as np
+import distance as Dist
 
 def is_similarity(vec1, vec2, dist_choise=2, tolerance=0.3):
     '''

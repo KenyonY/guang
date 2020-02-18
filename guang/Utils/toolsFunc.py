@@ -1,13 +1,7 @@
 import numpy as np
 import os
 import shutil
-import time
-import datetime
-from .time import beijing
 import sys
-
-
-
 
 def path(string):
     platform = sys.platform.lower()
@@ -18,48 +12,6 @@ def path(string):
     else:
         return string
 
-class probar:
-    """
-    Simple progress bar display, to instead of tqdm.
-    """
-    def __init__(self, iterable, total_steps=None):
-        self.iterable = iterable
-        self.t0 = time.time()
-        self.c = 0
-        # self.cT = datetime.datetime.now()
-        self.cT = beijing.now
-        if hasattr(iterable, '__len__'):
-            self.total_steps = len(iterable) -1
-        else:
-            if self.total_steps==None:
-                raise ValueError(f'{iterable} has no __len__ attr, use total_steps param')
-            self.total_steps = total_steps 
-            if self.total_steps:
-                self.total_steps = self.total_steps
-        
-    def __iter__(self):
-        for idx, i in enumerate(self.iterable):
-            if idx == 0:
-                print(f'\r{0:.2f}% \t  {0:.1f}|{np.inf:.1f}s \t', end='', flush=1)
-                d_percent = 0.01
-            else:
-                percent = self.c/self.total_steps
-                PERCENT = percent*100
-                
-                if PERCENT >= d_percent:
-                    d_percent += 0.01
-                    cost_time = time.time() - self.t0
-                    cost_minute, cost_second = divmod(cost_time, 60)
-
-                    total_time = cost_time/percent
-                    t_minute, t_second = divmod(total_time, 60)
-                    dT = datetime.timedelta(0, total_time)
-                    deadLine = self.cT + dT
-                    print(f"\r{PERCENT:.2f}% \t{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\"\t\tExpect:\
-{deadLine.month}-{deadLine.day} \
-{deadLine.hour}:{deadLine.minute}:{deadLine.second} \t", end='', flush=1)
-            yield idx, i
-            self.c += 1
 
 def broadcast(func):
     '''
@@ -145,7 +97,6 @@ def index_char(L=1000):
         character = chr(i)
         index_token[i] = character
         token.append(character)
-
     token_index=dict(zip(token, range(L))) # token_index[idx] is equal to ord(idx)
-    return index_token
+    return index_token, token_index
 

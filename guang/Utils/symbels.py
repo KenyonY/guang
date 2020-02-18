@@ -1,7 +1,7 @@
 import string
 import re 
 
-useless = string.printable+"，。；’：‘’“”！？《》￥…（）—·【】、"
+useless = string.printable + "，。；’：‘’“”！？《》￥…（）—·【】、"
 
 
 def has_chinese(str0):
@@ -15,7 +15,7 @@ def has_chinese(str0):
 #     else:
 #         return False
 def has_english(str0):
-    return bool(re.search('[a-z]', str0)) or bool(re.search('[A-Z]', str0))
+    return bool(re.search('[a-z]', str0.lower()))
 
 def has_number(str0):
     return bool(re.search('[0-9]', str0))
@@ -28,3 +28,6 @@ def replace_bracket(a):
 
 def sub2empty(useless, str0):
     return re.sub(f"[{useless}]+", "", str0)
+
+if __name__ == "__main__":
+    print(useless)
