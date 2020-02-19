@@ -74,11 +74,18 @@ pip install git+https://github.com/beidongjiedeguang/guang
 * Use `probar` to display current progress
 
   ```python
-  from guang.Utils.toolsFunc import probar
+  from guang.Utils.bar import bar, probar
   for idx, x in probar(range(10)):
       time.sleep(0.8)
   
-  >> 100.00%         0'7.3"|0'7.3"     Expect: 12-2 23:59:8
+  >> 100.00% |█████████████████████████████| 0'7.2"|0'7.2" ETC: 12-2 23:59:8
+  
+  N = 1024
+  a = np.linspace(2, 5, N)
+  for idx, i in enumerate(a):
+      time.sleep(0.01)
+      bar(idx, N)
+  100.00%  |█████████████████████████████| 0:00:00|0:00:10  ETC: 02-19 20:33:34 
   ```
 
   

@@ -80,12 +80,12 @@ def get_color(N_color, update=True, COLOR=[0]):
         return COLOR[0]
 
 
-def bar(current_size, total_size, color='constant_random', first_time=[time.time()], flag_list=[1000], COLOR=[0]):
+def bar(index, total_size, color='constant_random', first_time=[time.time()], flag_list=[1000], COLOR=[0]):
     """
     :arg color: options  'constant_random', 'update_random', 'reset'
     """
     # init(autoreset=True)
-    percent = current_size/total_size
+    percent = (index+1)/total_size # index+1 for index start from 0
     cost_time = time.time() - first_time[0]
     total_time = cost_time/percent
     remain_time = int(total_time - cost_time)
