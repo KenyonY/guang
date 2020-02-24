@@ -14,6 +14,7 @@ psutil
 pretty_errors
 ephem
 keyboard
+colorama
 # treetable
 # plotly
 # ffmpeg-python

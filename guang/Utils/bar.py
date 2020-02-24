@@ -6,11 +6,6 @@ import numpy as np
 from .time import beijing
 from colorama import init, Fore, Back, Style
 
-# class beijing:
-#     # utc_time = datetime.utcnow()
-#     utc_time = datetime.datetime.now(tz=timezone.utc)
-#     bj_time = utc_time.astimezone(timezone(timedelta(hours=8)))
-#     now = bj_time.now()
 
 class Fc(IntEnum):
     """Foreground color"""
@@ -48,7 +43,6 @@ def cprint(string, fc=Fc.cyan, bg=False, bc=Bc.black, coverage='\r'):
     else:
         print(f'{coverage}\033[{Disp.highlight};{fc}m{string}\033[0m', end='', flush=True)
 
-
 def get_bar(percent):
     unit_percent = 0.034
     total_space = 30
@@ -60,14 +54,12 @@ def get_bar(percent):
     SIGN = '|' + sign1 + sign0 + (total_space- N1 - N0-1) * ' ' + '|'
     return SIGN, N1
 
-
 def get_color(N_color, update=True, COLOR=[0]):
     if update == True or COLOR[0] == 0:
         color_list = ['CYAN', 'GREEN', 'RED', 'YELLOW', 'RESET', \
                       'LIGHTGREEN_EX',  'LIGHTRED_EX', \
                       'LIGHTYELLOW_EX',  'LIGHTBLACK_EX', 'LIGHTBLUE_EX', 'LIGHTCYAN_EX']
         # 'LIGHTMAGENTA_EX', 'MAGENTA', 'BLUE',
-
 
         color = [Fore.LIGHTCYAN_EX]  # Manually specify the first color
         for i in range(N_color - 2):
@@ -79,13 +71,13 @@ def get_color(N_color, update=True, COLOR=[0]):
     else:
         return COLOR[0]
 
-
 def bar(index, total_size, color='constant_random', first_time=[time.time()], flag_list=[1000], COLOR=[0]):
     """
     :arg color: options  'constant_random', 'update_random', 'reset'
     """
     # init(autoreset=True)
-    percent = (index+1)/total_size # index+1 for index start from 0
+    _index = index + 1
+    percent = (_index)/total_size # index+1 for index start from 0
     cost_time = time.time() - first_time[0]
     total_time = cost_time/percent
     remain_time = int(total_time - cost_time)
@@ -108,10 +100,17 @@ def bar(index, total_size, color='constant_random', first_time=[time.time()], fl
               flush=True)
     elif color == 'constant_random':
         [color1, color2, color3, color4] = get_color(N_color=4, update=False)
-        print(color1 + f"\r{percent * 100: >6.2f}% ", color2 + SIGN, color3 + f"{ETC_1}", color4 + f"{ETC_2}", Fore.RESET, end='',
+        print(f"\r{color1}{percent * 100: >6.2f}% "+ color2 + SIGN + color3 + f"{ETC_1}"+ color4 + f"{ETC_2}"+ Fore.RESET, end='',
               flush=True)
     elif color == 'reset':
-        print(f"\r{percent * 100: >6.2f}% ", SIGN, f"ETC {ETC}", end='', flush=True)
+
+        print(f"\r{percent * 100: >6.2f}% "+ SIGN + f"{ETC_1} {ETC_2}", end='', flush=True)
+    else:
+        raise ValueError("Invalid input!")
+
+    if _index == total_size:
+        print('\n')
+
 
 
 class probar:
@@ -122,11 +121,9 @@ class probar:
     def __init__(self, iterable, total_steps=None):
         self.iterable = iterable
         self.t0 = time.time()
-        self.c = 0
-        # self.cT = datetime.datetime.now()
-        self.cT = beijing.now
+
         if hasattr(iterable, '__len__'):
-            self.total_steps = len(iterable) - 1
+            self.total_steps = len(iterable)
         else:
             self.total_steps = total_steps
             if self.total_steps == None:
@@ -134,50 +131,51 @@ class probar:
 
     def __iter__(self):
         for idx, i in enumerate(self.iterable):
+            c = idx + 1
+
             if idx == 0:
-                # cprint(f'{0:.2f}% \t  {0:.1f}|{np.inf:.1f}s ')
                 print(f"\r{0:.2f}% \t  {0:.1f}|{np.inf:.1f}s ", end='', flush=True)
                 d_percent = 0.01
             else:
-                percent = self.c / self.total_steps
+                # percent = self.c / self.total_steps
+                percent = c / self.total_steps
                 PERCENT = percent * 100
 
                 if PERCENT >= d_percent:
                     d_percent += 0.01
                     cost_time = time.time() - self.t0
-                    cost_minute, cost_second = divmod(cost_time, 60)
-
                     total_time = cost_time / percent
-                    t_minute, t_second = divmod(total_time, 60)
-                    dT = datetime.timedelta(0, total_time)
-                    deadLine = self.cT + dT
+
+                    remain_time = int(total_time - cost_time)
+                    remain_time = datetime.timedelta(seconds=remain_time)
+                    total_time = timedelta(seconds=int(total_time))
+                    cost_time = datetime.timedelta(seconds=int(cost_time))
+
                     _PERCENT=f"{PERCENT: >6.2f}%"
                     SIGN, N1 = get_bar(percent)
+                    _COST = f"{cost_time}|{total_time} "
+                    _ETC = f"  ETC: {(datetime.datetime.now() + remain_time).strftime('%m-%d %H:%M:%S')}"
 
-                    _COST = f"""{cost_minute:.0f}'{cost_second:.1f}\"|{t_minute:.0f}'{t_second:.1f}\""""
-                    # _ETC = f"ETC: {deadLine.month}-{deadLine.day} {deadLine.hour}:{deadLine.minute}:{deadLine.second}"
-                    _ETC = f"ETC: {deadLine.strftime('%m-%d %H:%M:%S')}"
-
-
-                    print(Fore.CYAN +f"\r{_PERCENT}",Fore.LIGHTBLACK_EX+SIGN,  Fore.LIGHTGREEN_EX +_COST, Fore.LIGHTBLUE_EX +_ETC, Fore.RESET, end='', flush=True)
+                    print('\r'+ Fore.CYAN +f"{_PERCENT}"+Fore.LIGHTBLACK_EX+SIGN+  \
+                          Fore.LIGHTGREEN_EX +_COST+ Fore.LIGHTBLUE_EX +_ETC+ Fore.RESET, end='', flush=True)
                     # cprint(_PERCENT, fc=Fc.cyan)
                     # cprint(_COST, fc=Fc.green, coverage='')
                     # cprint(_ETC, fc=Fc.yellow, coverage='')
+            if c == self.total_steps:
+                print('\n')
 
             yield idx, i
-            self.c += 1
-
 
 
 
 if __name__=="__main__":
-    def _test1():
-        for i in range(1, 10):
+    def test_bar():
+        for i in range(10):
             time.sleep(1)
-            bar(i, 9)
+            bar(i, 10)
 
-    def _test2():
+    def test_probar():
         for idx, i in probar(range(15)):
             time.sleep(1)
-    # _test1()
-    _test2()
+
+    test_bar()

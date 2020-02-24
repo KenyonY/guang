@@ -1,5 +1,6 @@
 from IPython.core.interactiveshell import InteractiveShell
-import imp
+# import imp
+import importlib
 
 def output(flag='all'):
     """
@@ -8,5 +9,6 @@ def output(flag='all'):
     InteractiveShell.ast_node_interactivity = flag
 
 def reload(module):
-    imp.reload(module)
+    # imp.reload(module)
+    importlib.reload(module)
 

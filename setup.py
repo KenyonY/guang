@@ -41,6 +41,6 @@ setup(
           'Machine Learning',
           'Neural Networks',
           'Natural Language Processing',
-          'Computer Version'
+          'Computer Vision'
       ]
 )

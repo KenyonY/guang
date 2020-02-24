@@ -85,7 +85,7 @@ pip install git+https://github.com/beidongjiedeguang/guang
   for idx, i in enumerate(a):
       time.sleep(0.01)
       bar(idx, N)
-  100.00%  |█████████████████████████████| 0:00:00|0:00:10  ETC: 02-19 20:33:34 
+  >> 100.00% |█████████████████████████████| 0:00:00|0:00:10  ETC: 02-19 20:33:34 
   ```
 
   
