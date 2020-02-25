@@ -4,7 +4,8 @@ from itchat.content import *
 import time
 from glob import glob
 import os
-
+from guang.Utils.toolsFunc import path
+from datetime import datetime
 
 def get_all_info():
     """get all my friends' information """
@@ -12,13 +13,15 @@ def get_all_info():
 
     for friend in itchat.get_friends():
         nickNames.append(friend.NickName)
-        pass
+        # print(nickNames)
+    return nickNames
 
 
 def get_userName(*name_list):
     UserNames = {}
     for name in name_list:
         friends = itchat.search_friends(name=name)
+
         if len(friends) == 1:
             UserNames[name] = friends[0].UserName
         else:
@@ -107,6 +110,28 @@ def dynamic_specified_msg(userName=None):
             return msg
 
 
+flag_get_txt = True
+MY_USER_NAME = None
+def get_txt(msg):
+    global flag_get_txt, MY_USER_NAME
+    if flag_get_txt:
+        MY_USER_NAME = get_userName("被冻结的光")["被冻结的光"]
+        # print(MY_USER_NAME)
+        flag_get_txt = False
+    tpath = os.path.join('wechat_download', msg.User.NickName, 'text')
+    if not os.path.exists(tpath):
+        os.makedirs(tpath)
+    nowTime = datetime.now()
+    nowTime = nowTime.strftime("%Y-%m-%d %H:%M:%S")
+    if msg['FromUserName'] != MY_USER_NAME:
+        text = f"{msg.User.NickName: <10}:{msg.text: <100} {nowTime: >10} \n"
+    else:
+        text = f"{'被冻结的光': <10}:{msg.text: <100} {nowTime: >10}\n"
+    with open(path(tpath + '/dialogue.txt'), 'a+', encoding='utf-8') as fw:
+        fw.write(text)
+    return msg
+
+
 def download_file(msg, fileType='mp3'):
     '''
     Param
@@ -122,22 +147,22 @@ def download_file(msg, fileType='mp3'):
     sufname = file_name[-1]
     prename = '.'.join(file_name[:-1])
 
-    if fileType == 'attachment':#'attachment':
+    if fileType == 'attachment':  # 'attachment':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'attachment')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
         msg.download(os.path.join(tpath, msg.fileName))
-    elif sufname == 'png' and fileType== 'png':
+    elif sufname == 'png' and fileType == 'png':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'picture')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
         msg.download(os.path.join(tpath, msg.fileName))
-    elif sufname=='mp3'and fileType=='mp3':
+    elif sufname == 'mp3' and fileType == 'mp3':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'voice')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
         msg.download(os.path.join(tpath, msg.fileName))
-    elif sufname == 'mp4' and fileType=='mp4':
+    elif sufname == 'mp4' and fileType == 'mp4':
         tpath = os.path.join('wechat_download', msg.User.NickName, 'video')
         if not os.path.exists(tpath):
             os.makedirs(tpath)
@@ -145,7 +170,6 @@ def download_file(msg, fileType='mp3'):
 
     #     os.remove(msg.fileName) # remove 当前文件夹下的下载文件
     return msg, tpath
-
 
 
 def d_time(d_t, t0=[]):

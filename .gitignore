@@ -3,6 +3,12 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+workflow.py
+night_workflow.py
+generateREADME.py
+test.*
+test/
+
 # data
 data/
 
