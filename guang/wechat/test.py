@@ -4,7 +4,7 @@ import argparse
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n','--name', help='nike name', type=str, default='caloi')
+    parser.add_argument('-n','--name', help='nike name', type=str, default='桂花香')
     args = parser.parse_args()
     nickName = args.name
 

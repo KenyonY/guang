@@ -112,7 +112,7 @@ def dynamic_specified_msg(userName=None):
 
 flag_get_txt = True
 MY_USER_NAME = None
-def get_txt(msg):
+def write_txt(msg):
     global flag_get_txt, MY_USER_NAME
     if flag_get_txt:
         MY_USER_NAME = get_userName("被冻结的光")["被冻结的光"]
