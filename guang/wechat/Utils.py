@@ -6,6 +6,11 @@ from glob import glob
 import os
 from guang.Utils.toolsFunc import path
 from datetime import datetime
+from multiprocessing import Process
+from multiprocessing import Pool
+import threading
+from concurrent.futures import ThreadPoolExecutor
+from guang.Utils.symbols import fstring
 
 def get_all_info():
     """get all my friends' information """
@@ -112,10 +117,10 @@ def dynamic_specified_msg(userName=None):
 
 flag_get_txt = True
 MY_USER_NAME = None
-def write_txt(msg):
+def _txt(msg, MyName="被冻结的光"):
     global flag_get_txt, MY_USER_NAME
     if flag_get_txt:
-        MY_USER_NAME = get_userName("被冻结的光")["被冻结的光"]
+        MY_USER_NAME = get_userName(MyName)[MyName]
         # print(MY_USER_NAME)
         flag_get_txt = False
     tpath = os.path.join('wechat_download', msg.User.NickName, 'text')
@@ -123,14 +128,44 @@ def write_txt(msg):
         os.makedirs(tpath)
     nowTime = datetime.now()
     nowTime = nowTime.strftime("%Y-%m-%d %H:%M:%S")
+    out_text = fstring(msg.text, 100, '<')
     if msg['FromUserName'] != MY_USER_NAME:
-        text = f"{msg.User.NickName: <10}:{msg.text: <100} {nowTime: >10} \n"
+        out_name = fstring(msg.User.NickName, 10, '<')
     else:
-        text = f"{'被冻结的光': <10}:{msg.text: <100} {nowTime: >10}\n"
+        out_name = fstring(MyName, 10, '<')
+    text = f"{out_name}:{out_text}{nowTime: >10}\n"
     with open(path(tpath + '/dialogue.txt'), 'a+', encoding='utf-8') as fw:
         fw.write(text)
     return msg
 
+def write_txt(name_list, MyName="被冻结的光"):
+    """name_list such as ['filehelper', 'caloi']"""
+
+    lock = threading.Lock()
+    def run(nickName):
+        print(nickName, ":start")
+        @itchat.msg_register([TEXT])
+        def write2file(msg):
+            userName = get_userName(nickName)[nickName]
+            if msg.user.userName == userName:
+                _txt(msg,MyName)
+        lock.acquire()
+        itchat.auto_login(hotReload=True, enableCmdQR=2)
+        itchat.run()
+        lock.release()
+    try:
+        #     t = [threading.Thread(target=run, args=(name,)) for name in name_list]
+        #     [i.start() for i in t]
+        #     [i.join() for i in t]
+
+        # Thread pools without locks can result in multiple writes
+        with ThreadPoolExecutor(max_workers=len(name_list)) as executor:
+            res = [executor.submit(run, name) for name in name_list]
+
+        # with Pool(len(name_list)) as pool: # process pool
+        #     pool.map(run, name_list)
+    except:
+        print("try is not successful !")
 
 def download_file(msg, fileType='mp3'):
     '''

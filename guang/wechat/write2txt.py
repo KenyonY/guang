@@ -1,6 +1,6 @@
 import itchat
 from itchat.content import TEXT
-from guang.wechat.Utils import get_userName, get_txt
+from .Utils import get_userName, _txt
 from multiprocessing import Process
 from multiprocessing import Pool
 import threading
@@ -21,7 +21,7 @@ def write(name_list):
         def write2file(msg):
             userName = get_userName(nickName)[nickName]
             if msg.user.userName == userName:
-                get_txt(msg)
+                _txt(msg)
 
         lock.acquire()
         itchat.auto_login(hotReload=True, enableCmdQR=2)
