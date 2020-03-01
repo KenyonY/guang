@@ -15,6 +15,7 @@ pretty_errors
 ephem
 keyboard
 colorama
+mdmail
 # treetable
 # plotly
 # ffmpeg-python

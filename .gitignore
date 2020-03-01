@@ -6,6 +6,10 @@ Desktop.ini
 workflow.py
 night_workflow.py
 generateREADME.py
+genTOC.sh
+_config.yml
+TEST.ipynb
+
 test.*
 test/
 
