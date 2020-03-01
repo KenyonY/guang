@@ -7,13 +7,12 @@ def downloads(nickName='caloi', fileType='mp3', d_t=60):
     Args:
         d_t: Program run duration. unit: s
     """
-    itchat.auto_login(hotReload=True, enableCmdQR=2)
+    itchat.auto_login(hotReload=True)
 
     while d_time(d_t):
         
         msg = dynamic_specified_msg(get_userName(nickName)[nickName])
-        msg, tpath = download_file(msg, fileType=fileType)
-        print(tpath)
+        msg = download_file(msg, fileType=fileType)
         
 if __name__=="__main__":
     downloads()

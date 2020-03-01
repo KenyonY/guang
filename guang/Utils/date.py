@@ -4,7 +4,6 @@ import requests
 import dill
 import os
 
-# The class `LunarDate` is modified from https://github.com/CutePandaSh/zhdate.git
 def download_data():
     pwd_path = os.path.dirname(__file__)
     data_path = os.path.join(pwd_path, 'date_data')
@@ -19,7 +18,7 @@ def download_data():
 data_path = download_data()
 with open(data_path, 'rb') as fi:
     [CHINESENEWYEAR,CHINESEYEARCODE] = dill.load(fi)
-
+# The class `LunarDate` is modified from https://github.com/CutePandaSh/zhdate.git
 class LunarDate():
 
     def __init__(self, lunar_year, lunar_month, lunar_day, leap_month=False):

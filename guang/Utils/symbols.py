@@ -27,9 +27,9 @@ def fstring(string, N=20, align='>', symbol=None, flag='en'):
     """Chinese and English mixed string alignment
      chr(12288): Chinese space"""
     if flag == 'zh':
-        space = chr(12288)
+        space = chr(12288) # chinese space
     elif flag == 'en':
-        space = ' '
+        space = chr(32) # english space
     def lenStr(string, space): # if space is chr(12288)
         if space == chr(12288):
             zh, en = 1, 0.6

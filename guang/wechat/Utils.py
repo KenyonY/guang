@@ -11,6 +11,8 @@ from multiprocessing import Pool
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from guang.Utils.symbols import fstring
+from guang.Utils.toolsFunc import rm
+import mdmail
 
 def get_all_info():
     """get all my friends' information """
@@ -37,7 +39,7 @@ def get_userName(*name_list):
 
 def save_userName():
     name_list = ['爸爸', '妈妈',
-                 '被冻结的光', '光']
+                 '被冻结的光', 'caloi']
     userNames = get_userName(*name_list)
     with open('userNames.pkl', 'wb') as fo:
         pickle.dump(userNames, fo)
@@ -61,8 +63,6 @@ def get_list(lis=[''], count=[0]):
 
 
 count_n = 0
-
-
 def get_content(l, count):
     global count_n
     if count == count_n:
@@ -128,21 +128,54 @@ def _txt(msg, MyName="被冻结的光"):
         os.makedirs(tpath)
     nowTime = datetime.now()
     nowTime = nowTime.strftime("%Y-%m-%d %H:%M:%S")
-    out_text = fstring(msg.text, 100, '<')
+    out_text = fstring(msg.text, 100, '<', flag='en')
     if msg['FromUserName'] != MY_USER_NAME:
         out_name = fstring(msg.User.NickName, 10, '<')
     else:
         out_name = fstring(MyName, 10, '<')
-    text = f"{out_name}:{out_text}{nowTime: >10}\n"
+    text = f"{out_name}   :{out_text}{nowTime: >10}\n"
     with open(path(tpath + '/dialogue.txt'), 'a+', encoding='utf-8') as fw:
         fw.write(text)
     return msg
 
-def write_txt(name_list, MyName="被冻结的光"):
+def write_txt(name_list, MyName="被冻结的光", fileDir="itchat.pkl", cmdQR=False):
     """name_list such as ['filehelper', 'caloi']"""
-
     lock = threading.Lock()
+    def relogin(fileDir):
+        # global lock
+        c = 0
+        sleepTime = 1200
+        while (True):
+            if c == 0 :
+                lock.acquire()
+                print("lock acquire")
+                if os.path.exists(fileDir):
+                    atime = os.path.getatime(fileDir)
+                    if (time.time() - atime) > (2*sleepTime):
+                        rm(fileDir)
+
+            print("................loading....................")
+            if itchat.load_login_status(fileDir):
+                pass
+            else:
+                if cmdQR:
+                    itchat.login(enableCmdQR=2)
+                else:
+                    picDir = 'QR.png'
+                    itchat.login(picDir=picDir)
+                    # to modified: miniconda3/lib/python3.7/site-packages/itchat/utils.py
+
+            itchat.dump_login_status(fileDir=fileDir)
+            
+            print("................load success ................")
+            if c == 0:
+                print("lock release")
+                lock.release()
+                c = 1
+            time.sleep(sleepTime)
+
     def run(nickName):
+        # global lock
         print(nickName, ":start")
         @itchat.msg_register([TEXT])
         def write2file(msg):
@@ -150,20 +183,26 @@ def write_txt(name_list, MyName="被冻结的光"):
             if msg.user.userName == userName:
                 _txt(msg,MyName)
         lock.acquire()
-        itchat.auto_login(hotReload=True, enableCmdQR=2)
-        itchat.run()
-        lock.release()
-    try:
-        #     t = [threading.Thread(target=run, args=(name,)) for name in name_list]
-        #     [i.start() for i in t]
-        #     [i.join() for i in t]
+        # itchat.auto_login(hotReload=True, statusStorageDir=fileDir, enableCmdQR=2)
+        itchat.run(debug=True)
 
+    try:
+        #  ----------------------------------------------------------------------
+        # t0 = threading.Thread(target=relogin, args=(fileDir))
+        # t = [threading.Thread(target=run, args=(name,)) for name in name_list]
+        # t0.start()
+        # [i.start() for i in t]
+
+        # ----------------------------------------------------------------------
+        # with Pool(len(name_list)) as pool:  # process pool
+        #     pool.map(run, name_list)
+        # ----------------------------------------------------------------------
+        # ----------------------------------------------------------------------
         # Thread pools without locks can result in multiple writes
-        with ThreadPoolExecutor(max_workers=len(name_list)) as executor:
+        with ThreadPoolExecutor(max_workers=len(name_list) + 5) as executor:
+            res0 = executor.submit(relogin, fileDir)
             res = [executor.submit(run, name) for name in name_list]
 
-        # with Pool(len(name_list)) as pool: # process pool
-        #     pool.map(run, name_list)
     except:
         print("try is not successful !")
 
@@ -222,10 +261,15 @@ def d_time(d_t, t0=[]):
         return False
 
 
-if __name__ == '__main__':
-    itchat.auto_login(hotReload=True)
 
-    while d_time(60):
-        msg = dynamic_specified_msg(get_userName('光')['光'])
-        msg = download_file(msg, fileType='mp3')
+if __name__ == '__main__':
+    statusDir = "itchat.pkl"
+    write_txt(name_list=["妈妈", "caloi"], fileDir=statusDir, cmdQR=False)
+
+
+    # itchat.auto_login(hotReload=True)
+    # while d_time(60):
+    #     msg = dynamic_specified_msg(get_userName('光')['光'])
+    #     msg = download_file(msg, fileType='mp3')
+
 
