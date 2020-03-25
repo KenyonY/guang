@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 from guang.Utils.symbols import fstring
 from guang.Utils.toolsFunc import rm
 import mdmail
+import psutil
 
 def get_all_info():
     """get all my friends' information """
@@ -143,17 +144,12 @@ def write_txt(name_list, MyName="被冻结的光", fileDir="itchat.pkl", cmdQR=F
     lock = threading.Lock()
     def relogin(fileDir):
         # global lock
-        c = 0
         sleepTime = 1200
         while (True):
-            if c == 0 :
-                lock.acquire()
-                print("lock acquire")
-                if os.path.exists(fileDir):
-                    atime = os.path.getatime(fileDir)
-                    if (time.time() - atime) > (2*sleepTime):
-                        rm(fileDir)
-
+            lock.acquire()
+            print("lock acquire")
+            if os.path.exists(fileDir) and time.time() - os.path.getatime(fileDir) > 2*sleepTime:
+                rm(fileDir)
             print("................loading....................")
             if itchat.load_login_status(fileDir):
                 pass
@@ -164,15 +160,16 @@ def write_txt(name_list, MyName="被冻结的光", fileDir="itchat.pkl", cmdQR=F
                     picDir = 'QR.png'
                     itchat.login(picDir=picDir)
                     # to modified: miniconda3/lib/python3.7/site-packages/itchat/utils.py
-
             itchat.dump_login_status(fileDir=fileDir)
-            
             print("................load success ................")
-            if c == 0:
-                print("lock release")
-                lock.release()
-                c = 1
+            print("lock release")
+            lock.release()
             time.sleep(sleepTime)
+
+            pid = os.getpid()
+            p = psutil.Process(pid)
+            p.kill()
+
 
     def run(nickName):
         # global lock
@@ -264,7 +261,12 @@ def d_time(d_t, t0=[]):
 
 if __name__ == '__main__':
     statusDir = "itchat.pkl"
-    write_txt(name_list=["妈妈", "caloi"], fileDir=statusDir, cmdQR=False)
+    name_list = ['妈妈','caloi']
+    while True:
+        t_i = Process(target=write_txt, args=(name_list, "被冻结的光", statusDir, False) )
+        t_i.start()
+        t_i.join()
+
 
 
     # itchat.auto_login(hotReload=True)
