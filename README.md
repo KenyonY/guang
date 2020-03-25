@@ -151,8 +151,15 @@ pip install git+https://github.com/beidongjiedeguang/guang
   downloads(nickName='caloi', fileType='mp3', d_t=60)
   ```
 
+* .yaml file load and dump:
 
+  ```bash
+  guang.Utils.toolsFunc import yaml_dump, yaml_load
+  yaml_dump(filepath, data)
+  yaml_load(filepath)
+  ```
 
+  
 
 * Plots 3D Scatter:
 
@@ -166,7 +173,7 @@ pip install git+https://github.com/beidongjiedeguang/guang
   fig.scatter3d(x,y,z,mode="lines+markers",color_line=z,color_marker=None,marker_size=2)
   fig.show()
   ```
-  
+
   <img src="docs/picture/Lorenz.gif" width = "400" height = "300"/>
 
 

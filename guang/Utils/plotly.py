@@ -237,7 +237,7 @@ class Scatter3d():
         Multiplots.write_image.__doc__ = self.fig.write_image.__doc__
         return self.fig.write_image(*args, **kwargs)
 
-class Surface():
+class Surface:
     def __init__(self, **kwargs):
         self.fig = go.Figure()
 

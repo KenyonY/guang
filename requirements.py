@@ -16,6 +16,7 @@ ephem
 keyboard
 colorama
 mdmail
+coverage
 # treetable
 # plotly
 # ffmpeg-python

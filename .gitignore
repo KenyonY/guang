@@ -10,6 +10,8 @@ genTOC.sh
 _config.yml
 TEST.ipynb
 
+.coverage
+
 test.*
 test/
 
