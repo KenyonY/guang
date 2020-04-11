@@ -3,20 +3,21 @@
 numpy
 pandas
 matplotlib
-opencv-python
-pydub
-librosa # 0.6.3
-pomegranate
-soundfile
-pypinyin
-python-Levenshtein
+gdown
+# opencv-python
+# pydub
+# librosa # 0.6.3
+# pomegranate
+# soundfile
+# pypinyin
+# python-Levenshtein
 psutil
 pretty_errors
-ephem
-keyboard
+# ephem
+# keyboard
 colorama
-mdmail
-coverage
+# mdmail
+# coverage
 # treetable
 # plotly
 # ffmpeg-python
