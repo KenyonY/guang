@@ -16,10 +16,10 @@ def cvt2wav(orig_path, new_path, sr=16000):
 #     with Pool(processes=n_cpu) as pool:
 #         for i,j in zip(PATH_orig, PATH_new):
 #             pool.apply_async(cvt2wav, (i, j, sr))
-#         pool.join()
+
 
     
-def multi_cvt2wav(PATH_orig, PATH_new, sr=16000, n_cpu=16):
+def multi_cvt2wav(PATH_orig, PATH_new, sr=16000, n_cpu=None):
     pool =Pool(processes=n_cpu)
     for i,j in zip(PATH_orig, PATH_new):
         pool.apply_async(cvt2wav, (i, j, sr))

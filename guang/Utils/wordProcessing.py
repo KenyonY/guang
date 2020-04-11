@@ -27,3 +27,4 @@ def replace(string, beRepl, repl, count=1):
     if count=0, relplace all."""
     pattern = re.compile(beRepl)
     return pattern.sub(repl, string, count)
+
