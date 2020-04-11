@@ -1,9 +1,10 @@
-# -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
-# --default-timeout=1000 
+# -i https://mirrors.aliyun.com/pypi/simple/ --default-timeout=1000 
+
 numpy
 pandas
 matplotlib
 gdown
+fire
 # opencv-python
 # pydub
 # librosa # 0.6.3

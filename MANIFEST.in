@@ -1,3 +1,0 @@
-include MANIFEST.in 
-include guang/version_config.yaml
-include guang/Utils/date_data

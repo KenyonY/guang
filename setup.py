@@ -15,8 +15,12 @@ with open("README.md", "r", encoding='utf-8') as fr:
 setup(
        name = guang.__name__ ,
        version=guang.__version__,
-       packages = find_packages(),
-       include_package_data = True,
+       package_data={
+           'guang':[
+               'version_config.yaml',
+               'Utils/date_data',
+           ],
+       },
        description = " ML/DL tools function library" ,
 
        long_description=long_description,
@@ -42,5 +46,6 @@ setup(
           'Neural Networks',
           'Natural Language Processing',
           'Computer Vision'
-      ]
+      ], 
+      packages = find_packages()
 )

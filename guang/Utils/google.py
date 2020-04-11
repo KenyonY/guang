@@ -14,7 +14,6 @@ def rand_str(length=7):
     return out
 
 def download(url, output=None, quiet=False, proxy=None, speed=None):
-
     if "https://drive.google.com/" in url:
         url_prefix = 'https://drive.google.com/uc?id='
         url_id = url[url.find('id=') + 3:]

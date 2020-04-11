@@ -2,7 +2,7 @@ import os
 import pickle
 
 def version_config(update=False):
-    filename = "guang/version_config.yaml"
+    filename = os.path.join(os.path.dirname(__file__), 'version_config.yaml')
     config = yaml_load(filename)
     # config = load(filename)
     if update:

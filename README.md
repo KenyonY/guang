@@ -1,6 +1,6 @@
 # Guang
 
-[![image](https://img.shields.io/badge/Pypi-0.0.8.0.3-green.svg)](https://pypi.org/project/guang)
+[![image](https://img.shields.io/badge/Pypi-0.0.8.0.5-green.svg)](https://pypi.org/project/guang)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -105,6 +105,17 @@ pip install git+https://github.com/beidongjiedeguang/guang
   
   >> f([2,4,10])
   >> array([1, 3, 832040], dtype=object)
+  ```
+
+  
+
+* `download` download files from google drive.
+
+  ```python
+  from guang.Utils.google import download
+  url = "https://drive.google.com/open?id=1eU57Fkv1DBEOqi-iOs1AebD02FqVDY23"
+  outname = "filename.zip"
+  download(url, outname)
   ```
 
   
