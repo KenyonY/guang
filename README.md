@@ -47,9 +47,17 @@ pip install git+https://github.com/beidongjiedeguang/guang
 
 - Convert audio in .mp3/ .wav format to (sample rate=16k, single channel) .wav format
 
+  **Use on bash**
+
+  ```bash
+  guang cvt2wav INPUT OUTPUT
+  ```
+
+  **Use as function**
+
   ```python
   from guang.Voice.convert import cvt2wav
-  cvt2wav(orig_path, target_path, sr=16000)
+  cvt2wav(input_name, output_name, sr=16000)
   
   # Multi-process
   from guang.Voice.convert import multi_cvt2wav 

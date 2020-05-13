@@ -1,6 +1,7 @@
 import os
 from pydub import AudioSegment
 from multiprocessing import Pool
+from glob import glob
 
 def cvt2wav(orig_path, new_path, sr=16000):
     basename = os.path.basename(orig_path)
@@ -18,8 +19,11 @@ def cvt2wav(orig_path, new_path, sr=16000):
 #             pool.apply_async(cvt2wav, (i, j, sr))
 
 
-    
-def multi_cvt2wav(PATH_orig, PATH_new, sr=16000, n_cpu=None):
+def multi_cvt2wav(PATH1, PATH2, FORMAT='*', sr=16000, n_cpu=None):
+    PATH_orig = glob(f"{PATH1}/*.{FORMAT}")
+    if not os.path.exists(PATH2): os.makedirs(PATH2)
+    PATH_new = [os.path.join(PATH2, os.path.basename(i)) for i in PATH_orig]
+
     pool =Pool(processes=n_cpu)
     for i,j in zip(PATH_orig, PATH_new):
         pool.apply_async(cvt2wav, (i, j, sr))
@@ -27,4 +31,7 @@ def multi_cvt2wav(PATH_orig, PATH_new, sr=16000, n_cpu=None):
     pool.join()
 
 if __name__ == "__main__":
-    pass
+    multi_cvt2wav('data', "new_data")
+
+    
+
