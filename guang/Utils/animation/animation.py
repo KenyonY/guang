@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import numpy as np
 from guang.interesting import Lorenz
 from guang.Utils.plotly import Scatter3d
-from guang.Utils.toolsFunc import ExtremeValue
+from guang.Utils.animation.utils import ExtremeValue
 
 
 def getRange(x, dx=0.02):
