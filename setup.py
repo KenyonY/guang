@@ -19,6 +19,7 @@ setup(
            'guang':[
                'version_config.yaml',
                'Utils/date_data',
+               'Voice/pinyin_to_phone.txt'
            ],
        },
        description = " ML/DL tools function library" ,
@@ -46,6 +47,11 @@ setup(
           'Neural Networks',
           'Natural Language Processing',
           'Computer Vision'
-      ], 
+      ],
+    entry_points={
+        'console_scripts': [
+            'guang = guang.guang:main'
+        ]
+    },
       packages = find_packages()
 )
