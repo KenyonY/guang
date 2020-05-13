@@ -3,7 +3,7 @@
 numpy
 pandas
 matplotlib
-gdown
+gdown>=3.11
 fire
 # opencv-python
 # pydub
@@ -14,13 +14,14 @@ fire
 # python-Levenshtein
 psutil
 pretty_errors
+streamlit
+plotly
 # ephem
 # keyboard
-colorama
+# colorama
 # mdmail
 # coverage
 # treetable
-# plotly
 # ffmpeg-python
 # musdb
 # museval

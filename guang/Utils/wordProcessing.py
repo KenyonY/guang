@@ -28,3 +28,6 @@ def replace(string, beRepl, repl, count=1):
     pattern = re.compile(beRepl)
     return pattern.sub(repl, string, count)
 
+def find_all_index(pattern, string, flags=0):
+    """find all matched index of string"""
+    return [i.span() for i in re.finditer(pattern, string, flags=flags)]

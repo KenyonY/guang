@@ -18,7 +18,7 @@ def download(url, output=None, quiet=False, proxy=None, speed=None):
         url_prefix = 'https://drive.google.com/uc?id='
         url_id = url[url.find('id=') + 3:]
         url = url_prefix + url_id
-    gdown.download(url, output, quiet, proxy, speed)
+    gdown.download(url=url, output=output, quiet=quiet, proxy=proxy, speed=speed)
 
 download.__doc__ = gdown.download.__doc__
 
