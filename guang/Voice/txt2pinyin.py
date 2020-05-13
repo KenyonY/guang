@@ -36,8 +36,6 @@ def _pre_pinyin_setting():
 _pre_pinyin_setting()
 
 
-
-
 def _pinyinformat(syllable):
     '''format pinyin to mtts's format''' 
     if not syllable[-1].isdigit():
