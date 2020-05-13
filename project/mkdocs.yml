@@ -1,0 +1,42 @@
+site_name: guang
+site_author: 'k.y'
+
+site_url: https://github.com/beidongjiedeguang/guang
+repo_url: https://github.com/beidongjiedeguang/guang
+
+repo_name: GUANG
+
+nav:
+    - Home: index.md
+    - Guide: 
+      - getting-started: 'guide/getting-started.md'
+      - getting-style: 'guide/getting-started.md'
+    - About: LICENSE.md
+
+plugins:
+    - search
+    - markdownextradata: {} # https://github.com/rosscdh/mkdocs-markdownextradata-plugin
+
+extra:
+  customer:                 # https://github.com/rosscdh/mkdocs-markdownextradata-plugin
+    name: Your name here
+    web: www.example.com
+    salt: salt.example.com
+ 
+markdown_extensions:
+    - extra
+    - mdx_math 
+    - tables
+    - fenced_code
+
+extra_javascript: 
+    - mathjaxhelper.js
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML
+
+theme: 
+    name: readthedocs # mkdocs
+    nav_style: dark
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - python
