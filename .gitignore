@@ -4,7 +4,7 @@ ehthumbs.db
 Desktop.ini
 
 workflow.py
-night_workflow.py
+# night_workflow.py
 generateREADME.py
 genTOC.sh
 _config.yml

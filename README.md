@@ -1,6 +1,6 @@
 # Guang
 
-[![image](https://img.shields.io/badge/Pypi-0.0.8.0.6-green.svg)](https://pypi.org/project/guang)
+[![image](https://img.shields.io/badge/Pypi-0.0.8.0.7-green.svg)](https://pypi.org/project/guang)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-GNU_GPL--v3-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-K.y-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -66,6 +66,17 @@ pip install git+https://github.com/beidongjiedeguang/guang
 
 
 
+* **FFT  convolution**
+
+  ```python
+  from guang.sci import fft
+  A = np.random.rand(100, 100)
+  B = np.random.rand(100, 100)
+  fft.fft_conv2d(A, B)
+  ```
+
+  
+
 * Use `dict_dotable` to convert a dictionary to dot-able dictionary:
 
   ```python
@@ -79,7 +90,7 @@ pip install git+https://github.com/beidongjiedeguang/guang
 
   
 
-* Use `probar` to display current progress
+* ~~Use `probar` to display current progress~~   has separated to  [pyprobar](https://github.com/beidongjiedeguang/python-progress-bar)
 
   ```python
   from guang.Utils.bar import bar, probar

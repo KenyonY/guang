@@ -1,8 +1,8 @@
 # -i https://mirrors.aliyun.com/pypi/simple/ --default-timeout=1000 
 
-numpy
-pandas
-matplotlib
+# numpy
+# pandas
+# matplotlib
 gdown>=3.11
 fire
 # opencv-python
@@ -14,8 +14,9 @@ fire
 # python-Levenshtein
 psutil
 pretty_errors
-streamlit
-plotly
+# streamlit
+# plotly
+# syncnote
 # ephem
 # keyboard
 # colorama
@@ -30,8 +31,6 @@ plotly
 # jieba 
 # hmmlearn
 # itchat
-# tqdm
-# streamlit
 # jupyterlab
 # graphviz 
 # mkl

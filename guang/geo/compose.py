@@ -121,6 +121,7 @@ def special_(N=180, theta=3):
     plt.axis("equal")
     plt.show()
 
+
 if __name__ == "__main__":
     drawCircles()
     special_(N=2000, theta=1)
