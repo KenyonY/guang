@@ -18,7 +18,7 @@ def is_similarity(vec1, vec2, dist_choise=2, tolerance=0.3):
     elif dist_choise == 3:
         distance = Dist.chebyshev_dist
     else:
-        raise 'dist_choise is a bad number'
+        raise ValueError('dist_choise is a bad number')
         
     # 判断相似度:
     if distance(vec1, vec2) < tolerance:
@@ -94,3 +94,21 @@ def is_Centers_same(V1,w1,V2,w2,yourScore = 0.75, dist_choise=2,lamb = 5,sigma=1
         return True
     else:
         return False
+
+def find_centers_simil_idx(Centers1,Centers2,yourScore = 0.75, dist_choise=2,lamb = 5,sigma=1, **dic):
+    '''
+    Centers1将与每一个Centers2向量比较, 最后返回所有与Centers2相似向量下标列表
+    '''
+    # default Para
+    printScore = 0
+
+    if 'printScore' in dic:
+        printScore = dic['printScore']
+
+    V1,w1 = Centers1[0], Centers1[1]
+    IDX=[]
+    for idx,centers in enumerate(Centers2):
+        V2,w2 = centers[0],centers[1]
+        if is_Centers_same(V1, w1, V2, w2, yourScore=yourScore, dist_choise=dist_choise, lamb=lamb, sigma=sigma,printScore=printScore):
+            IDX.append(idx)
+    return IDX

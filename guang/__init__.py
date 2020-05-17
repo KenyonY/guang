@@ -10,5 +10,5 @@ __author__ = 'K.y <beidongjiedeguang@gmail.com>'
 __license__ = 'GPL-v3'
 __copyright = 'Copyright 2020 K.y'
 
-__all__ = ["ML","Utils","DL", "Voice", "wechat", "ML", "interesting", "app"]
+__all__ = ["ML","Utils","DL", "Voice", "wechat", "ML", "interesting", "app", "cv"]
 

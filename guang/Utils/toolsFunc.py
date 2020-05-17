@@ -2,7 +2,7 @@ import numpy as np
 import os
 import shutil
 import sys
-
+from collections import Counter
 
 
 def path(string):
@@ -124,6 +124,18 @@ def yaml_load(filepath):
         content = load(stream, Loader=Loader)
     return content
 
+def sort_count(lis):
+    '''
+    返回lis的由大到小排序好的元素列表
+    Example:
+    l = np.array([2,2,2,2,5,5,3,9,9])
+    sort_count(l) : [(2, 4), (5, 2), (9, 2), (3, 1)]
+    # return [2, 5, 9,3], [4, 2, 2, 1]
+    '''
+    a = Counter(lis)
+    b = sorted(a.items(),key=lambda item:item[1],reverse=True)
+    # idx, counts = [b[i][0] for i in range(len(b))], [b[i][1] for i in range(len(b))]
+    return b
 
 
 
