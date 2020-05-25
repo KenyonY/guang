@@ -25,6 +25,8 @@ soundfile
 pypinyin
 pomegranate
 python-Levenshtein
+streamlit
+pyprobar
 ```
 
 
@@ -37,8 +39,10 @@ pip install guang
 
 ​	*Nightly* Build
 
-```python
-pip install git+https://github.com/beidongjiedeguang/guang
+```bash
+git clone https://github.com/beidongjiedeguang/guang.git
+cd guang
+python ./night_workflow.py
 ```
 
 

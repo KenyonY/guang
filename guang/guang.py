@@ -21,6 +21,10 @@ def geo():
     file_path = path(os.path.join(os.path.dirname(__file__), "geo/compose.py"))
     os.system(f"python {file_path}")
 
+def fourier():
+    app_path = os.path.join(os.path.dirname(__file__), "sci/fourier_app.py")
+    os.system(f"streamlit run {app_path}")
+
 def multi_cvt2wav(PATH1, PATH2, FORMAT='*',sr=16000, n_cpu=None):
     """
     :arg PATH1: Input folder path
@@ -49,6 +53,12 @@ def upload(PAHT1="upload/", PATH2="/var/www/html/"):
         cloud.upload()
     upload(PAHT1, PATH2)
 
+def embedFrameInfo(InputPath, OutputPath):
+    """嵌入视频当前帧数"""
+    from guang.cv.video import embedFrameInfo
+    embedFrameInfo(InputPath, OutputPath)
+
+
 
 def main():
     fire.Fire({
@@ -57,6 +67,8 @@ def main():
         "geo":geo,
         'sawtooth':sawtooth,
         'cvt2wav':multi_cvt2wav,
+        'fourier':fourier,
+        'embedFrameInfo':embedFrameInfo,
 
     })
 

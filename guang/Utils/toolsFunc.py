@@ -3,6 +3,7 @@ import os
 import shutil
 import sys
 from collections import Counter
+from functools import wraps
 
 
 def path(string):
@@ -29,6 +30,7 @@ def broadcast(func):
         >> f([2,4,10])
         >> array([1, 3, 832040], dtype=object)
     '''
+    @wraps(func)
     def wrap(*args, **kwargs):
         '''
         Takes an arbitrary Python function and returns a NumPy ufunc
