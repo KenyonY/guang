@@ -33,7 +33,7 @@ def myplot(img,channel='bgr'):
     plt.show()
 
 if __name__ == "__main__":
-    l = np.array([2,2,2,2,5,5,3,9,9])
-    print(sort_count(l))
+    pass
+
 
 
