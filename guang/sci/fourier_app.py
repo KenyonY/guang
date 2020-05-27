@@ -1,4 +1,4 @@
-from fourier import space2fre
+from guang.sci.fft import space2fre
 import numpy as np
 from numpy import pi,sin,cos,linspace
 import plotly.express as px
