@@ -1,6 +1,8 @@
 import fire
 import os
 from guang.Utils.toolsFunc import path
+from guang.cv.video import resample, embedFrameInfo
+
 
 
 def mie():
@@ -53,10 +55,11 @@ def upload(PAHT1="upload/", PATH2="/var/www/html/"):
         cloud.upload()
     upload(PAHT1, PATH2)
 
-def embedFrameInfo(InputPath, OutputPath):
-    """嵌入视频当前帧数"""
-    from guang.cv.video import embedFrameInfo
-    embedFrameInfo(InputPath, OutputPath)
+# def embedFrameInfo(InputPath, OutputPath):
+#     """嵌入视频当前帧数"""
+#
+#     embedFrameInfo(InputPath, OutputPath)
+
 
 
 
@@ -69,6 +72,7 @@ def main():
         'cvt2wav':multi_cvt2wav,
         'fourier':fourier,
         'embedFrameInfo':embedFrameInfo,
+        'resample':resample,
 
     })
 

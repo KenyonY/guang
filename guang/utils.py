@@ -13,14 +13,14 @@ def version_config(update=False):
     __name__ = config["name"]
     return __version__, __name__
 
-def save(filename, file):
+def save(filename, data):
     with open(filename, 'wb') as fw:
-        pickle.dump(file, fw)
+        pickle.dump(data, fw)
 
 def load(filename):
     with open(filename, 'rb') as fi:
-        file = pickle.load(fi)
-    return file
+        data = pickle.load(fi)
+    return data
 
 def yaml_dump(filepath, data):
     from yaml import dump
