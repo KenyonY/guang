@@ -1,6 +1,7 @@
 import numpy as np
 import cupy as cp
 from numpy.fft import fft,fft2, fftshift
+# from guang.sci.utils import culc_frequency
 
 def fft_conv1d(a,b):
     n = len(a)+len(b)-1
@@ -83,3 +84,4 @@ def space2fre_2d(mat, dh=1, dw=1):
     magnitude_energy = np.abs(F) / ((Nh - 1) * (Nw - 1))
     amplitude = magnitude_energy * 2
     return x, y, amplitude[idx_h][:, -1, :][:, idx_w][:, :, -1]
+
