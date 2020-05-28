@@ -67,8 +67,16 @@ python ./night_workflow.py
   from guang.Voice.convert import multi_cvt2wav 
   multi_cvt2wav(PATH1, PATH2,sr=16000, n_cpu=None)
   ```
+  
+  
 
+* **Fourier visualization** 
 
+  ```bash
+  guang fourier
+  ```
+
+  
 
 * **FFT  convolution**
 
@@ -183,14 +191,6 @@ python ./night_workflow.py
   ```python
   from guang.wechat.Utils.download import downloads
   downloads(nickName='caloi', fileType='mp3', d_t=60)
-  ```
-
-* .yaml file load and dump:
-
-  ```bash
-  guang.Utils.toolsFunc import yaml_dump, yaml_load
-  yaml_dump(filepath, data)
-  yaml_load(filepath)
   ```
 
   
