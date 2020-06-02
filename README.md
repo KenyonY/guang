@@ -177,7 +177,7 @@ python ./night_workflow.py
 
 
 
-* Find silence part of a sound file: `find_no_silence`
+* Find NOT silence part of a sound file: `find_no_silence`
 
   ```python
   from guang.Voice.reduce import find_no_silence
