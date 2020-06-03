@@ -3,8 +3,8 @@
 # numpy
 # pandas
 # matplotlib
-gdown>=3.11
-fire
+# gdown>=3.11
+# fire
 # opencv-python
 # pydub
 # librosa # 0.6.3
@@ -12,8 +12,8 @@ fire
 # soundfile
 # pypinyin
 # python-Levenshtein
-psutil
-pretty_errors
+# psutil
+# pretty_errors
 # streamlit
 # plotly
 # syncnote
