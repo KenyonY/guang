@@ -4,13 +4,15 @@
 # pandas
 # matplotlib
 # gdown>=3.11
-# fire
+fire
 # opencv-python
 # pydub
 # librosa # 0.6.3
 # pomegranate
 # soundfile
 # pypinyin
+# # kenlm
+# # pycorrector
 # python-Levenshtein
 # psutil
 # pretty_errors
