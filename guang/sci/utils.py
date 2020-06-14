@@ -1,6 +1,7 @@
 import numpy as np
-import scipy.signal as signal
+from scipy import signal
 from guang.sci.fft import space2fre_2d
+from .signal import butter_lowpass
 
 
 def culc_frequency(x, y):
@@ -47,13 +48,12 @@ def culc_fig_fre(mat, method, dw=1,  dh=1, fre_min=1., FRE_MAX=15, neighb=2):
         return x, Fu
 
     if method == "1d":
-        x, Fu = get_fft_1d()
-        res = np.real(np.fft.ifft(Fu))
-        # x = np.linspace(0, dw*Nw, Nw)
-        # fig = plt.figure()
-        # plt.plot(x, res)
-        # plt.show()
-        frequncy = culc_frequency(x, res)[0]
+        Nh, Nw = mat.shape
+        x = np.arange(0, dw * Nw, dw)
+        y = mat[Nh//2, :]
+        y_rebuild = butter_lowpass(x, y, cutfre=FRE_MAX, orders=8)
+
+        frequncy = culc_frequency(x[30:-30], y_rebuild[30:-30])[0]
 
     elif method == "w_1d":
         _, Fu = get_fft_1d()
