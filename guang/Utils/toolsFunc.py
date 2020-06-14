@@ -4,6 +4,7 @@ import shutil
 import sys
 from collections import Counter
 from functools import wraps
+import time
 
 
 def path(string):
@@ -139,5 +140,17 @@ def sort_count(lis):
     # idx, counts = [b[i][0] for i in range(len(b))], [b[i][1] for i in range(len(b))]
     return b
 
-
+def d_time(d_t, t0=[]):
+    """
+    The unit of dt is seconds.
+    Returns 1 when current time in `d_t` duration
+    Returns 0 when current time out duration
+    """
+    if not t0:
+        t0.append(time.time())
+    t1 = time.time()
+    if t1 - t0[0] < d_t:
+        return True
+    else:
+        return False
 
