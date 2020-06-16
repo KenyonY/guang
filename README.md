@@ -35,6 +35,7 @@ fire
 ## Installation
 
 ```python
+# Before install `guang`, you should have installed all the requirements.
 pip install guang
 ```
 
