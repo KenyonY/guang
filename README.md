@@ -70,6 +70,15 @@ python ./night_workflow.py
   multi_cvt2wav(PATH1, PATH2,sr=16000, n_cpu=None)
   ```
   
+
+
+
+* **Let the video play at N times speed** (install ffmpeg first)
+
+  ```bash
+  guang av_speed inputname outputname N --cut_frame=False
+  ```
+
   
 
 * **Fourier visualization** 
