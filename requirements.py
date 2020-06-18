@@ -5,6 +5,8 @@
 # matplotlib
 # gdown>=3.11
 fire
+pyyaml
+yapf
 # opencv-python
 # pydub
 # librosa # 0.6.3
