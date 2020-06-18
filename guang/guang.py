@@ -2,7 +2,7 @@ import fire
 import os
 from guang.Utils.toolsFunc import path
 from guang.cv.video import resample, embedFrameInfo
-
+from guang.media.ffmpeg import *
 
 
 def mie():
@@ -11,23 +11,30 @@ def mie():
     os.system("streamlit run app.py")
     os.chdir(origin_wd)
 
+
 def lorenz():
-    app_path = path(os.path.join(os.path.dirname(__file__), "app/compose/anim_demo.py"))
+    app_path = path(
+        os.path.join(os.path.dirname(__file__), "app/compose/anim_demo.py"))
     os.system(f"streamlit run {app_path}")
 
+
 def sawtooth():
-    file_path = path(os.path.join(os.path.dirname(__file__), "app/compose/slider.py"))
+    file_path = path(
+        os.path.join(os.path.dirname(__file__), "app/compose/slider.py"))
     os.system(f"python {file_path}")
+
 
 def geo():
     file_path = path(os.path.join(os.path.dirname(__file__), "geo/compose.py"))
     os.system(f"python {file_path}")
 
+
 def fourier():
     app_path = os.path.join(os.path.dirname(__file__), "sci/fourier_app.py")
     os.system(f"streamlit run {app_path}")
 
-def multi_cvt2wav(PATH1, PATH2, FORMAT='*',sr=16000, n_cpu=None):
+
+def multi_cvt2wav(PATH1, PATH2, FORMAT='*', sr=16000, n_cpu=None):
     """
     :arg PATH1: Input folder path
     :arg PATH2: Output folder path
@@ -38,46 +45,46 @@ def multi_cvt2wav(PATH1, PATH2, FORMAT='*',sr=16000, n_cpu=None):
     from guang.Voice.convert import multi_cvt2wav as cvt
     cvt(PATH1, PATH2, FORMAT, sr, n_cpu)
 
+
 def upload(PAHT1="upload/", PATH2="/var/www/html/"):
     from syncnote import Cloud
 
-    def download(remote_path: str, local_path: str,
-                 config_path: str = r"C:\Users\beidongjiedeguang\OneDrive\a_github\myWebsite\config.yaml"):
+    def download(
+        remote_path: str,
+        local_path: str,
+        config_path = r"C:\Users\beidongjiedeguang\OneDrive\a_github\myWebsite\config.yaml"
+    ):
         cloud = Cloud(config_path)
         cloud.remote_walk(remote_path)
         cloud.local_walk(local_path)
         cloud.download()
-    def upload(local_path: str, remote_path: str,
-               config_path: str = r"C:\Users\beidongjiedeguang\OneDrive\a_github\myWebsite\config.yaml"):
+
+    def upload(
+        local_path: str,
+        remote_path: str,
+        config_path = r"C:\Users\beidongjiedeguang\OneDrive\a_github\myWebsite\config.yaml"
+    ):
         cloud = Cloud(config_path)
         cloud.remote_walk(remote_path)
         cloud.local_walk(local_path)
         cloud.upload()
+
     upload(PAHT1, PATH2)
 
-# def embedFrameInfo(InputPath, OutputPath):
-#     """嵌入视频当前帧数"""
-#
-#     embedFrameInfo(InputPath, OutputPath)
 
+func_list = [
+    mie, lorenz, geo, sawtooth, multi_cvt2wav, fourier, embedFrameInfo,
+    resample, resample_fps, av_speed, video_speed, audio_speed
+]
 
+func_dict = {}
+for func in func_list:
+    func_dict[func.__name__] = func
 
 
 def main():
-    fire.Fire({
-        'mie':mie,
-        'lorenz':lorenz,
-        "geo":geo,
-        'sawtooth':sawtooth,
-        'cvt2wav':multi_cvt2wav,
-        'fourier':fourier,
-        'embedFrameInfo':embedFrameInfo,
-        'resample':resample,
-
-    })
+    fire.Fire(func_dict)
 
 
 if __name__ == "__main__":
     main()
-
-
