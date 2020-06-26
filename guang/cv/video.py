@@ -2,7 +2,8 @@ import cv2
 from pyprobar import bar
 import matplotlib.pyplot as plt
 
-def getFrame(filename, frameNum=10,  W=(0, -1), H=(0, -1), gray=False):
+
+def getFrame(filename, frameNum=10, W=(0, -1), H=(0, -1), gray=False):
     """ Get a specific frame in the video
     :param W: ROI W range
     :param H: ROI H range
@@ -24,7 +25,14 @@ def getFrame(filename, frameNum=10,  W=(0, -1), H=(0, -1), gray=False):
     cap.release()
     return (TotolFrameNum, fps, size), ROI
 
-def resample(inputvideo, outputvideo, W=(0,-1), H=(0,-1), Time=None, samplerate=1, fps=None):
+
+def resample(inputvideo,
+             outputvideo,
+             W=(0, -1),
+             H=(0, -1),
+             Time=None,
+             samplerate=1,
+             fps=None):
     """重采样，可指定视频对应采样率或fps、ROI(采样区域)、采样时长
     :param W: (宽度开始位置，宽度结束位置)
     :param H: (高度开始位置，高度结束位置)
@@ -35,8 +43,10 @@ def resample(inputvideo, outputvideo, W=(0,-1), H=(0,-1), Time=None, samplerate=
     cap = cv2.VideoCapture(inputvideo)
     FPS = cap.get(cv2.CAP_PROP_FPS)
 
-    SIZE = [int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
-            int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))]  # 获取视频尺寸
+    SIZE = [
+        int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
+        int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    ]  # 获取视频尺寸
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')  # 编码格式
 
@@ -59,13 +69,13 @@ def resample(inputvideo, outputvideo, W=(0,-1), H=(0,-1), Time=None, samplerate=
     if fps is None:
         fps = round(FPS * samplerate)
     else:
-        step = round(FPS/fps)
+        step = round(FPS / fps)
     video = cv2.VideoWriter(outputvideo, fourcc, fps, tuple(SIZE))
     count = 0
     for idx in range(FrameNum):
         bar(idx, FrameNum)
         if idx % step != 0: continue
-        cap.set(cv2.CAP_PROP_POS_FRAMES, idx) # 为了均匀采样
+        cap.set(cv2.CAP_PROP_POS_FRAMES, idx)  # 为了均匀采样
         ret, frame = cap.read()
         ROI = frame[H[0]:H[1], W[0]:W[1], :]
         if not ret:
@@ -74,6 +84,7 @@ def resample(inputvideo, outputvideo, W=(0,-1), H=(0,-1), Time=None, samplerate=
         count += 1
     cap.release()
     print(f"总帧数：{count}")
+
 
 def embedFrameInfo(inputvideo, outputvideo, fps=None):
     cap = cv2.VideoCapture(inputvideo)
@@ -87,13 +98,15 @@ def embedFrameInfo(inputvideo, outputvideo, fps=None):
 
     video = cv2.VideoWriter(outputvideo, fourcc, fps, size)
 
-    TotolFrameNum = int(cap.get(7)) # == cv2.CV_CAP_PROP_FRAME_COUNT
+    TotolFrameNum = int(cap.get(7))  # == cv2.CV_CAP_PROP_FRAME_COUNT
     for idx in range(TotolFrameNum):
         ret, frame = cap.read()
         if not ret:
             break
-        cv2.putText(frame, f'current frame: {idx}', (50, 60), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 255, 0), 2, 1)
-        cv2.putText(frame, f'time: {idx/ fps:.2f} S', (50, 100), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 255, 0), 2, 1)
+        cv2.putText(frame, f'current frame: {idx}', (50, 60),
+                    cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 255, 0), 2, 1)
+        cv2.putText(frame, f'time: {idx/ fps:.2f} S', (50, 100),
+                    cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 255, 0), 2, 1)
         video.write(frame)
         bar(idx, TotolFrameNum)
         # cv2.imshow("zd1", frame)
