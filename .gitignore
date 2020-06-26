@@ -3,6 +3,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+*.ipynb
+
 workflow.py
 # night_workflow.py
 generateREADME.py
