@@ -7,7 +7,7 @@ from guang.media.ffmpeg import *
 
 def mie():
     origin_wd = os.getcwd()
-    os.chdir(r"C:\Users\beidongjiedeguang\OneDrive\a_github\ScatteringLight")
+    os.chdir(r"C:\CODE\a_github\ScatteringLight")
     os.system("streamlit run app.py")
     os.chdir(origin_wd)
 
@@ -52,7 +52,7 @@ def upload(PAHT1="upload/", PATH2="/var/www/html/"):
     def download(
         remote_path: str,
         local_path: str,
-        config_path = r"C:\Users\beidongjiedeguang\OneDrive\a_github\myWebsite\config.yaml"
+        config_path = r"C:\CODE\a_github\myWebsite\config.yaml"
     ):
         cloud = Cloud(config_path)
         cloud.remote_walk(remote_path)
@@ -62,7 +62,7 @@ def upload(PAHT1="upload/", PATH2="/var/www/html/"):
     def upload(
         local_path: str,
         remote_path: str,
-        config_path = r"C:\Users\beidongjiedeguang\OneDrive\a_github\myWebsite\config.yaml"
+        config_path = r"C:\CODE\a_github\myWebsite\config.yaml"
     ):
         cloud = Cloud(config_path)
         cloud.remote_walk(remote_path)
