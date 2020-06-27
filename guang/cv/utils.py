@@ -3,8 +3,6 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-
-
 def rotate(image, angle, center=None, scale=1.0):
     """Rotate the image angle degrees.
     if the center is None, initialize it as the center of
@@ -59,26 +57,41 @@ def cvtBlackWhite(fileName):
 
 def cvt2rgb(img, channel='bgr'):
     '''it can convert image channel BGR,BGRA,HLS,HSV to RGB'''
-    if channel == 'bgr' or channel == 'BGR' or channel == 'BGRA':
+    channel = channel.lower()
+    if channel == 'bgr' or channel=='bgra':
         print('bgr', img.shape)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    elif channel == 'HLS' or channel == 'hls':
+    elif channel == 'hls':
         img = cv2.cvtColor(img, cv2.COLOR_HLS2RGB)
-    elif channel == 'HSV' or channel == 'hsv':
+    elif channel == 'hsv':
         img = cv2.cvtColor(img, cv2.COLOR_HSV2RGB)
+    elif channel == 'gray':
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     else:
-        return 'bad channel'
+        pass
     return img
 
+def imgplot(image, channel:str ='rgb', title="", figsize=(7, 7)):
+    '''This can display BGR,BGRA,HLS,HSV channels image in RGB colors (OR GRAY)
+    :param image: RGB/BRG/BGRA/HLS/HSV channels array.
+    :param channel: image original channel
+    '''
+    plt.figure(figsize=figsize)
+    if np.ndim(image) == 2:
+        cmap = "gray" if channel == 'gray' else None
+        plt.imshow(image, cmap=cmap)
+        plt.title(title)
+        plt.show()
+    else:
+        img = image.copy()
+        if img.dtype != np.uint8:
+            img = img * 255
+            img = img.astype(np.uint8)
 
-def myplot(img, channel='bgr'):
-    ''' can show image channel BGR,BGRA,HLS,HSV.
-    if RGB, set channel = 0'''
-    if channel:
         img = cvt2rgb(img, channel)
-    plt.figure(figsize=(7, 7))
-    plt.imshow(img)
-    plt.show()
+        plt.imshow(img)
+        plt.title(title)
+        plt.show()
 
 
 if __name__ == "__main__":
