@@ -9,6 +9,7 @@ rm('build')
 rm('dist')
 rm('guang.egg-info')
 
+# os.system("yapf -i -r ./guang")
 os.system('pip uninstall guang -y && python setup.py install')
 
 rm('build')

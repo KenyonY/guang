@@ -1,12 +1,12 @@
 # -i https://mirrors.aliyun.com/pypi/simple/ --default-timeout=1000 
-
-# numpy
-# pandas
-# matplotlib
-# gdown>=3.11
+gdown>=3.11
 fire
 pyyaml
 yapf
+elasticdeform
+# numpy
+# pandas
+# matplotlib
 # opencv-python
 # pydub
 # librosa # 0.6.3

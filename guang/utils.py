@@ -1,6 +1,7 @@
 import os
 import pickle
 
+
 def version_config(update=False):
     filename = os.path.join(os.path.dirname(__file__), 'version_config.yaml')
     config = yaml_load(filename)
@@ -13,14 +14,17 @@ def version_config(update=False):
     __name__ = config["name"]
     return __version__, __name__
 
+
 def save(filename, data):
     with open(filename, 'wb') as fw:
         pickle.dump(data, fw)
+
 
 def load(filename):
     with open(filename, 'rb') as fi:
         data = pickle.load(fi)
     return data
+
 
 def yaml_dump(filepath, data):
     from yaml import dump
@@ -30,7 +34,8 @@ def yaml_dump(filepath, data):
         from yaml import Dumper
     with open(filepath, "w", encoding='utf-8') as fw:
         fw.write(dump(data, Dumper=Dumper))
-        
+
+
 def yaml_load(filepath):
     from yaml import load
     try:
@@ -38,7 +43,6 @@ def yaml_load(filepath):
     except ImportError:
         from yaml import Loader
     with open(filepath, 'r', encoding="utf-8") as stream:
-    #     stream = stream.read()
+        #     stream = stream.read()
         content = load(stream, Loader=Loader)
     return content
-
