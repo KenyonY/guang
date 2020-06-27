@@ -1,36 +1,34 @@
 import fire
 import os
-from guang.Utils.toolsFunc import path
+from guang.Utils.toolsFunc import path, ppath
 from guang.cv.video import resample, embedFrameInfo
 from guang.media.ffmpeg import *
 
 
 def mie():
     origin_wd = os.getcwd()
-    os.chdir(r"C:\CODE\a_github\ScatteringLight")
+    os.chdir(path(r"C:\CODE\a_github\ScatteringLight"))
     os.system("streamlit run app.py")
     os.chdir(origin_wd)
 
 
 def lorenz():
-    app_path = path(
-        os.path.join(os.path.dirname(__file__), "app/compose/anim_demo.py"))
+    app_path = ppath("app/compose/anim_demo.py")
     os.system(f"streamlit run {app_path}")
 
 
 def sawtooth():
-    file_path = path(
-        os.path.join(os.path.dirname(__file__), "app/compose/slider.py"))
+    file_path = ppath("app/compose/slider.py")
     os.system(f"python {file_path}")
 
 
 def geo():
-    file_path = path(os.path.join(os.path.dirname(__file__), "geo/compose.py"))
+    file_path = ppath("geo/compose.py")
     os.system(f"python {file_path}")
 
 
 def fourier():
-    app_path = os.path.join(os.path.dirname(__file__), "sci/fourier_app.py")
+    app_path = ppath("sci/fourier_app.py")
     os.system(f"streamlit run {app_path}")
 
 
