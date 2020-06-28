@@ -47,21 +47,17 @@ def multi_cvt2wav(PATH1, PATH2, FORMAT='*', sr=16000, n_cpu=None):
 def upload(PAHT1="upload/", PATH2="/var/www/html/"):
     from syncnote import Cloud
 
-    def download(
-        remote_path: str,
-        local_path: str,
-        config_path = r"C:\CODE\a_github\myWebsite\config.yaml"
-    ):
+    def download(remote_path: str,
+                 local_path: str,
+                 config_path=r"C:\CODE\a_github\myWebsite\config.yaml"):
         cloud = Cloud(config_path)
         cloud.remote_walk(remote_path)
         cloud.local_walk(local_path)
         cloud.download()
 
-    def upload(
-        local_path: str,
-        remote_path: str,
-        config_path = r"C:\CODE\a_github\myWebsite\config.yaml"
-    ):
+    def upload(local_path: str,
+               remote_path: str,
+               config_path=r"C:\CODE\a_github\myWebsite\config.yaml"):
         cloud = Cloud(config_path)
         cloud.remote_walk(remote_path)
         cloud.local_walk(local_path)
