@@ -2,7 +2,6 @@
 #
 # Linear transformations
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -17,7 +16,6 @@ class LinearTransformation(Transformation):
         ndim (int): The number of dimensions.
         parameters (np.ndarray): The (ndim) x (ndim + 1) transformation matrix.
     """
-
     def __init__(self, matrix):
         """
         Args:

@@ -1,9 +1,8 @@
 #! /usr/bin/env python
 #
 # Resample images on a new Grid instance using linear interplation.
-# This class is mostly here to test pure Numpy implementations of 
+# This class is mostly here to test pure Numpy implementations of
 # linear interpolation but can be mostly ignored for standard code.
-
 
 from __future__ import division, print_function, absolute_import
 
@@ -25,9 +24,7 @@ class LinearInterpolator(Interpolator):
         Args:
             image (np.array): A 2D or 3D image array.
         """
-        super(LinearInterpolator, self).__init__(
-            image
-        )
+        super(LinearInterpolator, self).__init__(image)
         if kwargs:
             print('WARNING: ignored options: {}'.format(kwargs))
         if image.ndim == 2:

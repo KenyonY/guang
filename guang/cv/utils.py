@@ -37,7 +37,6 @@ def rotate_bound(image, angle):
 
 
 def auto_canny(image, sigma=0.33):
-
     v = np.median(image)
     lower = int(max(0, (1.0 - sigma) * v))
     upper = int(min(255, (1.0 + sigma) * v))
@@ -58,7 +57,7 @@ def cvtBlackWhite(fileName):
 def cvt2rgb(img, channel='bgr'):
     '''it can convert image channel BGR,BGRA,HLS,HSV to RGB'''
     channel = channel.lower()
-    if channel == 'bgr' or channel=='bgra':
+    if channel == 'bgr' or channel == 'bgra':
         print('bgr', img.shape)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     elif channel == 'hls':
@@ -71,16 +70,24 @@ def cvt2rgb(img, channel='bgr'):
         pass
     return img
 
-def imgplot(image, sbpt=[], channel:str ='rgb', title=None, figsize=(7, 7), show=False, COUNT=[1]):
+
+def imgplot(image,
+            sbpt=[],
+            channel: str = 'rgb',
+            title=None,
+            show=False,
+            COUNT=[1]):
     '''This can display BGR,BGRA,HLS,HSV channels image in RGB colors (OR GRAY)
+
     :param image: RGB/BRG/BGRA/HLS/HSV channels array.
     :param channel: image original channel
     '''
-    
+
     if sbpt != []:
         plt.subplot(*sbpt)
     else:
-        plt.figure(figsize=(7,7))
+        plt.figure(figsize=(7, 7))
+
     if np.ndim(image) == 2:
         cmap = "gray" if channel == 'gray' else None
         plt.imshow(image, cmap=cmap)
@@ -91,16 +98,15 @@ def imgplot(image, sbpt=[], channel:str ='rgb', title=None, figsize=(7, 7), show
             img = img.astype(np.uint8)
         img = cvt2rgb(img, channel)
         plt.imshow(img)
+
     if title is None:
         title = f"{COUNT[0]}"
         COUNT[0] += 1
     plt.title(title)
 
-    if show is True:
+    if show:
         plt.show()
         COUNT[0] = 1
-        print("SHOW",COUNT)
-    print(COUNT)
 
 
 if __name__ == "__main__":

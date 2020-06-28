@@ -2,7 +2,6 @@
 #
 # BSpline transformation
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -23,7 +22,6 @@ class BSplineTransformation(Transformation):
         mode (str): How edges of image domain should be treated when transformed.
         cval (numeric): Constant value for mode='constant'
     """
-
     def __init__(self, grid, order=3, mode='mirror', cval=0):
         """
         Args:
@@ -48,17 +46,13 @@ class BSplineTransformation(Transformation):
         self.bspline_order = order
         self.mode = mode
         self.cval = cval
-        super(BSplineTransformation, self).__init__(
-            ndim=len(grid),
-            parameters=grid
-        )
+        super(BSplineTransformation, self).__init__(ndim=len(grid),
+                                                    parameters=grid)
 
     def __repr__(self):
         return '{}({}D, {})'.format(
-            self.__class__.__name__,
-            self.ndim,
-            'x'.join([str(x) for x in self.parameters.shape[1:]])
-        )
+            self.__class__.__name__, self.ndim,
+            'x'.join([str(x) for x in self.parameters.shape[1:]]))
 
     def _transform_points(self, points):
         assert points.dtype == DTYPE
@@ -74,11 +68,11 @@ class BSplineTransformation(Transformation):
         # interpolated at the scaled point's positions.
         for bspline_component in self.parameters:
             displacement.append(
-                nd.map_coordinates(bspline_component, scaled_points,
+                nd.map_coordinates(bspline_component,
+                                   scaled_points,
                                    order=self.bspline_order,
                                    mode=self.mode,
-                                   cval=self.cval)
-            )
+                                   cval=self.cval))
         result = (points + np.array(displacement))
         assert result.dtype == DTYPE
         return result

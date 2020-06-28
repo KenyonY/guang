@@ -3,7 +3,6 @@
 #
 # Composed transformations combine multiple transform objects into one
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -31,7 +30,6 @@ class ComposedTransformation(Transformation):
         parameters (np.ndarray): Left empty
         transformations (Iterable): A sequence of Transformation objects
     """
-
     def __init__(self, *transformations):
         """
         Args:
@@ -45,15 +43,18 @@ class ComposedTransformation(Transformation):
             raise ValueError('No transformations supplied.')
         ndims = [x.ndim for x in transformations]
         if not np.all(np.array(ndims) == ndims[0]):
-            raise ValueError('Number of dimensions for transformations {} do not '
-                             ' match: {}.'.format(', '.join(
-                                 tuple([x.__class__.__name__ for x in transformations])
-                             ), ndims))
+            raise ValueError(
+                'Number of dimensions for transformations {} do not '
+                ' match: {}.'.format(
+                    ', '.join(
+                        tuple([x.__class__.__name__
+                               for x in transformations])), ndims))
         self.ndim = ndims[0]
         self.transformations = transformations
 
     def __repr__(self):
-        return '{}({}D, {})'.format(self.__class__.__name__, self.ndim,
+        return '{}({}D, {})'.format(
+            self.__class__.__name__, self.ndim,
             '∘'.join([str(x) for x in self.transformations]))
 
     def _transform_points(self, points):

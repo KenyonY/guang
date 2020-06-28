@@ -2,7 +2,6 @@
 #
 # Transformation base class
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -26,7 +25,6 @@ class Transformation(object):
         parameters (iterable/array): Some array-like representation of the 
             transformation parameters, dependant on kind of transformation.
     """
-
     def __init__(self, ndim, parameters):
         """
         Args:
@@ -81,7 +79,8 @@ class Transformation(object):
         scaled_points = points / scale
 
         self._dimension_check(scaled_points)
-        result = self._transform_points(scaled_points).astype('float32') * scale
+        result = self._transform_points(scaled_points).astype(
+            'float32') * scale
 
         return result.astype(DTYPE)
 

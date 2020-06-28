@@ -2,7 +2,6 @@
 #
 # BSpline transformation
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -24,7 +23,6 @@ class BSplineTransformationCuda(BSplineTransformation):
         mode (str): How edges of image domain should be treated when transformed.
         cval (numeric): Constant value for mode='constant'
     """
-
     def __init__(self, grid, order=1, mode='mirror', cval=0):
         """
         Args:
@@ -42,12 +40,10 @@ class BSplineTransformationCuda(BSplineTransformation):
         Raises:
             ValueError: If grid.shape[0] is not equal to grid.ndim -1
         """
-        super(BSplineTransformationCuda, self).__init__(
-            grid=grid,
-            order=order,
-            mode=mode,
-            cval=cval
-        )
+        super(BSplineTransformationCuda, self).__init__(grid=grid,
+                                                        order=order,
+                                                        mode=mode,
+                                                        cval=cval)
 
     def _transform_points(self, points):
         assert points.dtype == DTYPE
@@ -69,12 +65,10 @@ class BSplineTransformationCuda(BSplineTransformation):
             displacement.append(
                 cp.asnumpy(
                     nd.map_coordinates(input=cp.array(bspline_component),
-                                   coordinates=cp.array(scaled_points),
-                                   order=self.bspline_order,
-                                   mode=self.mode,
-                                   cval=self.cval)
-                )
-            )
+                                       coordinates=cp.array(scaled_points),
+                                       order=self.bspline_order,
+                                       mode=self.mode,
+                                       cval=self.cval)))
         result = points + np.array(displacement).reshape(points.shape)
 
         assert result.dtype == DTYPE

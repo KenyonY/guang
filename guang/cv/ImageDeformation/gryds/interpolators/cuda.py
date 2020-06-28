@@ -2,7 +2,6 @@
 #
 # Resample images on a new Grid instance using B-spline interplation
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -26,7 +25,6 @@ class BSplineInterpolatorCuda(BSplineInterpolator):
             supported.
         default_cval (numeric): Constant value for mode='constant'.
     """
-
     def __init__(self, image, mode='constant', order=1, cval=0):
         """
         Args:
@@ -41,9 +39,10 @@ class BSplineInterpolatorCuda(BSplineInterpolator):
                 information about modes.
             cval (numeric): Constant value for mode='constant'.
         """
-        super(BSplineInterpolatorCuda, self).__init__(
-            image, mode=mode, order=order, cval=cval
-        )
+        super(BSplineInterpolatorCuda, self).__init__(image,
+                                                      mode=mode,
+                                                      order=order,
+                                                      cval=cval)
 
     def sample(self, points, mode=None, order=None, cval=None):
         """
@@ -80,4 +79,3 @@ class BSplineInterpolatorCuda(BSplineInterpolator):
         sample_cpu = cp.asnumpy(sample_gpu)
         sample = sample_cpu.transpose().reshape(points.shape[1:])
         return np.array(sample.astype(DTYPE))
-

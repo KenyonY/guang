@@ -2,7 +2,6 @@
 #
 # Transformations of points and grids of points
 
-
 from __future__ import division, print_function, absolute_import
 
 from .composed import ComposedTransformation

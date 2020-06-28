@@ -2,7 +2,6 @@
 #
 # Implement transformations of images, grids, and points
 
-
 from __future__ import division, print_function, absolute_import
 
 from .transformers import *

@@ -2,7 +2,6 @@
 #
 # Transformation base class
 
-
 from __future__ import division, print_function, absolute_import
 
 from .grid import Grid
@@ -17,7 +16,6 @@ class Interpolator(object):
         self.image (np.ndarray): The wrapped ND image.
         self.grid (Grid): The image's default sampling grid.
     """
-
     def __init__(self, image):
         """
         Args:

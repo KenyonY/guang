@@ -2,6 +2,5 @@
 #
 # Config file
 
-
 import numpy
 DTYPE = numpy.float32

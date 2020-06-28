@@ -2,7 +2,6 @@
 #
 # Resample images on a new Grid instance using B-spline interplation
 
-
 from __future__ import division, print_function, absolute_import
 
 import scipy.ndimage as nd
@@ -22,7 +21,6 @@ class BSplineInterpolator(Interpolator):
         default_order (int): B-Spline order.
         default_cval (numeric): Constant value for mode='constant'.
     """
-
     def __init__(self, image, mode='constant', order=3, cval=0):
         """
         Args:
@@ -37,9 +35,7 @@ class BSplineInterpolator(Interpolator):
                 information about modes.
             cval (numeric): Constant value for mode='constant'.
         """
-        super(BSplineInterpolator, self).__init__(
-            image
-        )
+        super(BSplineInterpolator, self).__init__(image)
         self.default_mode = mode
         self.default_order = order
         self.default_cval = cval
@@ -67,10 +63,10 @@ class BSplineInterpolator(Interpolator):
         new_cval = cval if cval else self.default_cval
 
         sample = nd.map_coordinates(input=self.image,
-                           coordinates=points,
-                           mode=new_mode,
-                           order=new_order,
-                           cval=new_cval)
+                                    coordinates=points,
+                                    mode=new_mode,
+                                    order=new_order,
+                                    cval=new_cval)
         return sample.astype(DTYPE)
 
     def resample(self, grid, mode=None, order=None, cval=None):
@@ -123,5 +119,7 @@ class BSplineInterpolator(Interpolator):
 
         transformed_grid = self.grid.transform(*transforms)
         new_grid = self.resample(transformed_grid,
-                                 mode=mode, order=order, cval=cval)
+                                 mode=mode,
+                                 order=order,
+                                 cval=cval)
         return new_grid.astype(DTYPE)

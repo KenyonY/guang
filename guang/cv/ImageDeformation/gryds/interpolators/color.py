@@ -2,7 +2,6 @@
 #
 # Resample multi-channel images on a new Grid
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -22,9 +21,12 @@ class MultiChannelInterpolator:
         default_order (int): B-Spline order.
         default_cval (numeric): Constant value for mode='constant'.
     """
-
-    def __init__(self, image, interpolator=BSplineInterpolator,
-                 data_format='channels_last', cval=None, **kwargs):
+    def __init__(self,
+                 image,
+                 interpolator=BSplineInterpolator,
+                 data_format='channels_last',
+                 cval=None,
+                 **kwargs):
         """
         Args:
             image (np.array): An image array.
@@ -38,7 +40,7 @@ class MultiChannelInterpolator:
         Raises:
             ValueError: when the data_format is something other than
                 'channels_first' or 'channels_last'.
-        """        
+        """
         self.image = image
         self.data_format = data_format
 
@@ -77,8 +79,8 @@ class MultiChannelInterpolator:
                              ' \'channels_first\' or \'channels_last\'.')
 
     def __repr__(self):
-        return '{}({}D, {})'.format(
-            self.__class__.__name__, self.image.ndim - 1, self.data_format)
+        return '{}({}D, {})'.format(self.__class__.__name__,
+                                    self.image.ndim - 1, self.data_format)
 
     @property
     def shape(self):
@@ -98,12 +100,15 @@ class MultiChannelInterpolator:
         cvals = kwargs.pop('cval', self.nchan * [0])
 
         if self.data_format == 'channels_last':
-            return np.rollaxis(np.array([
-                x.sample(points, cval=cval, **kwargs) for cval, x in zip(cvals, self.interpolators)
-            ]), 0, self.image.ndim)
-        if self.data_format == 'channels_first':    
+            return np.rollaxis(
+                np.array([
+                    x.sample(points, cval=cval, **kwargs)
+                    for cval, x in zip(cvals, self.interpolators)
+                ]), 0, self.image.ndim)
+        if self.data_format == 'channels_first':
             return np.array([
-                x.sample(points, cval=cval, **kwargs) for cval, x in zip(cvals, self.interpolators)
+                x.sample(points, cval=cval, **kwargs)
+                for cval, x in zip(cvals, self.interpolators)
             ])
 
     def resample(self, grid, **kwargs):
@@ -117,8 +122,7 @@ class MultiChannelInterpolator:
             np.array: The resampled image at the new grid.
         """
         rescaled_grid = grid.scaled_to(self.interpolators[0].image.shape)
-        return self.sample(rescaled_grid.grid,
-                           **kwargs)
+        return self.sample(rescaled_grid.grid, **kwargs)
 
     def transform(self, *transforms, **kwargs):
         """

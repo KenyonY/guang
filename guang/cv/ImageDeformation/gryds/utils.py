@@ -2,7 +2,6 @@
 #
 # Utils file
 
-
 import numpy as np
 
 
@@ -44,8 +43,8 @@ def unif(scale, size):
 
     size = np.array([size]).flatten()
     # return scale * 2 * (np.random.rand(*size) - 0.5)
-    return np.array([
-        x * y for x, y in zip(scale, 2 * (np.random.rand(*size) - 0.5))])
+    return np.array(
+        [x * y for x, y in zip(scale, 2 * (np.random.rand(*size) - 0.5))])
 
 
 def phantom_image(size, spacing=4, thickness=1, offset=0):

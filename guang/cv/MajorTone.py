@@ -10,6 +10,7 @@ from PIL import Image
 import colorsys
 import cv2
 
+
 class MajorTones:
     @staticmethod
     def preProces(imgName):

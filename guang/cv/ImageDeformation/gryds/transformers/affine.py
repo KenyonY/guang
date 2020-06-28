@@ -8,7 +8,6 @@
 # LinearTransformation, or simply defining a LinearTransformation with the
 # appropriate transformation matrix.
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -27,9 +26,14 @@ class AffineTransformation(LinearTransformation):
             representing the augmented affine matrix, where ndim is either
             2 or 3.
     """
-
-    def __init__(self, ndim, center=None, center_of=None, scaling=None,
-                 angles=None, translation=None, shear_matrix=None):
+    def __init__(self,
+                 ndim,
+                 center=None,
+                 center_of=None,
+                 scaling=None,
+                 angles=None,
+                 translation=None,
+                 shear_matrix=None):
         """
         Given a shear matrix G, a center c, a scaling s, angles a, and
         translation t computes on a point x:
@@ -54,10 +58,12 @@ class AffineTransformation(LinearTransformation):
         """
         if center_of is not None:
             center = _center_of(center_of)
-        matrix = _affine_matrix(
-            ndim=ndim, center=center, scaling=scaling, angles=angles,
-            translation=translation, shear_matrix=shear_matrix
-        )
+        matrix = _affine_matrix(ndim=ndim,
+                                center=center,
+                                scaling=scaling,
+                                angles=angles,
+                                translation=translation,
+                                shear_matrix=shear_matrix)
         super(AffineTransformation, self).__init__(matrix)
 
     def _transform_points(self, points):
@@ -72,8 +78,12 @@ def _center_of(image):
     return [(x - 1) / (2. * x) for x in image.shape]
 
 
-def _affine_matrix(ndim, center=None, shear_matrix=None, scaling=None,
-                  angles=None, translation=None):
+def _affine_matrix(ndim,
+                   center=None,
+                   shear_matrix=None,
+                   scaling=None,
+                   angles=None,
+                   translation=None):
     """
     Args:
         shear_matrix (np.array): An (ndim x ndim) matrix with shear
@@ -98,9 +108,8 @@ def _affine_matrix(ndim, center=None, shear_matrix=None, scaling=None,
         elif len(angles) == 3 and ndim == 3:
             rotation_matrix = rotation_matrix_3d(*angles)
         else:
-            raise ValueError(
-                'Number of angles ({}) not '
-                'supported.'.format(len(angles)))
+            raise ValueError('Number of angles ({}) not '
+                             'supported.'.format(len(angles)))
     else:
         rotation_matrix = np.eye(ndim)
 
@@ -156,27 +165,16 @@ def _affine_matrix(ndim, center=None, shear_matrix=None, scaling=None,
 
 def rotation_matrix_2d(theta):
     """2D rotation matrix for a single rotation angle theta."""
-    return np.array([
-        [np.cos(theta), -np.sin(theta)],
-        [np.sin(theta), np.cos(theta)]
-    ])
+    return np.array([[np.cos(theta), -np.sin(theta)],
+                     [np.sin(theta), np.cos(theta)]])
 
 
 def rotation_matrix_3d(alpha, beta, gamma):
     """3D rotation matrix for three rotation angles alpha, beta, gamma."""
-    Rx = np.array([
-        [1, 0, 0],
-        [0, np.cos(alpha), -np.sin(alpha)],
-        [0, np.sin(alpha), np.cos(alpha)]
-    ])
-    Ry = np.array([
-        [np.cos(beta), 0, np.sin(beta)],
-        [0, 1, 0],
-        [-np.sin(beta), 0, np.cos(beta)]
-    ])
-    Rz = np.array([
-        [np.cos(gamma), -np.sin(gamma), 0],
-        [np.sin(gamma), np.cos(gamma), 0],
-        [0, 0, 1]
-    ])
+    Rx = np.array([[1, 0, 0], [0, np.cos(alpha), -np.sin(alpha)],
+                   [0, np.sin(alpha), np.cos(alpha)]])
+    Ry = np.array([[np.cos(beta), 0, np.sin(beta)], [0, 1, 0],
+                   [-np.sin(beta), 0, np.cos(beta)]])
+    Rz = np.array([[np.cos(gamma), -np.sin(gamma), 0],
+                   [np.sin(gamma), np.cos(gamma), 0], [0, 0, 1]])
     return np.dot(np.dot(Rx, Ry), Rz)

@@ -2,7 +2,6 @@
 #
 # Interpolation code
 
-
 from __future__ import division, print_function, absolute_import
 
 from .grid import Grid
@@ -11,8 +10,8 @@ from .linear import LinearInterpolator
 from .color import MultiChannelInterpolator
 
 try:
-	from .cuda import BSplineInterpolatorCuda
+    from .cuda import BSplineInterpolatorCuda
 except ImportError:
-	pass
+    pass
 
 Interpolator = BSplineInterpolator  # Default interpolator

@@ -8,6 +8,7 @@ from imageio import imread, imsave
 # import sys
 # import os
 
+
 class Canvas(app.Canvas):
 
     VERTEX_SHADER_CODE = """
@@ -59,7 +60,12 @@ class Canvas(app.Canvas):
         }
     """
 
-    def __init__(self, file_name, strength, size, show=True, output_file_name="screen.png"):
+    def __init__(self,
+                 file_name,
+                 strength,
+                 size,
+                 show=True,
+                 output_file_name="screen.png"):
         app.Canvas.__init__(self, keys='interactive', size=(800, 600))
 
         if type(file_name) == str:
@@ -70,23 +76,33 @@ class Canvas(app.Canvas):
         self.strength, self.noise_size, self.output_file_name = strength, size, output_file_name
 
         def create_vertecies(dim):
-            vertecies_data = np.zeros( 6, dtype=[('position', np.float32, 2), ('uv_texture', np.float32, 2)])
-            vertecies_data['position'] = np.array([(-dim, -dim), (dim, -dim), (dim, dim),
-                                            (-dim, -dim), (dim, dim), (-dim, dim)], np.float32)
-            vertecies_data['uv_texture'] = np.array([(0.0, 0.0), (1.0, 0.0), (1.0, 1.0),
-                                            (0.0, 0.0), (1.0, 1.0), (0.0, 1.0)], np.float32)
+            vertecies_data = np.zeros(6,
+                                      dtype=[('position', np.float32, 2),
+                                             ('uv_texture', np.float32, 2)])
+            vertecies_data['position'] = np.array([(-dim, -dim), (dim, -dim),
+                                                   (dim, dim), (-dim, -dim),
+                                                   (dim, dim), (-dim, dim)],
+                                                  np.float32)
+            vertecies_data['uv_texture'] = np.array([(0.0, 0.0), (1.0, 0.0),
+                                                     (1.0, 1.0), (0.0, 0.0),
+                                                     (1.0, 1.0), (0.0, 1.0)],
+                                                    np.float32)
             return gloo.VertexBuffer(vertecies_data)
 
         self.vertecies = create_vertecies(0.8)
         self.render_vertecies = create_vertecies(1.0)
 
         if type(file_name) == str:
-            self.input_texture_data = (imread(file_name).astype(np.float32))/255.0
+            self.input_texture_data = (imread(file_name).astype(
+                np.float32)) / 255.0
         else:
             self.input_texture_data = file_name
         self.img_w, self.img_h, self.img_c = self.input_texture_data.shape
-        print("self.input_texture_data.shape = %s" % (self.input_texture_data.shape,))
-        self.input_texture = gloo.Texture2D(self.input_texture_data, interpolation='linear', resizable=False)
+        print("self.input_texture_data.shape = %s" %
+              (self.input_texture_data.shape, ))
+        self.input_texture = gloo.Texture2D(self.input_texture_data,
+                                            interpolation='linear',
+                                            resizable=False)
         #----------------------
         # self.noise_texture_data = np.random.normal(size=(size, size))
         # xy = np.linspace(0, 1, size, np.float32)
@@ -95,25 +111,31 @@ class Canvas(app.Canvas):
         # self.noise_texture_real_data = self.noise_interp_func(np.linspace(0, 1, w, np.float32),
         #                                            np.linspace(0, 1, h, np.float32)).astype(np.float32)
         # ----------------------
-        
-        x, y = np.meshgrid(np.linspace(0, 1, self.img_h, np.float32), np.linspace(0, 1, self.img_w, np.float32))
+
+        x, y = np.meshgrid(np.linspace(0, 1, self.img_h, np.float32),
+                           np.linspace(0, 1, self.img_w, np.float32))
         r = np.sqrt(x**2 + y**2)
-        l = 1.0/size
+        l = 1.0 / size
         self.noise_texture_real_data = np.zeros((self.img_w, self.img_h, 2))
         # unvortunatly vispy dosent seem to suport GL_RGB_32F format for textures so I am pulling some strings
-        self.noise_texture_real_data[:,:,0] = 0.5*np.sin(2*np.pi* r/l) + 0.5
-        self.noise_texture_real_data[:,:,1] = 0.5*np.cos(2*np.pi* r/l) + 0.5
-        self.noise_texture = gloo.Texture2D(self.noise_texture_real_data.astype(np.float32),
-                                    interpolation='linear', resizable=False)
+        self.noise_texture_real_data[:, :,
+                                     0] = 0.5 * np.sin(2 * np.pi * r / l) + 0.5
+        self.noise_texture_real_data[:, :,
+                                     1] = 0.5 * np.cos(2 * np.pi * r / l) + 0.5
+        self.noise_texture = gloo.Texture2D(
+            self.noise_texture_real_data.astype(np.float32),
+            interpolation='linear',
+            resizable=False)
 
         self.fbo_tbo = gloo.Texture2D(shape=(self.img_w, self.img_h, 4))
         self.fbo = gloo.FrameBuffer(self.fbo_tbo)
 
-        self.program = gloo.Program(Canvas.VERTEX_SHADER_CODE, Canvas.FRAGMENT_SHADER_CODE)
+        self.program = gloo.Program(Canvas.VERTEX_SHADER_CODE,
+                                    Canvas.FRAGMENT_SHADER_CODE)
         self.program.bind(self.vertecies)
         self.program['noise'] = self.noise_texture
         self.program['img'] = self.input_texture
-        self.program['strength'] = strength/100
+        self.program['strength'] = strength / 100
         self.program['width'] = self.physical_size[0]
         self.program['hight'] = self.physical_size[1]
 
@@ -132,8 +154,9 @@ class Canvas(app.Canvas):
         self.update()
 
     def on_mouse_wheel(self, event):
-        self.strength += event.delta[1]*np.log(1 + np.abs(self.strength))/15
-        self.program['strength'] = self.strength/100
+        self.strength += event.delta[1] * np.log(1 +
+                                                 np.abs(self.strength)) / 15
+        self.program['strength'] = self.strength / 100
         self.update()
 
     def on_resize(self, event):
@@ -155,7 +178,7 @@ class Canvas(app.Canvas):
             gloo.clear(color=True, depth=True)
             gloo.set_viewport(0, 0, self.img_w, self.img_h)
 
-            self.program['strength'] = self.strength/100
+            self.program['strength'] = self.strength / 100
             self.program['width'] = self.img_w
             self.program['hight'] = self.img_h
             self.program.bind(self.render_vertecies)
@@ -171,7 +194,7 @@ class Canvas(app.Canvas):
         return img
 
     def save_img(self):
-        print("saving img to: %s" %  self.output_file_name)
+        print("saving img to: %s" % self.output_file_name)
         imsave(self.output_file_name, self.render_img())
 
     def on_key_press(self, event):
@@ -183,9 +206,10 @@ def get_img(input_img, strength, size):
     c = Canvas(input_img, strength, size, False)
     return c.render_img()
 
+
 if __name__ == '__main__':
-		
-	strength = 1
-	size = 32
-	c = Canvas("pic/hue2.png", strength, size, output_file_name="screen.png")
-	app.run()
+
+    strength = 1
+    size = 32
+    c = Canvas("pic/hue2.png", strength, size, output_file_name="screen.png")
+    app.run()

@@ -2,7 +2,6 @@
 #
 # Implementation of sampling grids
 
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -15,7 +14,6 @@ class Grid(object):
     Attributes:
         self.grid (nd.array): The grid as an ndim x Ni x Nj x ... x Nndim array
     """
-
     def __init__(self, shape=None, grid=None):
         """
         Args:
@@ -30,14 +28,15 @@ class Grid(object):
             self.grid = grid.astype(DTYPE)
         elif shape is not None and grid is None:
             self.grid = np.array(np.meshgrid(
-                *[np.arange(d) / d for d in shape],
-                indexing='ij'
-            ), dtype=DTYPE)
+                *[np.arange(d) / d for d in shape], indexing='ij'),
+                                 dtype=DTYPE)
         else:
-            raise ValueError('Either the shape or the grid parameters should be defined')
+            raise ValueError(
+                'Either the shape or the grid parameters should be defined')
 
     def __repr__(self):
-        return '{}({}D, {})'.format(self.__class__.__name__, self.grid.shape[0],
+        return '{}({}D, {})'.format(
+            self.__class__.__name__, self.grid.shape[0],
             'x'.join([str(x) for x in self.grid.shape[1:]]))
 
     def scaled_to(self, size):
@@ -56,14 +55,11 @@ class Grid(object):
         if len(size) != len(self.grid):
             raise ValueError(
                 'Number of dimensions in size ({}) and grid ({}), do not'
-                ' match'.format(
-                    len(size), len(self.grid))
-            )
+                ' match'.format(len(size), len(self.grid)))
         size = np.array(size)
 
         new_grid_instance = Grid(grid=np.array(
-            [x * y for x, y in zip(size, self.grid)], dtype=DTYPE
-        ))
+            [x * y for x, y in zip(size, self.grid)], dtype=DTYPE))
         return new_grid_instance
 
     def transform(self, *transforms):
@@ -97,18 +93,18 @@ class Grid(object):
             np.array: An array of the size of the grid with the Jacobian
                 vectors, (i.e. ndim x Na x Nb x ... x ND)
         """
-        diff_grid = self.transform(*transforms).scaled_to(self.grid.shape[1:]).grid
+        diff_grid = self.transform(*transforms).scaled_to(
+            self.grid.shape[1:]).grid
         # scaled_grid = new_grid.scaled_to(self.grid.shape[1:])
-        jacobian = np.zeros(
-            (self.grid.shape[0], self.grid.shape[0]) + self.grid.shape[1:]
-        )
+        jacobian = np.zeros((self.grid.shape[0], self.grid.shape[0]) +
+                            self.grid.shape[1:])
         for i in range(jacobian.shape[0]):
             for j in range(jacobian.shape[1]):
                 padding = self.grid.shape[0] * [(0, 0)]
                 padding[j] = (0, 1)
-                jacobian[i, j] = np.pad(
-                    np.diff(diff_grid[i], axis=j),
-                    padding, mode='edge')
+                jacobian[i, j] = np.pad(np.diff(diff_grid[i], axis=j),
+                                        padding,
+                                        mode='edge')
 
         return jacobian.astype(DTYPE)
 
