@@ -71,27 +71,36 @@ def cvt2rgb(img, channel='bgr'):
         pass
     return img
 
-def imgplot(image, channel:str ='rgb', title="", figsize=(7, 7)):
+def imgplot(image, sbpt=[], channel:str ='rgb', title=None, figsize=(7, 7), show=False, COUNT=[1]):
     '''This can display BGR,BGRA,HLS,HSV channels image in RGB colors (OR GRAY)
     :param image: RGB/BRG/BGRA/HLS/HSV channels array.
     :param channel: image original channel
     '''
-    plt.figure(figsize=figsize)
+    
+    if sbpt != []:
+        plt.subplot(*sbpt)
+    else:
+        plt.figure(figsize=(7,7))
     if np.ndim(image) == 2:
         cmap = "gray" if channel == 'gray' else None
         plt.imshow(image, cmap=cmap)
-        plt.title(title)
-        plt.show()
     else:
         img = image.copy()
         if img.dtype != np.uint8:
             img = img * 255
             img = img.astype(np.uint8)
-
         img = cvt2rgb(img, channel)
         plt.imshow(img)
-        plt.title(title)
+    if title is None:
+        title = f"{COUNT[0]}"
+        COUNT[0] += 1
+    plt.title(title)
+
+    if show is True:
         plt.show()
+        COUNT[0] = 1
+        print("SHOW",COUNT)
+    print(COUNT)
 
 
 if __name__ == "__main__":
