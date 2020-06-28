@@ -1,6 +1,7 @@
 import numpy, imageio, elasticdeform
 import numpy as np
-from guang import ppath
+from guang.Utils.toolsFunc import ppath
+
 import imageio
 from guang.cv import imgplot
 # https://github.com/tueimage/gryds
@@ -17,7 +18,7 @@ interpolator = gryds.Interpolator(image) # 生成一个图像的插值对象
 a_translation = gryds.TranslationTransformation([0., 0.1]) # [行，列]
 translated_image = interpolator.transform(a_translation) # 对这个插值对象应用一个变换
 
-imgplot(translated_image,'gray')
+imgplot(translated_image,[1,3,1], 'gray')
 
 
 # -------------------------------------任意扭曲----------------------------------------
@@ -27,8 +28,8 @@ warp1, warp2 = np.meshgrid(np.zeros(sp_shape[0]), np.sin(x)/5-0.2)
 bspline = gryds.BSplineTransformation([warp1, warp2]) # 行偏移为0， 列偏移为sin函数性质
 translated_image = interpolator.transform(bspline) # 对这个插值对象应用一个变换
 
-imgplot(translated_image)
-imgplot(warp2)
+imgplot(translated_image,[1,3,2])
+imgplot(warp2, [1,3,3], show=True)
 
 
 
