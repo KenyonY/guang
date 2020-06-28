@@ -13,15 +13,12 @@ ax.set_ylim(0, max_rand)
 line, = ax.plot(x, np.random.randint(0, max_rand, max_x))
 the_plot = st.pyplot(plt)
 
-
 def init():  # give a clean slate to start
     line.set_ydata([np.nan] * len(x))
-
 
 def animate(i):  # update the y values (every 1000ms)
     line.set_ydata(np.random.randint(0, max_rand, max_x))
     the_plot.pyplot(plt)
-
 
 init()
 for i in range(100):

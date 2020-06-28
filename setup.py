@@ -2,17 +2,17 @@
 from __future__ import print_function
 from setuptools import setup, find_packages
 from glob import glob
-import guang as my_package
+import guang
 
 with open(glob('requirements.*')[0], encoding='utf-8') as f:
     all_reqs = f.read().split('\n')
-install_requires = [x.strip() for x in all_reqs]
+install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
 
 with open("README.md", "r", encoding='utf-8') as fr:
     long_description = fr.read()
 
-setup(name=my_package.__name__,
-      version=my_package.__version__,
+setup(name=guang.__name__,
+      version=guang.__version__,
       package_data={
           'guang': [
               'version_config.yaml', 'Utils/date_data',

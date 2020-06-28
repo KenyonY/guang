@@ -1,5 +1,5 @@
 # 线性变换
-def MaxMinNormal(I, out_min, out_max):
+def MaxMinNormal(I,out_min, out_max):
     '''
     input: 
         I: this vector to be scaled
@@ -10,9 +10,8 @@ def MaxMinNormal(I, out_min, out_max):
     '''
     Imax = I.max()
     Imin = I.min()
-    out = out_min + (out_max - out_min) / (Imax - Imin) * (I - Imin)
+    out = out_min + (out_max - out_min)/(Imax - Imin) * (I-Imin)
     return out
-
 
 # 伽马变换
 def Gamma_trans(I, I_max, gamma):
@@ -24,7 +23,7 @@ def Gamma_trans(I, I_max, gamma):
     return:
         the map of I
     '''
-    fI = I / I_max
+    fI = I/I_max
     out = np.power(fI, gamma)
-    out = out * I_max
+    out = out*I_max
     return out

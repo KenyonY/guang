@@ -2,11 +2,7 @@ import plotly.graph_objects as go
 import numpy as np
 from guang.Utils.mathFunc import sawtooth
 
-
-def slider_1D(x,
-              y,
-              width=None,
-              height=None,
+def slider_1D(x, y, width=None, height=None,
               color="#00CED1",
               linewidth=1,
               name="𝜈 = ",
@@ -34,11 +30,13 @@ def slider_1D(x,
         fig.add_trace(
             go.Scatter(
                 visible=False,
+
                 line=dict(color=color, width=linewidth),  # --------------- 1
-                name=name + str(step),  # --------------- 2
-                x=x[step],  # --------------- 3
-                y=y[step]  # --------------- 4
-            ))
+                name=name + str(step),                    # --------------- 2
+                x=x[step],                                # --------------- 3
+                y=y[step]                                 # --------------- 4
+            )
+        )
 
     # step 2： initial figure
     initial_step = initial_step  # --------------- 5
@@ -54,19 +52,21 @@ def slider_1D(x,
         step["args"][1][i] = True  # Toggle i'th trace to "visible"
         steps.append(step)
 
-    sliders = [
-        dict(
-            active=initial_step,
-            currentvalue={"prefix": "frequency: "},  # --------------- 6
-            pad={"t": 50},  # --------------- (7)
-            steps=steps)
-    ]
+    sliders = [dict(
+        active=initial_step,
+        currentvalue={"prefix": "frequency: "},  # --------------- 6
+        pad={"t": 50},                           # --------------- (7)
+        steps=steps
+    )]
 
-    fig.update_layout(sliders=sliders, width=width, height=height)
+    fig.update_layout(
+        sliders=sliders, 
+        width = width,
+        height = height
+    )
     return fig
 
-
-if __name__ == "__main__":
+if __name__ =="__main__":
 
     theta = np.linspace(0, 15, 1000)
     N = 10

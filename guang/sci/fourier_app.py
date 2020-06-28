@@ -1,8 +1,9 @@
 from guang.sci.fft import space2fre
 import numpy as np
-from numpy import pi, sin, cos, linspace
+from numpy import pi,sin,cos,linspace
 import plotly.express as px
 import streamlit as st
+
 
 
 def example_func(x_min, x_max):
@@ -12,7 +13,6 @@ def example_func(x_min, x_max):
     y = 2 * sin(w1 * x) + 0.8 * sin(w2 * x)  # + 0.2 * sin(w3*x)
     return x, y
 
-
 def randFunc(N, F, A):
     x = np.linspace(-3, 4, N)
     y = np.zeros(N)
@@ -20,13 +20,11 @@ def randFunc(N, F, A):
         w = 2 * np.pi * f
         y += np.sin(w * x) * a
     return x, y
-
-
 def showLatexFunc(F, A):
     y = f" $f(x)=$ "
     for f, a in zip(F, A):
         w = f"$2\pi\cdot{f}$"
-        y += f"{a}$\cdot\sin$ ({w} $x$) + "  #f"$\\sin({w}x) a$"
+        y += f"{a}$\cdot\sin$ ({w} $x$) + "#f"$\\sin({w}x) a$"
     st.write(f"{y[:-2]} \n    $x\\in[-3, 4]$")
 
 
@@ -40,23 +38,17 @@ def tutorial():
 
     fre_y = np.fft.fft(y)
     X = np.arange(len(fre_y))
-    fig2 = px.line(x=X,
-                   y=np.abs(fre_y),
-                   labels={
-                       'x': '_Frequency',
-                       'y': 'Amplitude'
-                   },
+    fig2 = px.line(x=X, y=np.abs(fre_y),
+                   labels={'x':'_Frequency', 'y':'Amplitude'},
                    range_x=(-50, 1050))
     "直接对函数进行fft"
     fig2
 
+
+
     fre_y_shift = np.fft.fftshift(fre_y)
-    fig3 = px.line(x=X,
-                   y=np.abs(fre_y_shift),
-                   labels={
-                       'x': '_Frequency',
-                       'y': '_Amplitude'
-                   },
+    fig3 = px.line(x=X, y=np.abs(fre_y_shift),
+                   labels={'x':'_Frequency', 'y':'_Amplitude'},
                    range_x=(-50, 1050))
     "fftshift移动为中心对称："
     fig3
@@ -87,35 +79,28 @@ def tutorial():
     x_max = x.max()
     x_min = x.min()
     N = len(x)
-    delta_x = (x_max - x_min) / (N - 1)
+    delta_x = (x_max - x_min)/(N-1)
 
-    f_max = 1 / (2 * delta_x)
-    delta_f = 2 * f_max / (N - 1)
+    f_max = 1/(2*delta_x)
+    delta_f = 2*f_max/(N-1)
     r"这里计算得到$f_{max}=\frac{1}{2\cdot\delta x}=$", f_max
-    r"$\delta f=$", delta_f
-    if N % 2 == 0:
-        fre_x = np.linspace(-f_max, f_max, N) - delta_f / 2
+    r"$\delta f=$",delta_f
+    if N%2==0:
+        fre_x = np.linspace(-f_max,f_max,N)-delta_f/2
     else:
         fre_x = np.linspace(-f_max, f_max, N)
-    fig4 = px.line(
-        x=fre_x,
-        y=np.abs(fre_y_shift),
-        labels={"x": "frequency"},
-    )
+    fig4 = px.line(x=fre_x,y=np.abs(fre_y_shift), labels={"x":"frequency"},
+                   )
     fig4
+
     """ 
     上图可以看到在频率为 0附近 以及 2附近存在两个峰，而这两个频率就是一开始时我们所设置的f1 和 f2 ,
     分别为0.1 和 2 x轴的意义弄清楚了。而y轴，对应的当然是振幅啦，只是我们需要进行一个规范化的操作：
     2*abs(fre_y_shift)/N-1
     """
 
-    amplitude_y = 2 * np.abs(fre_y_shift) / (len(x) - 1)
-    fig5 = px.line(x=fre_x,
-                   y=amplitude_y,
-                   labels={
-                       "x": "frequency",
-                       "y": "amplitude"
-                   })
+    amplitude_y = 2*np.abs(fre_y_shift)/(len(x)-1)
+    fig5 = px.line(x=fre_x, y=amplitude_y, labels={"x":"frequency", "y":"amplitude"})
     fig5
 
 
@@ -135,17 +120,13 @@ def test_fft():
     showLatexFunc(f, A)
     fre, amp = space2fre(x, y)
 
-    fig = px.line(x=fre[:, 0],
-                  y=amp[:, 0],
-                  labels={
-                      "x": "Frequency",
-                      "y": "Amplitude"
-                  })
+    fig = px.line(x=fre[:,0], y=amp[:,0],
+                  labels={"x": "Frequency", "y": "Amplitude"})
     st.write(fig)
-
 
 if st.sidebar.checkbox("Fundamental教程"):
     tutorial()
 
 "---"
 test_fft()
+

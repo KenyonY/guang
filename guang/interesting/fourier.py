@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def space2fre(x, y):
     """ Transform space domain (x, y) to the frequency domain (frequency, amplitude)
     """
@@ -14,5 +13,7 @@ def space2fre(x, y):
     # delta_f = 2 * f_max / (N - 1)
     fre_x = np.linspace(-f_max, f_max, len(x))
     amplitude_y = 2 * np.abs(fre_y_shift) / (len(x) - 1)
-    idx = np.argwhere(fre_x >= 0)
+    idx = np.argwhere(fre_x>=0)
     return fre_x[idx], amplitude_y[idx]
+
+

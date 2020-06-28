@@ -4,7 +4,7 @@ import seaborn
 import numpy as np
 
 mpl.rcParams['ytick.direction'] = 'in'
-mpl.rc('mathtext', fontset='cm', rm='serif')
+mpl.rc('mathtext',fontset = 'cm',rm = 'serif')
 mpl.rc(["xtick"], direction="in", top=1)
 mpl.rc(["ytick"], direction="in", right=1)
 # mpl.rc('font', family='Times New Roman', size=12)
@@ -21,7 +21,8 @@ def fillplot(*args, scalex=True, scaley=True, data=None, **kwargs):
         y = args[1]
         x = args[0]
     fill_y_min = kwargs.get('fill_y_min', 0)
-    fill_y_max = kwargs.get('fill_y_max', y)
+    fill_y_max = kwargs.get('fill_y_max', y) 
 
     plt.plot(*args, scalex=True, scaley=True, data=None, **kwargs)
     plt.fill_between(x, y1=fill_y_min, y2=fill_y_max, color='b', alpha=.2)
+   

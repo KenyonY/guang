@@ -4,14 +4,13 @@ ehthumbs.db
 Desktop.ini
 
 *.ipynb
-.vscode/
-.idea/
 
 workflow.py
 # night_workflow.py
 generateREADME.py
 genTOC.sh
 _config.yml
+TEST.ipynb
 
 .coverage
 
@@ -21,6 +20,8 @@ test/
 # data
 data/
 
+# pycharm
+.idea/
 
 #vim
 *.swp
@@ -31,12 +32,15 @@ data/
 *.so
 *.egg
 *.egg-info
-dist/
-build/
+dist
+build
 
 # juyter notebook
 .ipynb_checkpoints/
 
+
+# pycharm
+.idea/
 
 # books or paper or others
 图解数据结构/
@@ -48,3 +52,4 @@ wechat_download/
 kaldi.zip
 kaldi/
 HMM/
+# version 000000000000

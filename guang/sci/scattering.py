@@ -2,10 +2,9 @@ from scipy import sin, pi, cos, real, arcsin, arccos, diff, interpolate
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
-# font = FontProperties(fname=r"c:\windows\fonts\simsun.ttc", size=10)  # 显示中文
-# plt.style.use('science')
+font = FontProperties(fname=r"c:\windows\fonts\simsun.ttc", size=10)  # 显示中文
 
-def theta_def(theta_i, p, m):
+def theta_s(theta_i, p, m):
     '''输入的theta 是度数不是弧度,得到的是偏转角'''
     theta_i = theta_i * pi / 180
     theta_r = arcsin(sin(theta_i) / m)
@@ -13,7 +12,6 @@ def theta_def(theta_i, p, m):
     ths = real(ths)
     res = ths * 180 / pi
     return res
-
 
 def sgn(x):
     if x < 0:
@@ -24,15 +22,15 @@ def sgn(x):
         return 1
 
 
-def def2sca(theta_def, p):
+def trans2thetap(theta_s, p):
     ''' 将偏转角转换为散射角 ,单位是角度，不是弧度
         p的范围需要≥0
     '''
-    k_p = (180 - theta_def) // (2 * 180)
-    q = sgn(theta_def + 360 * k_p)
+    k_p = (180 - theta_s) // (2 * 180)
+    q = sgn(theta_s + 360 * k_p)
     if q == 0:
-        return theta_def
-    theta_p = (theta_def + 2 * 180 * k_p) / q
+        return theta_s
+    theta_p = (theta_s + 2 * 180 * k_p) / q
     return theta_p
 
 
@@ -42,33 +40,34 @@ def find_theta_i(ths, p, m, error=1e-12):
     if p == 0 or p == 1:  # 0阶
         theta_min, theta_max = 0, 90
 
+
     else:
         # p=2时， 当 1<m<2.5时， 散射角真实位置处于 -0 ~ -360°
-        theta_e = arccos(np.sqrt((m**2 - 1) / (p**2 - 1))) * 180 / pi
-        theta_end = def2sca(theta_def(90, p, m), p)
+        theta_e = arccos(np.sqrt((m ** 2 - 1) / (p ** 2 - 1))) * 180 / pi
+        theta_end = trans2thetap(theta_s(90, p, m), p)
         # 如果小于两者中更小的角度，则返回空
-        if ths < theta_end and ths < def2sca(theta_def(theta_e, p, m), p):
+        if ths < theta_end and ths < trans2thetap(theta_s(theta_e, p, m), p):
             return []
-        #         print('极值点:入射角{:.2f},入射角对应散射角{:.2f},thetaend:{:.2f}'.format(theta_e,theta_def(theta_e,p,m),theta_end))
+        #         print('极值点:入射角{:.2f},入射角对应散射角{:.2f},thetaend:{:.2f}'.format(theta_e,theta_s(theta_e,p,m),theta_end))
         # 那么单值情况便只会出现在thetaend ~ 180° 散射角区域
         # 所以可以设定 当 theta < thetaend ，返回空
         #         if ths < theta_end : # 这一句可以直接将上面一句的and 改为 or
         #             return []        # 但，我想把这句注释掉，我想看到多条光线
 
-        #        y_peak = def2sca(theta_def(theta_e,p,m),p) # 二阶光线的最高点，实际确实散射角最小位置
+        #        y_peak = trans2thetap(theta_s(theta_e,p,m),p) # 二阶光线的最高点，实际确实散射角最小位置
         theta_min = 1e-10
         theta_max = theta_e  # 这句话是不是有问题,应该是下面这句?
         #         theta_max = arccos(np.sqrt((m**2-1)/(p**2-1))) * 180/pi
         flag = 1
 
-    temp_min = def2sca(theta_def(theta_min, p, m), p) - ths
-    temp_max = def2sca(theta_def(theta_max, p, m), p) - ths
+    temp_min = trans2thetap(theta_s(theta_min, p, m), p) - ths
+    temp_max = trans2thetap(theta_s(theta_max, p, m), p) - ths
 
     # 二分求解
     while abs(temp_max - temp_min) > error:
 
         theta_mean = (theta_min + theta_max) / 2
-        temp_mean = def2sca(theta_def(theta_mean, p, m), p) - ths
+        temp_mean = trans2thetap(theta_s(theta_mean, p, m), p) - ths
         if temp_mean * temp_max < 0:
             theta_min = theta_mean
             temp_min = temp_mean
@@ -83,15 +82,15 @@ def find_theta_i(ths, p, m, error=1e-12):
         theta_min = theta_e
         theta_max = 90
 
-        temp_min = def2sca(theta_def(theta_min, p, m), p) - ths
-        temp_max = def2sca(theta_def(theta_max, p, m), p) - ths
+        temp_min = trans2thetap(theta_s(theta_min, p, m), p) - ths
+        temp_max = trans2thetap(theta_s(theta_max, p, m), p) - ths
         if temp_max * temp_min > 0:
             return res
         # 二分求解
         while abs(temp_max - temp_min) > error:
 
             theta_mean = (theta_min + theta_max) / 2
-            temp_mean = def2sca(theta_def(theta_mean, p, m), p) - ths
+            temp_mean = trans2thetap(theta_s(theta_mean, p, m), p) - ths
             if temp_mean * temp_max < 0:
                 theta_min = theta_mean
                 temp_min = temp_mean
@@ -118,9 +117,9 @@ def phase(theta_i, alpha, p, m):
     return 2 * alpha * (cos(theta_i) - p * m * cos(theta_r))
 
 
-
-
 from scipy import diff
+
+
 def phase_diff(ths, alpha, p0, p1, m):
     '''计算相位差'''
 
@@ -133,6 +132,7 @@ def phase_diff(ths, alpha, p0, p1, m):
             # 而从Mie解中发现,这里对应的应该是第二个解
     except:
         pass
+    theta_i0, theta_i1
 
     phase0 = phase(theta_i0, alpha, p0, m)
     phase1 = phase(theta_i1, alpha, p1, m)
@@ -147,12 +147,12 @@ def pd_output(p, m, alpha):
     PD = np.zeros(N)
 
     if p == 1:
-        theta_end = def2sca(theta_def(90, p, m), p)
+        theta_end = trans2thetap(theta_s(90, p, m), p)
         theta = np.linspace(1e-10, theta_end - 1e-10, N)
         theta_range = theta_end
     else:
-        ths_end = arccos(np.sqrt((m**2 - 1) / (p**2 - 1))) * 180 / pi  # 彩虹角位置
-        theta_end = def2sca(theta_def(ths_end, p, m), p)
+        ths_end = arccos(np.sqrt((m ** 2 - 1) / (p ** 2 - 1))) * 180 / pi  # 彩虹角位置
+        theta_end = trans2thetap(theta_s(ths_end, p, m), p)
         theta = np.linspace(theta_end + 1e-10, 180, N)
         theta_range = 180 - theta_end
 
@@ -170,12 +170,14 @@ def pd_output(p, m, alpha):
     return (theta, PD, theta[1:], abs(diff(PD)) / (2 * pi * dtheta))
 
 
+
+
 def frequency(p, m, theta_begin, alpha, dthe=3):
     Nu = np.zeros(len(alpha))
     if p == 1:
         flag_p = 1
         fName = '单角度数据//m={:.2f},p={:d},theta={:.2f}'.format(m, p, theta_begin)
-        theta_max = def2sca(theta_def(90, p, m), p)
+        theta_max = trans2thetap(theta_s(90, p, m), p)
         # ************************************************************************************
         #         print('p={},m={:.2f},theta={},theta_max={:.2f}'.format(p,m,theta_begin,theta_max))
         # ************************************************************************************
@@ -188,11 +190,9 @@ def frequency(p, m, theta_begin, alpha, dthe=3):
     if p == 2:
         flag_p = 2
         fName = '单角度数据//m={:.2f},p={:d},theta={:.2f}'.format(m, p, theta_begin)
-        theta_e = arccos(np.sqrt((m**2 - 1) / (p**2 - 1))) * 180 / pi
-        theta_min = min(def2sca(theta_def(90, p, m), p),
-                        def2sca(theta_def(theta_e, p, m), p))
-        print('p={},m={:.2f},theta={},theta_min={:.2f}'.format(
-            p, m, theta_begin, theta_min))
+        theta_e = arccos(np.sqrt((m ** 2 - 1) / (p ** 2 - 1))) * 180 / pi
+        theta_min = min(trans2thetap(theta_s(90, p, m), p), trans2thetap(theta_s(theta_e, p, m), p))
+        print('p={},m={:.2f},theta={},theta_min={:.2f}'.format(p, m, theta_begin, theta_min))
         if theta_begin < theta_min:
             flag_p = 0
             # *********************************************************
@@ -230,22 +230,14 @@ def get_k1k2(theta_1_begin, theta_2_begin, dthe1, dthe2, p1=1, p2=1):
                 theta = theta1
                 p = p1
                 temp_m = 1.3 + i * 0.001
-                Nu1, _ = frequency(p,
-                                   temp_m,
-                                   theta_begin=theta,
-                                   alpha=[1],
-                                   dthe=dthe1)
+                Nu1, _ = frequency(p, temp_m, theta_begin=theta, alpha=[1], dthe=dthe1)
                 temp_x.append(temp_m)
                 temp_y_1.append(Nu1[0])  # 以浮点数形式存放,而不是array
             if j == 1:
                 theta = theta2
                 p = p2
                 # print("p=",p,"m=",temp_m,"theta_begin=",theta,"alpha=", [1],"dthe=",dthe2)
-                Nu2, _ = frequency(p,
-                                   temp_m,
-                                   theta_begin=theta,
-                                   alpha=[1],
-                                   dthe=dthe2)
+                Nu2, _ = frequency(p, temp_m, theta_begin=theta, alpha=[1], dthe=dthe2)
                 temp_y_2.append(Nu2[0])  # 以浮点数形式存放,而不是array
     k1 = interpolate.interp1d(temp_x, temp_y_1, kind='cubic')
     k2 = interpolate.interp1d(temp_x, temp_y_2, kind='cubic')
@@ -280,38 +272,3 @@ def predict(v1, v2, k1, k2, m_min=1.301, m_max=1.399):
     alpha2 = v2 / k2(m)
 
     return alpha1, alpha2, m
-
-
-
-def test_theta90(flag="m>1"):
-    thetai = 90
-    if flag == "m>1":
-        M = np.linspace(1.01, 1.91, 100)
-    else:
-        M = np.linspace(0.1, 0.9,100)
-    fig, ax = plt.subplots()
-    for p in range(3):
-        res = []
-        for m in M:
-            res.append(def2sca(theta_def(thetai, p, m=m), p))
-        plt.plot(res, M)
-    plt.legend(["p=0", "p=1", "p=2"])
-    plt.title("thetas(theta_i=90)")
-    plt.show()
-
-def test_thetai_thetas(m=1.33, p=0):
-    THETA = np.linspace(1e-9, 90, 100)
-
-    fig, ax = plt.subplots()
-    for p in range(3):
-        res = []
-        for thetai in THETA:
-            res.append(def2sca(theta_def(thetai, p, m=m), p))
-        plt.plot(THETA, res)
-    plt.legend(["p=0", "p=1", "p=2"])
-    plt.title("theta_i theta_s")
-    plt.show()
-    
-if __name__ == "__main__":
-    test_theta90("m>1")
-    test_thetai_thetas()

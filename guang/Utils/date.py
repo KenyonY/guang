@@ -4,7 +4,6 @@ import requests
 import dill
 import os
 
-
 def download_data():
     pwd_path = os.path.dirname(__file__)
     data_path = os.path.join(pwd_path, 'date_data')
@@ -12,21 +11,16 @@ def download_data():
         pass
     else:
         print('Downloading the required file')
-        res = requests.get(
-            'https://raw.githubusercontent.com/beidongjiedeguang/guang/master/guang/Utils/date_data'
-        )
+        res = requests.get('https://raw.githubusercontent.com/beidongjiedeguang/guang/master/guang/Utils/date_data')
         with open(data_path, 'wb') as fo:
             fo.write(res.content)
     return data_path
-
-
 data_path = download_data()
 with open(data_path, 'rb') as fi:
-    [CHINESENEWYEAR, CHINESEYEARCODE] = dill.load(fi)
-
-
+    [CHINESENEWYEAR,CHINESEYEARCODE] = dill.load(fi)
 # The class `LunarDate` is modified from https://github.com/CutePandaSh/zhdate.git
 class LunarDate():
+
     def __init__(self, lunar_year, lunar_month, lunar_day, leap_month=False):
         """初始化函数
 
@@ -39,16 +33,14 @@ class LunarDate():
             leap_month {bool} -- 是否是在农历闰月中 (default: {False})
 
         """
-        if not LunarDate.validate(lunar_year, lunar_month, lunar_day,
-                                  leap_month):
+        if not LunarDate.validate(lunar_year, lunar_month, lunar_day, leap_month):
             raise TypeError('农历日期不支持，超出农历1900年1月1日至2100年12月29日，或日期不存在')
         self.lunar_year = lunar_year
         self.lunar_month = lunar_month
         self.lunar_day = lunar_day
         self.leap_month = leap_month
         self.year_code = CHINESEYEARCODE[self.lunar_year - 1900]
-        self.newyear = datetime.strptime(
-            CHINESENEWYEAR[self.lunar_year - 1900], '%Y%m%d')
+        self.newyear = datetime.strptime(CHINESENEWYEAR[self.lunar_year - 1900], '%Y%m%d')
 
     def to_datetime(self):
         """农历日期转换称公历日期
@@ -69,11 +61,9 @@ class LunarDate():
             LunarDate -- 生成的农历日期对象
         """
         lunar_year = dt.year
-        if (datetime.strptime(CHINESENEWYEAR[lunar_year - 1900], '%Y%m%d') -
-                dt).days > 0:
+        if (datetime.strptime(CHINESENEWYEAR[lunar_year - 1900], '%Y%m%d') - dt).days > 0:
             lunar_year -= 1
-        newyear_dt = datetime.strptime(CHINESENEWYEAR[lunar_year - 1900],
-                                       '%Y%m%d')
+        newyear_dt = datetime.strptime(CHINESENEWYEAR[lunar_year - 1900], '%Y%m%d')
         days_passed = (dt - newyear_dt).days
         year_code = CHINESEYEARCODE[lunar_year - 1900]
         month_days = LunarDate.decode(year_code)
@@ -108,11 +98,9 @@ class LunarDate():
         month_days = LunarDate.decode(self.year_code)
         month_leap = self.year_code & 0xf  # 当前农历年的闰月，为0表示无闰月
 
-        if (month_leap == 0) or (self.lunar_month <
-                                 month_leap):  # 当年无闰月，或者有闰月但是当前月小于闰月
+        if (month_leap == 0) or (self.lunar_month < month_leap):  # 当年无闰月，或者有闰月但是当前月小于闰月
             days_passed_month = sum(month_days[:self.lunar_month - 1])
-        elif (not self.leap_month) and (self.lunar_month
-                                        == month_leap):  # 当前不是闰月，并且当前月份和闰月相同
+        elif (not self.leap_month) and (self.lunar_month == month_leap):  # 当前不是闰月，并且当前月份和闰月相同
             days_passed_month = sum(month_days[:self.lunar_month - 1])
         else:
             days_passed_month = sum(month_days[:self.lunar_month])
@@ -184,19 +172,18 @@ class LunarDate():
     def __add__(self, another):
         if not isinstance(another, int):
             raise TypeError('加法只支持整数天数相加')
-        return LunarDate.from_datetime(self.to_datetime() +
-                                       timedelta(days=another))
+        return LunarDate.from_datetime(self.to_datetime() + timedelta(days=another))
 
     def __sub__(self, another):
         if isinstance(another, int):
-            return LunarDate.from_datetime(self.to_datetime() -
-                                           timedelta(days=another))
+            return LunarDate.from_datetime(self.to_datetime() - timedelta(days=another))
         elif isinstance(another, LunarDate):
             return (self.to_datetime() - another.to_datetime()).days
         elif isinstance(another, datetime):
             return (self.to_datetime() - another).days
         else:
             raise TypeError('减法只支持整数，LunarDate, Datetime类型')
+
 
     @staticmethod
     def __tiandi(anum):
@@ -269,27 +256,22 @@ class LunarDate():
         Returns:
             [int] -- 农历年份所对应的农历月份天数列表
         """
-        return LunarDate.decode(CHINESEYEARCODE[year - 1900])
+        return LunarDate.decode(
+            CHINESEYEARCODE[year - 1900]
+        )
 
 
+    
 """the following code is copied from the network"""
 
 import math
 import ephem
 
-
-def chinaCalendar(date):  # 默认输入ut+8时间
-    lunar_yue = [
-        "正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月",
-        "十二月"
-    ]
-    nlrq = [
-        "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二",
-        "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四",
-        "廿五", "廿六", "廿七", "廿八", "廿九", "三十"
-    ]
-    tiangan = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
-    dizhi = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+def chinaCalendar(date): # 默认输入ut+8时间
+    lunar_yue =["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+    nlrq = ["初一","初二","初三","初四","初五","初六","初七","初八","初九","初十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","廿一","廿二","廿三","廿四","廿五","廿六","廿七","廿八","廿九","三十"]
+    tiangan = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"]
+    dizhi = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"]
     gz = [''] * 60  # 六十甲子表
     for i in range(60):
         gz[i] = tiangan[i % 10] + dizhi[i % 12]
@@ -325,18 +307,18 @@ def chinaCalendar(date):  # 默认输入ut+8时间
             L = SolarLongitube(JD2)
             JD1 += math.sin(angle * math.pi / 180 - L) / math.pi * 180
             if abs(JD1 - JD2) < 0.00001:
-                break  # 精度小于1 second
-        return JD1  # UT
+                break # 精度小于1 second
+        return JD1 # UT
 
-    def DateCompare(JD1, JD2):  # 输入ut，返回ut+8的比较结果
-        JD1 += 0.5 + 8 / 24
-        JD2 += 0.5 + 8 / 24
+    def DateCompare(JD1, JD2): # 输入ut，返回ut+8的比较结果
+        JD1 += 0.5 + 8/24
+        JD2 += 0.5 + 8/24
         if int(JD1) >= int(JD2): return True
         else: return False
 
-    def dzs_search(year):  # 寻找年前冬至月朔日
+    def dzs_search(year): # 寻找年前冬至月朔日
         if year == 1: year -= 1  # 公元0改为公元前1
-        dz = ephem.next_solstice(str(year - 1) + '/12')  # 年前冬至
+        dz = ephem.next_solstice(str(year-1) + '/12') # 年前冬至
         jd = ephem.julian_date(dz)
         # 可能的三种朔日
         date1 = ephem.next_new_moon(ephem.Date(jd - 2415020 - 0))
@@ -345,54 +327,54 @@ def chinaCalendar(date):  # 默认输入ut+8时间
         jd2 = ephem.julian_date(date2)
         date3 = ephem.next_new_moon(ephem.Date(jd - 2415020 - 31))
         jd3 = ephem.julian_date(date3)
-        if DateCompare(jd, jd1):  # 冬至合朔在同一日或下月
+        if DateCompare(jd, jd1): # 冬至合朔在同一日或下月
             return date1
         elif DateCompare(jd, jd2) and (not DateCompare(jd, jd1)):
             return date2
-        elif DateCompare(jd, jd3):  # 冬至在上月
+        elif DateCompare(jd, jd3): # 冬至在上月
             return date3
-
-    JD = ephem.julian_date(date) - 8 / 24  # ut
-    year = ephem.Date(JD + 8 / 24 - 2415020).triple()[0]
+    
+    
+    JD = ephem.julian_date(date) - 8/24 # ut
+    year = ephem.Date(JD + 8/24 - 2415020).triple()[0]
     shuo = []
     shuo.append(dzs_search(year))  # 冬至朔
     sJD1 = ephem.julian_date(shuo[0])
-    next_dzs = dzs_search(year + 1)  # 次年冬至朔
+    next_dzs = dzs_search(year+1) # 次年冬至朔
     dzsJD = ephem.julian_date(next_dzs)
     if DateCompare(JD, dzsJD):
         shuo[0] = next_dzs
-        next_dzs = dzs_search(year + 2)
+        next_dzs = dzs_search(year+2)
         dzsJD = ephem.julian_date(next_dzs)
     # 查找所在月及判断置闰
     run = ''
     szy = 0
-    j = -1  # 计算连续两个冬至月中的合朔次数
-    zry = 99  # 无效值
+    j = -1 # 计算连续两个冬至月中的合朔次数
+    zry = 99 # 无效值
     flag = False
-    while not DateCompare(sJD1, dzsJD):  # 次年冬至朔前合朔即当年月份
+    while not DateCompare(sJD1, dzsJD): # 次年冬至朔前合朔即当年月份
         j += 1
-        sJD1 = ephem.julian_date(shuo[j])  # 起冬至朔
+        sJD1 = ephem.julian_date(shuo[j]) # 起冬至朔
         if DateCompare(JD, sJD1):
-            szy += 1  # date所在月
-            newmoon = int(sJD1 + 8 / 24 + 0.5)
-        shuo.append(ephem.next_new_moon(shuo[j]))  # i+1月朔
-        if j == 0: continue  # 冬至月一定含中气，从次月开始查找
-        sJD2 = ephem.julian_date(shuo[j + 1])  # 次月朔
-        month = ephem.Date(sJD1 - 2415020).triple()[1]  # 求某月的中气
-        angle = (-90 + 30 * month) % 360  # 该月中气
+            szy += 1 # date所在月
+            newmoon = int(sJD1 + 8/24 + 0.5)
+        shuo.append(ephem.next_new_moon(shuo[j])) # i+1月朔
+        if j == 0: continue # 冬至月一定含中气，从次月开始查找
+        sJD2 = ephem.julian_date(shuo[j+1])  # 次月朔
+        month = ephem.Date(sJD1 - 2415020).triple()[1] # 求某月的中气
+        angle = (-90 + 30 * month) % 360 # 该月中气
         if j == 1:
             nian1 = ephem.Date(sJD1 - 2415020).triple()[0]
-            qJD1 = SolarTerms(nian1, angle)  # 每月中气
+            qJD1 = SolarTerms(nian1, angle) # 每月中气
         else:
-            qJD1 = qJD2  # 使用上次计算结果，节约计算
+            qJD1 = qJD2 # 使用上次计算结果，节约计算
         nian2 = ephem.Date(sJD2 - 2415020).triple()[0]
-        qJD2 = SolarTerms(nian2, (angle + 30) % 360)  # 次月中气
-        if not DateCompare(qJD1, sJD1) and DateCompare(qJD2,
-                                                       sJD2) and flag == False:
-            zry = j + 1  # 置闰月
-            flag = True  # 仅第一个无中气月置闰
-    rq = int(JD + 8 / 24 + 0.5) - newmoon  # 日干支
-    if j == 12 and zry != 99:  # 连续两个冬至月间合朔12次则不闰
+        qJD2 = SolarTerms(nian2, (angle+30)%360) # 次月中气
+        if not DateCompare(qJD1, sJD1) and DateCompare(qJD2, sJD2) and flag == False:
+                zry = j + 1 # 置闰月
+                flag = True # 仅第一个无中气月置闰
+    rq = int(JD + 8/24 + 0.5) - newmoon # 日干支
+    if j == 12 and zry != 99: # 连续两个冬至月间合朔12次则不闰
         zry = 99
     if szy % 12 == zry % 12 and zry != 99:
         run = '闰'
@@ -401,44 +383,40 @@ def chinaCalendar(date):  # 默认输入ut+8时间
     # 判断节气月
     month = ephem.Date(date).triple()[1]
     angle = (-135 + 30 * month) % 360
-    jJD2 = SolarTerms(year, (angle + 30) % 360)  # 次月节气
-    if angle == 225:  # 再次月节气
-        jJD3 = SolarTerms(year + 1, (angle + 60) % 360)
+    jJD2 = SolarTerms(year, (angle+30)%360) # 次月节气
+    if angle == 225: # 再次月节气
+        jJD3 = SolarTerms(year+1, (angle+60)%360)
     else:
         jJD3 = SolarTerms(year, (angle + 60) % 360)
-    if angle == 255:  # 每月节气
-        jJD1 = SolarTerms(year - 1, angle)
+    if angle == 255: # 每月节气
+        jJD1 = SolarTerms(year-1, angle)
     else:
         jJD1 = SolarTerms(year, angle)
     daxue = False
-    if DateCompare(JD, jJD3):  # JD ≥ JD3
-        jq = ephem.Date(jJD3 + 8 / 24 - 2415020)
+    if DateCompare(JD, jJD3): # JD ≥ JD3
+        jq = ephem.Date(jJD3 + 8/24 - 2415020)
         month2 = (angle + 15 - 210) // 30 % 12
         if angle == 225: daxue = True
-    elif DateCompare(JD, jJD2):  # JD2 ≤ JD ＜ JD3
-        jq = ephem.Date(jJD2 + 8 / 24 - 2415020)
+    elif DateCompare(JD, jJD2): # JD2 ≤ JD ＜ JD3
+        jq = ephem.Date(jJD2 + 8/24 - 2415020)
         month2 = (angle + 15 - 240) // 30 % 12
-        if angle == 225 or (jq.triple()[1] == 12 and angle == 255):
-            daxue = True  # 大雪或小寒
-    else:  # JD ＜ JD2
-        jq = ephem.Date(jJD1 + 8 / 24 - 2415020)
+        if angle == 225 or (jq.triple()[1] == 12 and angle == 255): daxue = True  # 大雪或小寒
+    else: # JD ＜ JD2
+        jq = ephem.Date(jJD1 + 8/24 - 2415020)
         month2 = (angle + 15 - 270) // 30 % 12
         if angle == 255: daxue = True
     nian2 = jq.triple()[0]
     if nian2 < 0: nian2 += 1
     if daxue == True: nian2 += 1
-    jqy = gz[(nian2 * 12 + month2 + 12) % 60]  # 月干支
-    if (szy - 3) % 12 >= 10 and ephem.Date(date).triple()[1] <= 3:
-        year -= 1  # 年干支
+    jqy = gz[(nian2 * 12 + month2 + 12) % 60] # 月干支
+    if (szy - 3) % 12 >= 10 and ephem.Date(date).triple()[1] <= 3: year -= 1 # 年干支
     if year < 0: year += 1
-
+        
     lunar_year = year
     lunar_month = (szy - 3) % 12 + 1
     lunar_day = rq + 1
-
+    
     chinese_year = gz[(year - 4) % 60] + '年'
     chinese_month = jqy + '月'
-    chinese_day = gz[int(JD + 8 / 24 + 0.5 + 49) % 60] + '日'
-    return lunar_year, lunar_month, lunar_day, [
-        chinese_year, chinese_month, chinese_day
-    ]
+    chinese_day = gz[int(JD + 8/24 + 0.5 + 49) % 60] + '日'
+    return lunar_year, lunar_month, lunar_day, [chinese_year, chinese_month, chinese_day]

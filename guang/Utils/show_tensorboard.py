@@ -3,18 +3,17 @@ from guang.Utils.plotly import Multiplots, Subplots
 import numpy as np
 from glob import glob
 
-event_list = glob(
-    './exp/train_nodev_csmsc_parallel_wavegan.v1/events.out.tfevents.*')
 
+event_list = glob('./exp/train_nodev_csmsc_parallel_wavegan.v1/events.out.tfevents.*')
 
 def show(event_list):
-    ea = event_accumulator.EventAccumulator(event_list[0])
+    ea=event_accumulator.EventAccumulator(event_list[0]) 
     ea.Reload()
 
     # for idx, i in enumerate(ea.scalars.Keys()):
     #     print(idx, i)
 
-    val = ea.scalars.Items(ea.scalars.Keys()[11])
+    val=ea.scalars.Items(ea.scalars.Keys()[11])
 
     print(len(val))
     steps, loss = {}, {}
@@ -32,3 +31,4 @@ def show(event_list):
     fig.y_label = 'loss'
 
     fig.show()
+

@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 PI = math.pi
-TAU = 2 * PI
+TAU = 2*PI
 
 ORIGIN = np.array((0., 0., 0.))
 UP = np.array((0., 1., 0.))
@@ -34,11 +34,17 @@ def quaternion_mult(q1, q2):
 
 
 def quaternion_from_angle_axis(angle, axis):
-    return np.append(np.cos(angle / 2), np.sin(angle / 2) * normalize(axis))
+    return np.append(
+        np.cos(angle / 2),
+        np.sin(angle / 2) * normalize(axis)
+    )
 
 
 def angle_axis_from_quaternion(quaternion):
-    axis = normalize(quaternion[1:], fall_back=np.array([1, 0, 0]))
+    axis = normalize(
+        quaternion[1:],
+        fall_back=np.array([1, 0, 0])
+    )
     angle = 2 * np.arccos(quaternion[0])
     if angle > TAU / 2:
         angle = TAU - angle
@@ -60,8 +66,10 @@ def rotate_vector(vector, angle, axis=OUT):
         # Use quaternions...because why not
         quat = quaternion_from_angle_axis(angle, axis)
         quat_inv = quaternion_conjugate(quat)
-        product = reduce(quaternion_mult,
-                         [quat, np.append(0, vector), quat_inv])
+        product = reduce(
+            quaternion_mult,
+            [quat, np.append(0, vector), quat_inv]
+        )
         return product[1:]
     else:
         raise Exception("vector must be of dimension 2 or 3")
@@ -84,8 +92,11 @@ def rotation_matrix(angle, axis):
 
 
 def rotation_about_z(angle):
-    return [[np.cos(angle), -np.sin(angle), 0],
-            [np.sin(angle), np.cos(angle), 0], [0, 0, 1]]
+    return [
+        [np.cos(angle), -np.sin(angle), 0],
+        [np.sin(angle), np.cos(angle), 0],
+        [0, 0, 1]
+    ]
 
 
 def z_to_vector(vector):
@@ -106,13 +117,19 @@ def z_to_vector(vector):
             theta = -theta
     else:
         theta = 0
-    phi_down = np.array([[np.cos(phi), 0, np.sin(phi)], [0, 1, 0],
-                         [-np.sin(phi), 0, np.cos(phi)]])
+    phi_down = np.array([
+        [np.cos(phi), 0, np.sin(phi)],
+        [0, 1, 0],
+        [-np.sin(phi), 0, np.cos(phi)]
+    ])
     return np.dot(rotation_about_z(theta), phi_down)
 
 
 def angle_between(v1, v2):
-    return np.arccos(np.dot(v1 / get_norm(v1), v2 / get_norm(v2)))
+    return np.arccos(np.dot(
+        v1 / get_norm(v1),
+        v2 / get_norm(v2)
+    ))
 
 
 def angle_of_vector(vector):
@@ -135,13 +152,15 @@ def fdiv(a, b, zero_over_zero_value=None):
 
     return np.true_divide(a, b, out=out, where=where)
 
-
 def angle_between_vectors(v1, v2):
     """
     Returns the angle between two 3D vectors.
     This angle will always be btw 0 and pi
     """
-    return np.arccos(fdiv(np.dot(v1, v2), get_norm(v1) * get_norm(v2)))
+    return np.arccos(fdiv(
+        np.dot(v1, v2),
+        get_norm(v1) * get_norm(v2)
+    ))
 
 
 def project_along_vector(point, vector):
@@ -162,7 +181,8 @@ def normalize(vect, fall_back=None):
 
 def cross(v1, v2):
     return np.array([
-        v1[1] * v2[2] - v1[2] * v2[1], v1[2] * v2[0] - v1[0] * v2[2],
+        v1[1] * v2[2] - v1[2] * v2[1],
+        v1[2] * v2[0] - v1[0] * v2[2],
         v1[0] * v2[1] - v1[1] * v2[0]
     ])
 
@@ -171,9 +191,13 @@ def get_unit_normal(v1, v2):
     return normalize(cross(v1, v2))
 
 
+
 def compass_directions(n=4, start_vect=RIGHT):
     angle = TAU / n
-    return np.array([rotate_vector(start_vect, k * angle) for k in range(n)])
+    return np.array([
+        rotate_vector(start_vect, k * angle)
+        for k in range(n)
+    ])
 
 
 def complex_to_R3(complex_num):
@@ -216,3 +240,5 @@ def line_intersection(line1, line2):
     x = det(d, x_diff) / div
     y = det(d, y_diff) / div
     return np.array([x, y, 0])
+
+
