@@ -1,5 +1,6 @@
 import re
 
+
 def find_match(start, end, S, flag=0):
     """find the string between `start` and `end` of `S`
     flag=0 defaults, means no special specification
@@ -17,6 +18,7 @@ def find_match(start, end, S, flag=0):
         print('Do not match anything.')
         return None
 
+
 def find_match2(pattern, S, flag=0):
     res = re.search(pattern, S, flags=flag)
     return res.group()
@@ -27,6 +29,7 @@ def replace(string, beRepl, repl, count=1):
     if count=0, relplace all."""
     pattern = re.compile(beRepl)
     return pattern.sub(repl, string, count)
+
 
 def find_all_index(pattern, string, flags=0):
     """find all matched index of string"""

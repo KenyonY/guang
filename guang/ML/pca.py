@@ -1,7 +1,8 @@
-import numpy as np 
+import numpy as np
+
 
 def transform(X, dim):
-	"""
+    """
 	A principal component analysis model.
 	
 	Parameters
@@ -15,6 +16,6 @@ def transform(X, dim):
 	-------
 	shape = (Samples, dim)
 	"""
-	U, S, V = np.linalg.svd(X-X.mean(0),full_matrices=True)
-	idx = S.argsort()[::-1][:dim]
-	return X.dot(V[idx].T)
+    U, S, V = np.linalg.svd(X - X.mean(0), full_matrices=True)
+    idx = S.argsort()[::-1][:dim]
+    return X.dot(V[idx].T)
