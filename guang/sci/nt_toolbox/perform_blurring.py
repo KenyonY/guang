@@ -2,6 +2,7 @@ import numpy as np
 import pylab as pyl
 from scipy import signal
 
+
 def perform_blurring(M, sigma, bound="sym"):
     """
         perform_blurring - gaussian blurs an image
@@ -19,25 +20,25 @@ def perform_blurring(M, sigma, bound="sym"):
 
     if np.ndim(M) > 2:
         for i in range(np.shape(M)[2]):
-             M[:,:,i] = perform_blurring(M[:,:,i], sigma, bound);
+            M[:, :, i] = perform_blurring(M[:, :, i], sigma, bound)
 
     n = max(np.shape(M))
 
     eta = 4
-    p = np.round((sigma*eta)/2.)*2+1
-    p = np.minimum(p,(round(n/2.)*2-1)*np.ones(len(p)))
+    p = np.round((sigma * eta) / 2.) * 2 + 1
+    p = np.minimum(p, (round(n / 2.) * 2 - 1) * np.ones(len(p)))
 
-    A = np.array([1.,1.])
+    A = np.array([1., 1.])
     if np.ndim(M) == 1:
-        A = 1 #1D
+        A = 1  #1D
 
-    h = compute_gaussian_filter(p*A,sigma/(4.*n),n*A)
+    h = compute_gaussian_filter(p * A, sigma / (4. * n), n * A)
     M = perform_convolution(M, h, bound)
 
     return M
 
 
-def compute_gaussian_filter(n,s,N):
+def compute_gaussian_filter(n, s, N):
     """
         compute_gaussian_filter - compute a 1D or 2D Gaussian filter.
 
@@ -58,23 +59,24 @@ def compute_gaussian_filter(n,s,N):
 
           Copyright (c) 2004 Gabriel Peyre
     """
-    nd = 1;
+    nd = 1
     if len(n) > 1 and n[1] > 1:
         nd = 2
 
     if nd == 2 and len(s) == 1:
-        s = np.hstack((s,s))
+        s = np.hstack((s, s))
 
     if nd == 2 and len(N) == 1:
-        N = np.hstack((N,N))
+        N = np.hstack((N, N))
 
-    if nd == 1 :
-        f = build_gaussian_filter_1d(n,s,N)
+    if nd == 1:
+        f = build_gaussian_filter_1d(n, s, N)
     else:
-        f = build_gaussian_filter_2d(n,s,N)
+        f = build_gaussian_filter_2d(n, s, N)
     return f
 
-def build_gaussian_filter_2d(n,s,N=[]):
+
+def build_gaussian_filter_2d(n, s, N=[]):
     """
         build_gaussian_filter_2d - compute a 2D Gaussian filter.
 
@@ -98,25 +100,25 @@ def build_gaussian_filter_2d(n,s,N=[]):
         N = n
 
     if len(N) == 1 or N[0] == 1:
-        N = np.hstack((N,N))
+        N = np.hstack((N, N))
 
     if len(s) == 1 or s[0] == 1:
-        s = np.hstack((s,s))
+        s = np.hstack((s, s))
 
     if len(s[s <= 0]) > 0:
         f = np.zeros(n)
-        f[np.round((n-1)/2).astype(int)] = 1
+        f[np.round((n - 1) / 2).astype(int)] = 1
         return f
 
-    x = (np.arange(0,n[0])-(n[0]-1)/2.)/(N[0]-1)
-    y = (np.arange(0,n[1])-(n[1]-1)/2.)/(N[1]-1)
-    [Y,X] = np.meshgrid(y,x)
-    f = np.exp(-(X**2/(2*s[0]**2)) - (Y**2/(2*s[1]**2)))
-    f = f/np.sum(f)
+    x = (np.arange(0, n[0]) - (n[0] - 1) / 2.) / (N[0] - 1)
+    y = (np.arange(0, n[1]) - (n[1] - 1) / 2.) / (N[1] - 1)
+    [Y, X] = np.meshgrid(y, x)
+    f = np.exp(-(X**2 / (2 * s[0]**2)) - (Y**2 / (2 * s[1]**2)))
+    f = f / np.sum(f)
     return f
 
 
-def build_gaussian_filter_1d(n,s,N=[]):
+def build_gaussian_filter_1d(n, s, N=[]):
     """
         build_gaussian_filter_1d - compute a Gaussian filter.
 
@@ -133,16 +135,16 @@ def build_gaussian_filter_1d(n,s,N=[]):
 
     if s <= 0:
         f = np.zeros(n)
-        f[np.round((n-1)/2)] = 1
+        f[np.round((n - 1) / 2)] = 1
         return f
 
-    x = (np.arange(0,n)-(n-1)/2.)/(N-1)
-    f = np.exp(-x**2/(2*s**2))
-    f = f/np.sum(f)
+    x = (np.arange(0, n) - (n - 1) / 2.) / (N - 1)
+    f = np.exp(-x**2 / (2 * s**2))
+    f = f / np.sum(f)
     return f
 
 
-def perform_convolution(x,h,bound="sym"):
+def perform_convolution(x, h, bound="sym"):
     """
         perform_convolution - compute convolution with centered filter.
 
@@ -165,13 +167,14 @@ def perform_convolution(x,h,bound="sym"):
 
     if np.ndim(x) == 3 and np.shape(x)[2] < 4:
         #for color images
-        y = x;
+        y = x
         for i in range(np.shape(x)[2]):
-            y[:,:,i] = perform_convolution(x[:,:,i],h, bound)
+            y[:, :, i] = perform_convolution(x[:, :, i], h, bound)
         return y
 
     if np.ndim(x) == 3 and np.shape(x)[2] >= 4:
-        raise Exception('Not yet implemented for 3D array, use smooth3 instead.')
+        raise Exception(
+            'Not yet implemented for 3D array, use smooth3 instead.')
 
     n = np.shape(x)
     p = np.shape(h)
@@ -184,27 +187,30 @@ def perform_convolution(x,h,bound="sym"):
 
     if bound == 'sym':
 
-                #################################
+        #################################
         # symmetric boundary conditions #
-        d1 = np.asarray(p).astype(int)/2  # padding before
-        d2 = p - d1 - 1    			    # padding after
+        d1 = np.asarray(p).astype(int) / 2  # padding before
+        d2 = p - d1 - 1  # padding after
 
         if nd == 1:
-        ################################# 1D #################################
+            ################################# 1D #################################
             nx = len(x)
-            xx = np.vstack((x[d1:-1:-1],x,x[nx-1:nx-d2-1:-1]))
-            y = signal.convolve(xx,h)
-            y = y[p:nx-p-1]
+            xx = np.vstack((x[d1:-1:-1], x, x[nx - 1:nx - d2 - 1:-1]))
+            y = signal.convolve(xx, h)
+            y = y[p:nx - p - 1]
 
         elif nd == 2:
-        ################################# 2D #################################
+            ################################# 2D #################################
             #double symmetry
-            nx,ny=np.shape(x)
+            nx, ny = np.shape(x)
             xx = x
-            xx = np.vstack((xx[d1[0]:-1:-1,:], xx, xx[nx-1:nx-d2[0]-1:-1,:]))
-            xx = np.hstack((xx[:,d1[1]:-1:-1], xx, xx[:,ny-1:ny-d2[1]-1:-1]))
-            y = signal.convolve2d(xx,h,mode="same")
-            y = y[(2*d1[0]):(2*d1[0]+n[0]+1), (2*d1[1]):(2*d1[1]+n[1]+1)]
+            xx = np.vstack(
+                (xx[d1[0]:-1:-1, :], xx, xx[nx - 1:nx - d2[0] - 1:-1, :]))
+            xx = np.hstack(
+                (xx[:, d1[1]:-1:-1], xx, xx[:, ny - 1:ny - d2[1] - 1:-1]))
+            y = signal.convolve2d(xx, h, mode="same")
+            y = y[(2 * d1[0]):(2 * d1[0] + n[0] + 1),
+                  (2 * d1[1]):(2 * d1[1] + n[1] + 1)]
 
     else:
 
@@ -215,13 +221,17 @@ def perform_convolution(x,h,bound="sym"):
             raise Exception('h filter should be shorter than x.')
         n = np.asarray(n)
         p = np.asarray(p)
-        d = np.floor((p-1)/2.)
+        d = np.floor((p - 1) / 2.)
         print(n)
         if nd == 1:
-            h = np.vstack((h[d:],np.vstack((np.zeros(n-p),h[:d]))))
-            y = np.real(pyl.ifft(pyl.fft(x)*pyl.fft(h)))
+            h = np.vstack((h[d:], np.vstack((np.zeros(n - p), h[:d]))))
+            y = np.real(pyl.ifft(pyl.fft(x) * pyl.fft(h)))
         else:
-            h = np.vstack((h[d[0]:,:],np.vstack((np.zeros([n[0]-p[0],p[1]]),h[:(d[0]),:]))))
-            h = np.hstack((h[:,d[1]:],np.hstack((np.zeros([n[0],n[1]-p[1]]),h[:,:(d[1])]))))
-            y = np.real(pyl.ifft2(pyl.fft2(x)*pyl.fft2(h)))
+            h = np.vstack((h[d[0]:, :],
+                           np.vstack((np.zeros([n[0] - p[0],
+                                                p[1]]), h[:(d[0]), :]))))
+            h = np.hstack(
+                (h[:, d[1]:],
+                 np.hstack((np.zeros([n[0], n[1] - p[1]]), h[:, :(d[1])]))))
+            y = np.real(pyl.ifft2(pyl.fft2(x) * pyl.fft2(h)))
     return y

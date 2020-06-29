@@ -8,19 +8,19 @@ def culc_frequency(x, y):
     idx_max = signal.argrelextrema(y, np.greater)[0]
     idx_min = signal.argrelextrema(y, np.less)[0]
     Lmax, Lmin = len(idx_max), len(idx_min)
-    if Lmax<=1 and Lmin<=1:
+    if Lmax <= 1 and Lmin <= 1:
         raise ValueError("无振荡")
-    
+
     if Lmax > Lmin:
-        N = Lmax-1
-        frequency = N/(x[idx_max[-1]] - x[idx_max[0]])
+        N = Lmax - 1
+        frequency = N / (x[idx_max[-1]] - x[idx_max[0]])
     else:
         N = Lmin - 1
         frequency = N / (x[idx_min[-1]] - x[idx_min[0]])
     return frequency, idx_max, idx_min
 
 
-def culc_fig_fre(mat, method, dw=1,  dh=1, fre_min=1., FRE_MAX=15, neighb=2):
+def culc_fig_fre(mat, method, dw=1, dh=1, fre_min=1., FRE_MAX=15, neighb=2):
     """
     :param mat: 2d array
     :param method: options "1d" or "2d"
@@ -50,10 +50,17 @@ def culc_fig_fre(mat, method, dw=1,  dh=1, fre_min=1., FRE_MAX=15, neighb=2):
     if method == "1d":
         Nh, Nw = mat.shape
         x = np.arange(0, dw * Nw, dw)
-        y = mat[Nh//2, :]
+        y = mat[Nh // 2, :]
         y_rebuild = butter_lowpass(x, y, cutfre=FRE_MAX, orders=8)
-
+        # import matplotlib.pyplot as plt
+        # plt.figure()
+        # plt.subplot(2,1,1)
+        # plt.plot(x, y)
+        # plt.subplot(2,1,2)
+        # plt.plot(x, y_rebuild)
+        # plt.show()
         frequncy = culc_frequency(x[30:-30], y_rebuild[30:-30])[0]
+        # frequncy = culc_frequency(x, y_rebuild)[0]
 
     elif method == "w_1d":
         _, Fu = get_fft_1d()
@@ -62,22 +69,21 @@ def culc_fig_fre(mat, method, dw=1,  dh=1, fre_min=1., FRE_MAX=15, neighb=2):
         F = Fu_shift[idx_x]
         x = x.reshape(-1, )
 
-        amplitude = np.real(np.log(F)).reshape(-1,)
+        amplitude = np.real(np.log(F)).reshape(-1, )
 
         idx_1 = np.argwhere(x > fre_min)
         idx_2 = np.argmax(amplitude[idx_1])
 
         idx = int(idx_1[0] + idx_2)
 
-        def weight_fre(fre, weight, idx, neighb = 2):
-            IDX = np.arange(idx-neighb, idx+neighb+1, 1)
+        def weight_fre(fre, weight, idx, neighb=2):
+            IDX = np.arange(idx - neighb, idx + neighb + 1, 1)
             res = 0
             for i in IDX:
                 res += fre[i] * weight[i]
-            return res/np.sum(weight[IDX])
+            return res / np.sum(weight[IDX])
 
-        frequncy =  weight_fre(x, amplitude, idx, neighb=neighb)# x[idx]
-
+        frequncy = weight_fre(x, amplitude, idx, neighb=neighb)  # x[idx]
 
     elif method == "2d":
         x, y, amplitude = space2fre_2d(mat, dh, dw)
@@ -91,10 +97,13 @@ def culc_fig_fre(mat, method, dw=1,  dh=1, fre_min=1., FRE_MAX=15, neighb=2):
 if __name__ == "__main__":
     from guang.cv.video import getFrame
     import matplotlib.pyplot as plt
-    INFO, mat = getFrame(r'C:\Users\beidongjiedeguang\Desktop\实验\60degree\1_resample.avi', 1400,
-                         W=(52, 618), H=(43, 580),
-                         gray=1)
-    fig2 =plt.figure()
+    INFO, mat = getFrame(
+        r'C:\Users\beidongjiedeguang\Desktop\实验\60degree\1_resample.avi',
+        1400,
+        W=(52, 618),
+        H=(43, 580),
+        gray=1)
+    fig2 = plt.figure()
     plt.imshow(mat)
     plt.show()
 
@@ -102,5 +111,3 @@ if __name__ == "__main__":
     dx = dtheta / (618 - 52)
     print(culc_fig_fre(mat, method=1, dw=dx, FRE_MAX=13))
     print(culc_fig_fre(mat, method=2, dw=dx, fre_min=3))
-
-    

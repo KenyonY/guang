@@ -4,7 +4,7 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from scipy import ndimage
 # general.py TODO: try to not make use of transform.resize
-from skimage import transform ## commented
+from skimage import transform  ## commented
 
 
 def crop(M, n=None):
@@ -18,7 +18,7 @@ def crop(M, n=None):
     n0 = M.shape[0]
 
     if n is None:
-        n = (n0/2)
+        n = (n0 / 2)
     # Start and end of selection
     start_ind = int(np.floor((n0 - n) / 2))
     end_ind = int(-np.ceil((n0 - n) / 2))
@@ -36,11 +36,13 @@ def circshift(x, p):
         y = np.concatenate((y[:, p[0]::], y[:, :p[0]:]), axis=1)
     return y
 
+
 def circshift1d(x, k):
     """
         Circularly shift a 1D vector
     """
     return np.roll(x, -k, axis=0)
+
 
 def clamp(x, a=[], b=[]):
     """
@@ -59,7 +61,8 @@ def clamp(x, a=[], b=[]):
         b = 1.0
     return np.minimum(np.maximum(x, a), b)
 
-def rescale(f,a=0,b=1):
+
+def rescale(f, a=0, b=1):
     """
         Rescale linearly the dynamic of a vector to fit within a range [a,b]
     """
@@ -67,7 +70,8 @@ def rescale(f,a=0,b=1):
     g = (f - f.min()).copy()
     if v > 0:
         g = g / v
-    return a + g*(b-a)
+    return a + g * (b - a)
+
 
 def reverse(x):
     """
