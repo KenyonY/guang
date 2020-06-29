@@ -53,7 +53,7 @@ python ./night_workflow.py
 
 - Convert audio in .mp3/ .wav format to (sample rate=16k, single channel) .wav format
 
-  **Use on bash**
+  **Use in bash/shell**
 
   ```bash
   guang cvt2wav INPUT OUTPUT
