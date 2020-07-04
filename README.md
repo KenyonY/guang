@@ -87,7 +87,13 @@ python ./night_workflow.py
   guang fourier
   ```
 
+* **Fourier draw anything**
+
+  <img src="docs/picture/fourier1.gif" width = "400" height = "300"/>
+
   
+
+  <img src="docs/picture/fourier0.gif" width = "400" height = "300"/>
 
 * **FFT  convolution**
 
