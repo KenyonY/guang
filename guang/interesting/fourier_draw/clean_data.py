@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# @Time    : 2019/12/12
-# @Author  : github.com/guofei9987
-
-
 import numpy as np
 
 
