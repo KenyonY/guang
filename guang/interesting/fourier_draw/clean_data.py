@@ -1,13 +1,6 @@
 import numpy as np
 
 
-def get_data_from_pic():
-    pass
-
-
-def get_data_from_csv():
-    pass
-
 
 def get_data_from_func():
     '''
@@ -21,10 +14,18 @@ def get_data_from_func():
     X = x + 1j * y
     return X
 
+def get_data_from_pic():
+    pass
+
+
+def get_data_from_csv():
+    pass
 
 def sort_data(X):
     '''
-    TODO: X必须是有序的（最短路径的），这里以后补充，假设输入数据已经是有序的了
+    对于图数据，使用最短路径算法得到序列。
+    然后返回二元数(2维)或三元数(三维)形式
+    其定义在guang.geo.space中
     '''
     return X
 
