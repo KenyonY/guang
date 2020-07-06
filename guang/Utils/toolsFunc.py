@@ -5,19 +5,21 @@ import sys
 from collections import Counter
 from functools import wraps
 import time
+from glob import glob
 
 
-def path(string):
+def path(string: str) -> str:
+    """Adaptive to different platforms """
     platform = sys.platform.lower()
     if 'linux' in platform:
-        return string.replace('\\','/')
+        return string.replace('\\', '/')
     elif 'win' in platform:
-        return string.replace('/','\\')
+        return string.replace('/', '\\')
     else:
         return string
 
 
-def broadcast(func):
+def broadcast(func): # It can be replaced by `np.vectorize`
     '''
         example:
         @broadcast
@@ -40,15 +42,17 @@ def broadcast(func):
         type:numpy object
 
         '''
-        nin, nout = len(args)+len(kwargs), 1
-        return np.frompyfunc(func,nin, nout)(*args, **kwargs)
+        nin, nout = len(args) + len(kwargs), 1
+        return np.frompyfunc(func, nin, nout)(*args, **kwargs)
+
     return wrap
 
-# :Enables the dictionary to be dot operated
+
 class _Dict_enhance(dict):
+    """Enables the dictionary to be dot operated"""
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
-        self.__dict__ = self 
+        self.__dict__ = self
 
 def dict_dotable(dic):
     '''
@@ -65,22 +69,25 @@ def dict_dotable(dic):
             dic[i] = dict_dotable(dic[i])
     return dic
 
-# define a constant like C language.
+
+
 class Cons:
     '''
+    define a constant like C language.
     `object.__setattr__(self, name, value)`
     this built-in function will called when assigning values to properties of the class
     
     `object.__dict__` holds all writable attributes in object, 
     key as variable name and value as variable value.
     '''
-    def __setattr__(self, name,value):
-        if hasattr(self,name):
+    def __setattr__(self, name, value):
+        if hasattr(self, name):
             raise ValueError('Constant value can\'t be changed')
         else:
             self.__dict__[name] = value
 
-def rm(path):
+
+def _rm(path):
     '''remove path
     '''
     if os.path.exists(path):
@@ -90,6 +97,12 @@ def rm(path):
             shutil.rmtree(path)
         else:
             print(f'{path} is  illegal !')
+
+def rm(PATH):
+    """ Enhanced rm, support for regular expressions """
+    path_list = glob(PATH)
+    for path in path_list:
+        _rm(path)
 
 def index_char(L=1000):
     '''
@@ -102,11 +115,11 @@ def index_char(L=1000):
         character = chr(i)
         index_token[i] = character
         token.append(character)
-    token_index=dict(zip(token, range(L))) # token_index[idx] equal to ord(idx)
+    token_index = dict(zip(token,
+                           range(L)))  # token_index[idx] equal to ord(idx)
     return index_token, token_index
 
 
-    
 def yaml_dump(filepath, data):
     from yaml import dump
     try:
@@ -115,7 +128,8 @@ def yaml_dump(filepath, data):
         from yaml import Dumper
     with open(filepath, "w", encoding='utf-8') as fw:
         fw.write(dump(data, Dumper=Dumper))
-        
+
+
 def yaml_load(filepath):
     from yaml import load
     try:
@@ -123,9 +137,10 @@ def yaml_load(filepath):
     except ImportError:
         from yaml import Loader
     with open(filepath, 'r', encoding="utf-8") as stream:
-    #     stream = stream.read()
+        #     stream = stream.read()
         content = load(stream, Loader=Loader)
     return content
+
 
 def sort_count(lis):
     '''
@@ -136,9 +151,10 @@ def sort_count(lis):
     # return [2, 5, 9,3], [4, 2, 2, 1]
     '''
     a = Counter(lis)
-    b = sorted(a.items(),key=lambda item:item[1],reverse=True)
+    b = sorted(a.items(), key=lambda item: item[1], reverse=True)
     # idx, counts = [b[i][0] for i in range(len(b))], [b[i][1] for i in range(len(b))]
     return b
+
 
 def d_time(d_t, t0=[]):
     """
@@ -153,4 +169,3 @@ def d_time(d_t, t0=[]):
         return True
     else:
         return False
-
