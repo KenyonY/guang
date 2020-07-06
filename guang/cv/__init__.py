@@ -1,1 +1,1 @@
-from .utils import cvt2rgb, imgplot
+from .utils import cvt2rgb, implot

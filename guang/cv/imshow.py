@@ -1,6 +1,6 @@
 import taichi as ti
 import numpy as np
-from guang import imgplot
+from guang import implot
 # import cupy as cp
 from pyprobar import probar, bar
 import cv2
@@ -11,8 +11,7 @@ x = theta
 y = np.sin(theta)
 def get_data_from_func():
     '''
-    心图作为 demo
-    :return:
+    love
     '''
     n = 650
     t = np.linspace(0, 2 * np.pi, n)
@@ -39,7 +38,7 @@ def imshow(x, y):
 
     for col,row in zip(pixel_x, pixel_y):
         background[col,row] = np.uint8(255) # taichi
-        background[row, col] = np.uint8(255)  # opencv / matplotlib
+        # background[row, col] = np.uint8(255)  # opencv / matplotlib
 
     # imgplot(background)
     gui.set_image(background)

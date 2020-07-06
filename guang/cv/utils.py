@@ -71,9 +71,10 @@ def cvt2rgb(img, channel='bgr'):
     return img
 
 
-def imgplot(image,
+def implot(image,
             sbpt=[],
             channel: str = 'rgb',
+            figsize=(8,6),
             title=None,
             show=False,
             COUNT=[1]):
@@ -86,7 +87,7 @@ def imgplot(image,
     if sbpt != []:
         plt.subplot(*sbpt)
     else:
-        plt.figure(figsize=(7, 7))
+        plt.figure(figsize=figsize)
 
     if np.ndim(image) == 2:
         cmap = "gray" if channel == 'gray' else None
