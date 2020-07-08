@@ -4,6 +4,7 @@ fire
 pyyaml
 yapf
 elasticdeform
+pysnooper
 # numpy
 # pandas
 # matplotlib

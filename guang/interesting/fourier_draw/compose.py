@@ -1,21 +1,22 @@
 from manimlib.imports import *
-from PIL import Image
 import numpy as np
 import imageio
-from guang import path
-from skimage.transform import hough_circle, hough_circle_peaks
-from skimage.feature import canny
-import cv2
-from guang import implot, auto_canny
-from skimage import measure
-from skimage import filters
+from skimage import measure, filters
 import matplotlib.pyplot as plt
 from guang import rm
 
+# from PIL import Image
+# from guang import path
+# from skimage.transform import hough_circle, hough_circle_peaks
+# from skimage.feature import canny
+# import cv2
+# from guang import implot, auto_canny
 
-def get_data_from_func():
+
+
+def from_func():
     '''
-    love
+    love function
     '''
     n = 150
     t = np.linspace(0, 2 * np.pi, n)
@@ -42,6 +43,7 @@ def from_text(S = "LOVE", scale=2, style=None):
     return X
 
 
+
 def from_pic():
     pass
 
@@ -52,13 +54,14 @@ def from_csv():
 def sort_data(X):
     '''
     对于图数据，使用最短路径算法得到序列。
-    然后返回二元数(2维)或三元数(三维)形式
+    然后返回二元数(2维)或三/四元数(三维)形式
     其定义在guang.geo.space中
     '''
     return X
 
 
 def clean_data(X):
+    
     X = sort_data(X)
     x, y = X.real, X.imag
     x = (x - x.min()) / (x.max() - x.min()) - 0.5
@@ -67,8 +70,10 @@ def clean_data(X):
     return X
 
 if __name__ == "__main__":
-    X = from_text("533", 5)
-    plt.figure(figsize=(10, 5))
-    for x in X:
-        plt.plot(x.real, x.imag, linewidth=2)
-    plt.axis("equal")
+    pass
+    # X = from_text("533", 5)
+    # plt.figure(figsize=(10, 5))
+    # for x in X:
+    #     plt.plot(x.real, x.imag, linewidth=2)
+    # plt.axis("equal")
+
