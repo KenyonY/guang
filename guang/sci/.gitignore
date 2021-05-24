@@ -1,0 +1,50 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+nt_toolbox
+*.ipynb
+.vscode/
+.idea/
+
+workflow.py
+# night_workflow.py
+generateREADME.py
+genTOC.sh
+_config.yml
+
+.coverage
+
+test.*
+test/
+
+# data
+data/
+
+
+#vim
+*.swp
+*.un~
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+
+# juyter notebook
+.ipynb_checkpoints/
+
+
+# books or paper or others
+图解数据结构/
+
+# itchat
+itchat.pkl
+wechat_download/
+
+kaldi.zip
+kaldi/
+HMM/
